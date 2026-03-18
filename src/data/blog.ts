@@ -1,0 +1,105 @@
+import type { BlogPost } from "@/types";
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: "1",
+    slug: "why-i-chose-postgresql-over-mongodb",
+    title: "Why I Chose PostgreSQL Over MongoDB for My SaaS — And When I'd Switch",
+    excerpt: "A deep technical breakdown of the real trade-offs between PostgreSQL and MongoDB based on building three production systems. Not the answer you expect.",
+    content: "Full article content here...",
+    category: "architecture",
+    tags: ["PostgreSQL", "MongoDB", "Database Design", "Architecture"],
+    publishedAt: "2024-11-15",
+    readTime: "8 min read",
+    thumbnail: "/images/blog/postgresql-vs-mongodb.jpg",
+    isFeatured: true,
+    author: {
+      name: "Alex Johnson",
+      role: "Full Stack Developer",
+      avatar: "/images/avatar.jpg",
+      bio: "Building production systems with Next.js, PostgreSQL, and Redis.",
+    },
+  },
+  {
+    id: "2",
+    slug: "redis-caching-strategies-production",
+    title: "Redis Caching Strategies That Actually Work in Production",
+    excerpt: "Cache invalidation is one of the hardest problems in CS. Here's how I handle it across three production systems with zero stale data incidents.",
+    content: "Full article content here...",
+    category: "performance",
+    tags: ["Redis", "Caching", "Performance", "Node.js"],
+    publishedAt: "2024-10-28",
+    readTime: "10 min read",
+    thumbnail: "/images/blog/redis-caching.jpg",
+    isFeatured: false,
+    author: {
+      name: "Alex Johnson",
+      role: "Full Stack Developer",
+      avatar: "/images/avatar.jpg",
+      bio: "Building production systems with Next.js, PostgreSQL, and Redis.",
+    },
+  },
+  {
+    id: "3",
+    slug: "nextjs-app-router-patterns",
+    title: "Next.js 15 App Router Patterns I Use in Every Project",
+    excerpt: "After building three production apps with the Next.js App Router, these are the patterns that save me the most time and eliminate the most bugs.",
+    content: "Full article content here...",
+    category: "frontend",
+    tags: ["Next.js", "React", "TypeScript", "App Router"],
+    publishedAt: "2024-10-10",
+    readTime: "7 min read",
+    thumbnail: "/images/blog/nextjs-patterns.jpg",
+    isFeatured: false,
+    author: {
+      name: "Alex Johnson",
+      role: "Full Stack Developer",
+      avatar: "/images/avatar.jpg",
+      bio: "Building production systems with Next.js, PostgreSQL, and Redis.",
+    },
+  },
+  {
+    id: "4",
+    slug: "stripe-webhooks-production-reliability",
+    title: "Making Stripe Webhooks 100% Reliable in Production",
+    excerpt: "Silent payment failures are catastrophic. Here's the exact idempotent webhook pattern I use to ensure every payment event is processed exactly once.",
+    content: "Full article content here...",
+    category: "backend",
+    tags: ["Stripe", "Payments", "Node.js", "Reliability"],
+    publishedAt: "2024-09-22",
+    readTime: "9 min read",
+    thumbnail: "/images/blog/stripe-webhooks.jpg",
+    isFeatured: false,
+    author: {
+      name: "Alex Johnson",
+      role: "Full Stack Developer",
+      avatar: "/images/avatar.jpg",
+      bio: "Building production systems with Next.js, PostgreSQL, and Redis.",
+    },
+  },
+ 
+  {
+    id: "6",
+    slug: "from-junior-to-mid-level-engineer",
+    title: "What Actually Moved Me from Junior to Mid-Level Engineer",
+    excerpt: "It wasn't learning more frameworks. The shift came when I started thinking about systems, trade-offs, and the humans who maintain code after it's written.",
+    content: "Full article content here...",
+    category: "career",
+    tags: ["Career", "Engineering", "Growth", "Mentorship"],
+    publishedAt: "2024-08-18",
+    readTime: "5 min read",
+    thumbnail: "/images/blog/career-growth.jpg",
+    isFeatured: false,
+    author: {
+      name: "Alex Johnson",
+      role: "Full Stack Developer",
+      avatar: "/images/avatar.jpg",
+      bio: "Building production systems with Next.js, PostgreSQL, and Redis.",
+    },
+  },
+];
+
+export const getFeaturedPost = () => blogPosts.find((p) => p.isFeatured);
+export const getPostBySlug = (slug: string) => blogPosts.find((p) => p.slug === slug);
+export const getRelatedPosts = (currentSlug: string, category: string) =>
+  blogPosts.filter((p) => p.slug !== currentSlug && p.category === category).slice(0, 3);
