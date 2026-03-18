@@ -18,7 +18,7 @@ export const PERSONAL_INFO = {
   phone: "+92 (311) 352-63300",
   availability: true,
   availabilityText: "Open to Full Stack Development Opportunities",
-  cvUrl: "/cv.pdf",
+  cvUrl: "/usman_cv.pdf",
   techStack: ["React", "Next.js", "Node.js", "PostgreSQL", "MongoDB"],
   techStackFull: ["React", "Next.js", "Tailwind CSS", "Redux", "Axios", "React Router", "Framer Motion", "SWR", "Zustand", "Node.js", "Express", "MongoDB", "PostgreSQL", "Cloudinary", "Multer", "Stripe", "GitHub", "Vercel", "Git", "npm", "Webpack", "Babel"],
 };
