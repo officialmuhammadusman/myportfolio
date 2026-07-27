@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-label="Animated MU Mark">
+<defs></defs>
+<g id="mu-mark">
+  <path id="mu-m" d="M9 48V16H17L26 31L35 16H43V48H35V29L26 43L17 29V48H9Z" fill="#FF6A00"/>
+  <path id="mu-u" d="M43 16H51V37C51 44 46 49 39 49H34V41H39C41.8 41 43 39.6 43 37V16Z" fill="#FF6A00"/>
+  <path id="mu-tip" d="M51 16H57L51 24V16Z" fill="#FFB347"/>
+</g>
+</svg>

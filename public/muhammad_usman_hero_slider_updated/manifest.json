@@ -1,0 +1,33 @@
+{
+  "project": "Muhammad Usman \u2014 Software Agency website",
+  "master_frame": "3840x2160, 16:9, sRGB",
+  "web_frame": "1920x1080, 16:9, sRGB",
+  "subject_face_center_4k": {
+    "x": 2780,
+    "y": 680
+  },
+  "target_detected_face_height_4k": 500,
+  "recommended_object_position": "72% center",
+  "files": [
+    {
+      "slide": 1,
+      "base_name": "01-hero-laptop-primary-16x9"
+    },
+    {
+      "slide": 2,
+      "base_name": "02-hero-desk-trust-16x9"
+    },
+    {
+      "slide": 3,
+      "base_name": "03-hero-thinking-plan-16x9"
+    },
+    {
+      "slide": 4,
+      "base_name": "04-hero-client-delivery-16x9"
+    },
+    {
+      "slide": 5,
+      "base_name": "05-hero-authority-standing-16x9"
+    }
+  ]
+}

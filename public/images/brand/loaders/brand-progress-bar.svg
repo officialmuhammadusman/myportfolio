@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="24" viewBox="0 0 320 24" fill="none" >
+
+<style>
+  .progress { animation: progress 2.2s ease-in-out infinite; }
+  @keyframes progress {
+    0% { width: 0; }
+    55% { width: 230px; }
+    100% { width: 320px; }
+  }
+</style>
+<rect x="0" y="8" width="320" height="8" rx="4" fill="#2A2A2A"/>
+<rect class="progress" x="0" y="8" width="0" height="8" rx="4" fill="#FF6A00"/>
+<rect x="272" y="8" width="48" height="8" rx="4" fill="#FFB347" opacity=".55"/>
+
+</svg>

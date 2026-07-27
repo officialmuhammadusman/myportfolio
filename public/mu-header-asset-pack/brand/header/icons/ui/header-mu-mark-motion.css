@@ -1,0 +1,6 @@
+/* Animate separate SVG layers: #mu-m, #mu-u, #mu-tip */
+.mu-mark:hover #mu-m { transform: translateY(-1px); }
+.mu-mark:hover #mu-u { transform: translateX(1px); }
+.mu-mark:hover #mu-tip { transform: translate(1px,-1px) scale(1.08); }
+.mu-mark #mu-m,.mu-mark #mu-u,.mu-mark #mu-tip { transform-box: fill-box; transform-origin: center; transition: transform 220ms cubic-bezier(.22,1,.36,1); }
+@media (prefers-reduced-motion: reduce){.mu-mark #mu-m,.mu-mark #mu-u,.mu-mark #mu-tip{transition:none}}

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-label="Delivery Process">
+<defs></defs>
+<circle cx="13" cy="18" r="5" fill="none" stroke="#FFB347" stroke-width="2.2" /><circle cx="32" cy="18" r="5" fill="none" stroke="#FF6A00" stroke-width="2.2" /><circle cx="51" cy="18" r="5" fill="none" stroke="#FFB347" stroke-width="2.2" /><circle cx="51" cy="46" r="5" fill="none" stroke="#FF6A00" stroke-width="2.2" /><circle cx="32" cy="46" r="5" fill="none" stroke="#FFB347" stroke-width="2.2" /><circle cx="13" cy="46" r="5" fill="none" stroke="#FF6A00" stroke-width="2.2" /><path d="M18 18H27M37 18H46M51 23V41M46 46H37M27 46H18M13 41V23" fill="none" stroke="#FF6A00" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" /><path d="M24 15L27 18L24 21M43 43L46 46L43 49" fill="none" stroke="#FFB347" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" />
+</svg>

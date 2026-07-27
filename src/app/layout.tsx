@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { PERSONAL_INFO } from "@/lib/constants";
+import { PageTransitionProvider } from "@/components/providers/PageTransitionProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -34,8 +35,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0F0D0B" },
-    { media: "(prefers-color-scheme: light)", color: "#FAF7F2" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFBF5" },
   ],
 };
 
@@ -53,22 +54,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-base text-primary-color font-body antialiased overflow-x-hidden">
         <ReduxProvider>
           <ThemeProvider>
-            <Navbar />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
-            <BackToTop />
-            <Toaster
-              position="bottom-right"
-              toastOptions={{
-                style: {
-                  background: "var(--surface)",
-                  color: "var(--text-primary)",
-                  border: "1px solid var(--border)",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "14px",
-                },
-              }}
-            />
+            <PageTransitionProvider>
+              <Navbar />
+              {/*
+                Standard agency pattern: fixed header + explicit main offset.
+                Hardcoded heights (not CSS vars) so content never starts under the nav.
+                68px = main bar (mobile) · 104px = utility 36px + main bar 68px (md+)
+              */}
+              <main className="min-h-screen pt-[68px] md:pt-[104px]">{children}</main>
+              <Footer />
+              <BackToTop />
+              <Toaster
+                position="bottom-right"
+                toastOptions={{
+                  style: {
+                    background: "var(--surface)",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--border)",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "14px",
+                  },
+                }}
+              />
+            </PageTransitionProvider>
           </ThemeProvider>
         </ReduxProvider>
       </body>

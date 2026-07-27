@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { PERSONAL_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: `${PERSONAL_INFO.name} — Full Stack Developer`,
+  title: `${PERSONAL_INFO.name} — Software Agency`,
   description: PERSONAL_INFO.bioShort,
 };
 

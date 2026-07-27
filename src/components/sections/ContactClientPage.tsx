@@ -480,7 +480,7 @@ ${emailData.body}`;
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
-      <div className="pt-24 pb-20">
+      <div className="pt-12 pb-20">
         <div className="max-w-[1280px] mx-auto container-padding">
 
           {/* Header */}

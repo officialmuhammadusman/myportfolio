@@ -7,11 +7,11 @@
 ───────────────────────────────────────── */
 @theme {
   /* Custom colors */
-  --color-accent-primary:         #A8C0D6;
-  --color-accent-primary-hover:   #8AAEC8;
-  --color-accent-primary-light:   #C4D8E8;
-  --color-accent-secondary:       #4A7FA5;
-  --color-accent-secondary-light: #6B9CBD;
+  --color-accent-primary:         #FF6A00;
+  --color-accent-primary-hover:   #E85D00;
+  --color-accent-primary-light:   #FFB347;
+  --color-accent-secondary:       #FFB347;
+  --color-accent-secondary-light: #FFD76A;
 
   /* Font families */
   --font-family-display: 'Instrument Serif', Georgia, serif;
@@ -62,35 +62,42 @@
     from { width: 0; }
     to   { width: 100%; }
   }
+  @keyframes mu-hero-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
 }
 
 /* ─────────────────────────────────────────
    CSS CUSTOM PROPERTIES — LIGHT MODE (default)
 ───────────────────────────────────────── */
 :root {
-  --accent-primary:         #2A5F8A;
-  --accent-primary-hover:   #1E4F78;
-  --accent-primary-light:   #4A7FA5;
-  --accent-secondary:       #4A7FA5;
-  --accent-secondary-light: #A8C0D6;
-  --accent-gradient:        linear-gradient(135deg, #2A5F8A 0%, #4A7FA5 100%);
-  --accent-gradient-text:   linear-gradient(135deg, #2A5F8A, #4A7FA5);
+  --accent-primary:         #FF6A00;
+  --accent-primary-hover:   #E85D00;
+  --accent-primary-light:   #FFB347;
+  --accent-secondary:       #FFB347;
+  --accent-secondary-light: #FFD76A;
+  --accent-gradient:        linear-gradient(135deg, #FF6A00 0%, #FFB347 100%);
+  --accent-gradient-text:   linear-gradient(135deg, #FF6A00, #FFB347);
 
-  --bg-primary:       #F4F8FC;
-  --bg-secondary:     #E8EFF6;
+  /* Fixed header offset — paired with main pt-[68px] md:pt-[104px] */
+  --site-header-h: 68px;
+
+  --bg-primary:       #FFFBF5;
+  --bg-secondary:     #FFF5EB;
   --surface:          #FFFFFF;
-  --surface-hover:    #F0F5FA;
+  --surface-hover:    #FFF8F0;
   --surface-elevated: #FFFFFF;
 
-  --border:       #C8D8E8;
-  --border-hover: #A8C0D6;
-  --divider:      #E0EAF3;
+  --border:       #E8DDD0;
+  --border-hover: #FF6A00;
+  --divider:      #F0E6DA;
 
-  --text-primary:   #0D1E2E;
-  --text-secondary: #3A5570;
-  --text-muted:     #7A9AB5;
-  --text-inverse:   #F4F8FC;
-  --text-accent:    #2A5F8A;
+  --text-primary:   #111111;
+  --text-secondary: #4A4A4A;
+  --text-muted:     #7A7A7A;
+  --text-inverse:   #FFF7ED;
+  --text-accent:    #FF6A00;
 
   --success:       #15803D;
   --success-light: #4ADE80;
@@ -118,25 +125,39 @@
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 }
 
+@media (min-width: 768px) {
+  :root {
+    --site-header-h: 104px;
+  }
+}
+
 /* ─────────────────────────────────────────
    CSS CUSTOM PROPERTIES — DARK MODE
 ───────────────────────────────────────── */
 .dark {
-  --bg-primary:       #080E1A;
-  --bg-secondary:     #0D1525;
-  --surface:          #0F1829;
-  --surface-hover:    #162033;
-  --surface-elevated: #1E3048;
+  --accent-primary:         #FF6A00;
+  --accent-primary-hover:   #E85D00;
+  --accent-primary-light:   #FFB347;
+  --accent-secondary:       #FFB347;
+  --accent-secondary-light: #FFD76A;
+  --accent-gradient:        linear-gradient(135deg, #FF6A00 0%, #FFB347 100%);
+  --accent-gradient-text:   linear-gradient(135deg, #FF6A00, #FFB347);
 
-  --border:       #1E3048;
-  --border-hover: #4A7FA5;
-  --divider:      #0F1829;
+  --bg-primary:       #0A0A0A;
+  --bg-secondary:     #141414;
+  --surface:          #141414;
+  --surface-hover:    #1C1C1C;
+  --surface-elevated: #222222;
 
-  --text-primary:   #EEF3F8;
-  --text-secondary: #A8C0D6;
-  --text-muted:     #4A7FA5;
-  --text-inverse:   #080E1A;
-  --text-accent:    #A8C0D6;
+  --border:       #2A2A2A;
+  --border-hover: #FF6A00;
+  --divider:      #1A1A1A;
+
+  --text-primary:   #FFF7ED;
+  --text-secondary: #CFCFCF;
+  --text-muted:     #888888;
+  --text-inverse:   #111111;
+  --text-accent:    #FFB347;
 
   --success:       #4ADE80;
   --success-light: #86EFAC;
@@ -154,7 +175,7 @@
   --shadow-xl:         0 16px 64px rgba(0,0,0,0.55);
   --shadow-card:       0 2px 8px rgba(0,0,0,0.35), 0 8px 32px rgba(0,0,0,0.25);
   --shadow-card-hover: 0 8px 40px rgba(0,0,0,0.50), 0 2px 8px rgba(168,192,214,0.15);
-  --shadow-glow:       0 0 40px rgba(168,192,214,0.20);
+  --shadow-glow:       0 0 40px rgba(255,106,0,0.28);
 }
 
 /* ─────────────────────────────────────────
@@ -397,4 +418,10 @@
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* MU animated mark (header asset pack) */
+.mu-mark-animated:hover {
+  transform: scale(1.04);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }

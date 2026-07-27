@@ -71,18 +71,22 @@ export function useInView(options?: IntersectionObserverInit) {
 // USE THEME TOGGLE
 // ─────────────────────────────────────────
 export function useThemeToggle() {
-  const { theme, setTheme } = useNextTheme();
+  const { theme, resolvedTheme, setTheme } = useNextTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
+  const isDark = resolvedTheme === "dark";
+
   const toggle = useCallback(() => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }, [theme, setTheme]);
+    // Use resolvedTheme so "system" mode still toggles correctly
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
 
   return {
     theme,
-    isDark: theme === "dark",
+    resolvedTheme,
+    isDark,
     toggle,
     mounted,
   };

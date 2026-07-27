@@ -25,7 +25,7 @@ export function BlogClientPage() {
   const filtered = (active === "all" ? rest : rest.filter((p) => p.category === active));
 
   return (
-    <div className="min-h-screen pt-32 pb-20" style={{ background: "var(--bg-primary)" }}>
+    <div className="min-h-screen pt-16 pb-20" style={{ background: "var(--bg-primary)" }}>
       <div className="max-w-[1280px] mx-auto container-padding">
 
         {/* Header */}

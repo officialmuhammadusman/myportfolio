@@ -6,7 +6,7 @@ import { PERSONAL_INFO } from "@/lib/constants";
 export function AboutHero() {
   return (
     <section
-      className="pt-36 pb-20 border-b relative overflow-hidden"
+      className="pt-16 pb-20 border-b relative overflow-hidden"
       style={{ borderColor: "var(--border)", background: "var(--bg-primary)" }}
     >
       <div

@@ -7,30 +7,55 @@ export const PERSONAL_INFO = {
   name: "Muhammad Usman",
   firstName: "Muhammad",
   lastName: "Usman",
-  role: "Full Stack Developer",
-  roleExtended: "Full Stack Developer & Web Solutions Architect",
-  tagline: "Crafting scalable web applications with modern technologies and user-centric design.",
-  bio: "Full Stack Developer with 1+ years of professional experience designing and developing scalable web applications. Specialized in modern JavaScript frameworks including Next.js and React, with expertise in relational (PostgreSQL) and NoSQL (MongoDB) databases. Proven track record of delivering high-performance applications through clean architecture, efficient API integration, and responsive design principles. Committed to writing maintainable code and continuously advancing technical expertise.",
-  bioShort: "Full Stack Developer with 1+ years of experience architecting scalable web solutions using Next.js, React, PostgreSQL, and MongoDB. Focused on performance optimization, clean code principles, and delivering exceptional user experiences.",
+  role: "Software Engineer & Agency",
+  roleExtended: "Software Agency — Full Stack, AI & Product Engineering",
+  tagline: "I design and ship production software for startups and businesses worldwide.",
+  bio: "Full Stack Developer with 2+ years of experience building scalable, production-ready web applications. I ship end-to-end products across Next.js/React, Node.js backends, data platforms, and AI/RAG systems — with an agency focus on clear delivery for clients worldwide.",
+  bioShort: "Software agency — full-stack products, AI/RAG systems, and production backends for founders and businesses worldwide.",
   location: "Islamabad, Pakistan",
-  locationRemote: "Available Globally · Remote-First Professional",
+  locationRemote: "Available Globally · Remote-First",
   email: "official.muammadusman01@gmail.com",
   phone: "+92 (311) 352-63300",
   availability: true,
-  availabilityText: "Open to Full Stack Development Opportunities",
+  availabilityText: "Available for new projects",
   cvUrl: "/usman_cv.pdf",
-  techStack: ["React", "Next.js", "Node.js", "PostgreSQL", "MongoDB"],
-  techStackFull: ["React", "Next.js", "Tailwind CSS", "Redux", "Axios", "React Router", "Framer Motion", "SWR", "Zustand", "Node.js", "Express", "MongoDB", "PostgreSQL", "Cloudinary", "Multer", "Stripe", "GitHub", "Vercel", "Git", "npm", "Webpack", "Babel"],
+  techStack: ["Next.js", "React", "Node.js", "PostgreSQL", "AI / RAG"],
+  techStackFull: [
+    "React 18",
+    "Next.js 15",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion",
+    "Redux Toolkit",
+    "Zustand",
+    "TanStack Query",
+    "Node.js",
+    "Express.js",
+    "NestJS",
+    "PostgreSQL",
+    "MongoDB",
+    "Supabase",
+    "Redis",
+    "Prisma",
+    "Docker",
+    "AWS",
+    "Vercel",
+    "Stripe",
+    "OpenAI",
+    "LangChain",
+    "LangGraph",
+    "RAG",
+  ],
 };
 
 // ─────────────────────────────────────────
 // NAVIGATION
 // ─────────────────────────────────────────
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Work", href: "/projects" },
   { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
+  { label: "Insights", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -62,10 +87,10 @@ export const SOCIAL_LINKS = [
 // HOME STATS (animated counters)
 // ─────────────────────────────────────────
 export const HOME_STATS: Stat[] = [
-  { value:3, suffix: "+", label: "Production Projects", icon: "Layers" },
-  { value: 10, suffix: "+", label: "Successful Engagements", icon: "Users" },
-  { value: 50, suffix: "+", label: "Git Commits", icon: "GitCommit" },
-  { value: 1, suffix: " yrs", label: "Professional Experience", icon: "Calendar" },
+  { value: 3, suffix: "+", label: "Production Projects", icon: "Layers" },
+  { value: 10, suffix: "+", label: "Client Engagements", icon: "Users" },
+  { value: 2, suffix: "+", label: "Years Experience", icon: "Calendar" },
+  { value: 20, suffix: "+", label: "Technologies", icon: "Code" },
 ];
 
 // ─────────────────────────────────────────
@@ -98,9 +123,10 @@ export const PHILOSOPHY_ITEMS: PhilosophyItem[] = [
 // CONTACT SUBJECTS
 // ─────────────────────────────────────────
 export const CONTACT_SUBJECTS = [
-  "Full-Time Opportunity",
-  "Project Collaboration",
-  "Freelance Engagement",
-  "Speaking & Mentorship",
+  "Full-Stack Product Build",
+  "AI / RAG / Agentic System",
+  "Backend & API Development",
+  "MVP / Startup Launch",
+  "Freelance / Upwork Project",
   "General Inquiry",
 ] as const;
