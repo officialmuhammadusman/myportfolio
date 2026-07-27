@@ -6,6 +6,7 @@ import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { blogPosts, getFeaturedPost } from "@/data/blog";
 import type { BlogCategory } from "@/types";
 import { formatDate } from "@/lib/utils";
+import { PageShell } from "@/components/layout/PageShell";
 
 const filters: { label: string; value: string }[] = [
   { label: "All", value: "all" },
@@ -25,25 +26,21 @@ export function BlogClientPage() {
   const filtered = (active === "all" ? rest : rest.filter((p) => p.category === active));
 
   return (
-    <div className="min-h-screen pt-16 pb-20" style={{ background: "var(--bg-primary)" }}>
-      <div className="max-w-[1280px] mx-auto container-padding">
-
+    <div className="min-h-screen pb-12 sm:pb-16 md:pb-20" style={{ background: "var(--bg-primary)" }}>
+      <PageShell>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-10 sm:mb-12 md:mb-14"
         >
           <span className="section-eyebrow">Writing</span>
           <div className="fancy-divider" />
-          <h1
-            className="font-display font-bold mt-2 mb-4"
-            style={{ fontSize: "clamp(36px, 6vw, 72px)", color: "var(--text-primary)" }}
-          >
+          <h1 className="font-display mt-2 mb-3 text-3xl font-bold text-[var(--text-primary)] sm:mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
             Blog
           </h1>
-          <p className="text-lg max-w-xl" style={{ color: "var(--text-secondary)" }}>
+          <p className="max-w-2xl text-base sm:text-lg lg:text-xl" style={{ color: "var(--text-secondary)" }}>
             Technical deep-dives on architecture, performance, and the decisions that matter in production.
           </p>
         </motion.div>
@@ -220,7 +217,7 @@ export function BlogClientPage() {
             ))}
           </motion.div>
         </AnimatePresence>
-      </div>
+      </PageShell>
     </div>
   );
 }

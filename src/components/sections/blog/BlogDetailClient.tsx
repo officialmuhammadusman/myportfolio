@@ -13,7 +13,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
   };
 
   return (
-    <div className="min-h-screen pt-12 pb-20" style={{ background: "var(--bg-primary)" }}>
+    <div className="min-h-screen pb-20" style={{ background: "var(--bg-primary)" }}>
       <div className="max-w-[1280px] mx-auto container-padding">
 
         {/* Back */}

@@ -7,89 +7,116 @@ export interface HeroSlide {
   alt: string;
   label: string;
   eyebrow: string;
-  /** Main hero title — line 1 */
   title: string;
-  /** Main hero title — line 2 (accent) */
   titleAccent: string;
   support: string;
 }
 
-/**
- * Matched 16:9 cinematic set.
- * Titles rotate with each image — clear, professional agency English.
- */
+export interface HeroStat {
+  value: string;
+  label: string;
+}
+
 export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "laptop-primary",
     src: `${BASE}/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/01-hero-laptop-primary-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman working at a laptop — product engineering",
-    label: "Build",
-    eyebrow: "Product Engineering",
-    title: "Build software",
-    titleAccent: "ready for production.",
+    alt: "Muhammad Usman — full-stack & SaaS product engineering",
+    label: "SaaS",
+    eyebrow: "Full-Stack · SaaS · Custom Software",
+    title: "Ship SaaS & custom",
+    titleAccent: "software that scales.",
     support:
-      "End-to-end product engineering for startups and growing businesses — modern web apps, reliable backends, and AI features built to launch, scale, and perform in the real world.",
+      "Production-ready platforms — dashboards, billing, RBAC, subscriptions & business workflows — built with Next.js, React, TypeScript, Node.js, and PostgreSQL.",
   },
   {
     id: "desk-trust",
     src: `${BASE}/web-1080/02-hero-desk-trust-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/02-hero-desk-trust-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman at his desk — clear delivery partner",
-    label: "Trust",
-    eyebrow: "Delivery Partner",
-    title: "Clear delivery",
-    titleAccent: "you can rely on.",
+    alt: "Muhammad Usman — AI and RAG engineering",
+    label: "AI",
+    eyebrow: "AI Engineer · RAG · LangGraph",
+    title: "Build AI & RAG systems",
+    titleAccent: "that stay grounded.",
     support:
-      "From the first brief to a stable production release — transparent scope, honest timelines, and engineering quality that holds up after handoff, not just in a demo.",
+      "LLM integrations with LangChain & LangGraph — Corrective RAG, Self-RAG, multi-agent supervisors, Pinecone/ChromaDB retrieval & SQL agents for production use.",
   },
   {
     id: "thinking-plan",
     src: `${BASE}/web-1080/03-hero-thinking-plan-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/03-hero-thinking-plan-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman planning product architecture",
-    label: "Plan",
-    eyebrow: "Strategy & Architecture",
-    title: "Plan with precision.",
-    titleAccent: "Scale without rework.",
+    alt: "Muhammad Usman — mobile and web app development",
+    label: "Mobile",
+    eyebrow: "Web Apps · React Native · APIs",
+    title: "Web & mobile apps",
+    titleAccent: "from one engineer.",
     support:
-      "Strong technical decisions up front — clean architecture, practical roadmaps, and systems designed to grow with your product instead of forcing expensive rebuilds later.",
+      "Full-stack web with Next.js plus React Native mobile apps — club dashboards, player flows, realtime features, NestJS/Express APIs & OpenAPI-documented backends.",
   },
   {
     id: "client-delivery",
     src: `${BASE}/web-1080/04-hero-client-delivery-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/04-hero-client-delivery-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman in a client delivery conversation",
+    alt: "Muhammad Usman — client delivery and telemedicine platforms",
     label: "Deliver",
-    eyebrow: "Client Partnership",
-    title: "Work with a partner",
-    titleAccent: "who ships with you.",
+    eyebrow: "Telemedicine · HRMS · Marketplaces",
+    title: "Domain modules",
+    titleAccent: "already proven in production.",
     support:
-      "Direct communication, weekly progress you can measure, and delivery that feels like an in-house product team — focused on outcomes, not endless status meetings.",
+      "Telemedicine booking & async reviews, HRMS with dynamic permissions, multi-vendor marketplaces, payments (Stripe/Webpay) & geolocation marketing tools.",
   },
   {
     id: "authority-standing",
     src: `${BASE}/web-1080/05-hero-authority-standing-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/05-hero-authority-standing-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — software agency authority portrait",
-    label: "Lead",
-    eyebrow: "Software Agency",
-    title: "Serious engineering.",
-    titleAccent: "Serious partnership.",
+    alt: "Muhammad Usman — full-stack AI software agency",
+    label: "Partner",
+    eyebrow: "Software Agency · Remote Worldwide",
+    title: "Your full-stack AI",
+    titleAccent: "engineering partner.",
     support:
-      "A software agency for founders and businesses that need dependable full-stack, AI/RAG, and backend delivery — remote-first, worldwide, and accountable from kickoff to launch.",
+      "2+ years shipping production systems for founders & businesses — performance, security, maintainability & clear delivery across USA, UK, KSA, UAE & remote.",
   },
 ];
+
+export const HERO_STATS: HeroStat[] = [
+  { value: "5+", label: "Products in production" },
+  { value: "2+", label: "Years of delivery" },
+  { value: "5", label: "Global markets" },
+  { value: "24h", label: "Client response" },
+];
+
+export const HERO_TECH_PROOF = [
+  "Next.js 15",
+  "React Native",
+  "NestJS",
+  "PostgreSQL",
+  "LangGraph",
+  "Stripe",
+  "OpenAI",
+  "AWS",
+] as const;
+
+export const HERO_SERVICE_PILLS = [
+  "SaaS platforms",
+  "Custom software",
+  "Mobile apps",
+  "AI / RAG",
+  "Backend APIs",
+  "HRMS & enterprise",
+] as const;
 
 export const HERO_OBJECT_POSITION = "72% center";
 
 export const HERO_TRUST = [
-  "Available for new projects",
-  "Remote worldwide",
-  "Next.js · AI/RAG · Node",
+  "Full-stack · AI engineer",
+  "USA · UK · KSA · UAE · Remote",
+  "SaaS · Mobile · RAG · APIs",
 ] as const;
 
 export const HERO_AUTOPLAY_MS = 5000;
 
-export const HERO_VIEWPORT_MIN_H =
-  "min-h-[calc(100svh-68px)] md:min-h-[calc(100svh-104px)]";
+export const HERO_VIEWPORT_MIN_H = "min-h-[100dvh]";
+
+export const HERO_HEADER_OFFSET = "pt-[68px] md:pt-[104px]";

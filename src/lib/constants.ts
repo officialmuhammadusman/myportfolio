@@ -7,19 +7,19 @@ export const PERSONAL_INFO = {
   name: "Muhammad Usman",
   firstName: "Muhammad",
   lastName: "Usman",
-  role: "Software Engineer & Agency",
-  roleExtended: "Software Agency — Full Stack, AI & Product Engineering",
-  tagline: "I design and ship production software for startups and businesses worldwide.",
-  bio: "Full Stack Developer with 2+ years of experience building scalable, production-ready web applications. I ship end-to-end products across Next.js/React, Node.js backends, data platforms, and AI/RAG systems — with an agency focus on clear delivery for clients worldwide.",
-  bioShort: "Software agency — full-stack products, AI/RAG systems, and production backends for founders and businesses worldwide.",
+  role: "Full-Stack & AI Engineer",
+  roleExtended: "Full-Stack · AI Engineer — SaaS, Web Apps, Mobile & RAG Systems",
+  tagline: "I build production SaaS platforms, custom software, mobile apps, and AI/RAG systems for startups and businesses worldwide.",
+  bio: "Full Stack Developer with 2+ years of experience building scalable, production-ready web applications using Next.js, React, Node.js, NestJS, and TypeScript. Experienced in secure SaaS platforms, RESTful APIs, React Native mobile apps, and LLM-powered solutions with LangChain, LangGraph, and RAG — focused on performance, security, and maintainability.",
+  bioShort: "Full-stack & AI engineer — SaaS, custom software, React Native mobile apps, backend APIs & production RAG systems for founders worldwide.",
   location: "Islamabad, Pakistan",
-  locationRemote: "Available Globally · Remote-First",
+  locationRemote: "USA · UK · KSA · UAE · Remote",
   email: "official.muammadusman01@gmail.com",
   phone: "+92 (311) 352-63300",
   availability: true,
   availabilityText: "Available for new projects",
   cvUrl: "/usman_cv.pdf",
-  techStack: ["Next.js", "React", "Node.js", "PostgreSQL", "AI / RAG"],
+  techStack: ["Next.js", "React Native", "NestJS", "PostgreSQL", "LangGraph / RAG"],
   techStackFull: [
     "React 18",
     "Next.js 15",
@@ -87,10 +87,10 @@ export const SOCIAL_LINKS = [
 // HOME STATS (animated counters)
 // ─────────────────────────────────────────
 export const HOME_STATS: Stat[] = [
-  { value: 3, suffix: "+", label: "Production Projects", icon: "Layers" },
-  { value: 10, suffix: "+", label: "Client Engagements", icon: "Users" },
-  { value: 2, suffix: "+", label: "Years Experience", icon: "Calendar" },
-  { value: 20, suffix: "+", label: "Technologies", icon: "Code" },
+  { value: 5, suffix: "+", label: "Products in production", icon: "Rocket" },
+  { value: 10, suffix: "+", label: "Client engagements", icon: "Users" },
+  { value: 2, suffix: "+", label: "Years delivering software", icon: "Calendar" },
+  { value: 24, suffix: "h", label: "Typical response time", icon: "Clock" },
 ];
 
 // ─────────────────────────────────────────

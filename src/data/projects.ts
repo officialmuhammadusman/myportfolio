@@ -8,7 +8,7 @@ export const projects: Project[] = [
     id: "1",
     slug: "vendorhub-multi-vendor-ecommerce",
     title: "VendorHub — Multi-Vendor E-Commerce Platform",
-    shortDescription: "Production-ready multi-vendor marketplace with Stripe payments, Cloudinary image management, role-based access for 3 user types and 50+ documented API endpoints.",
+    shortDescription: "Production-ready multi-vendor marketplace with Stripe payments, Cloudinary image management, role-based access for three user types, and a fully documented REST API.",
     longDescription: "VendorHub is a production-grade multi-vendor marketplace platform where vendors register stores, list products and sell to customers through a single platform — with full admin oversight. Features real Stripe payment processing, automatic refunds on cancellation, vendor earnings analytics, smart coupon system and a complete admin panel for platform management.",
     category: ["full-stack", "performance"],
     status: "completed",

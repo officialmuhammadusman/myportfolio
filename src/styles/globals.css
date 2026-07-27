@@ -6,6 +6,15 @@
    TAILWIND V4 THEME — NAVY STEEL
 ───────────────────────────────────────── */
 @theme {
+  /* Breakpoints — mobile → 2xl desktop */
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1920px;
+
   /* Custom colors */
   --color-accent-primary:         #FF6A00;
   --color-accent-primary-hover:   #E85D00;
@@ -83,6 +92,13 @@
   /* Fixed header offset — paired with main pt-[68px] md:pt-[104px] */
   --site-header-h: 68px;
 
+  /*
+   * Site gutters — mobile/tablet scale up; ALL desktops (lg+) share the same gutter.
+   * Content uses full width minus this padding (no narrow max-width column).
+   */
+  --layout-gutter: 1rem;
+  --layout-max: 100%;
+
   --bg-primary:       #FFFBF5;
   --bg-secondary:     #FFF5EB;
   --surface:          #FFFFFF;
@@ -125,9 +141,23 @@
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 }
 
+@media (min-width: 640px) {
+  :root {
+    --layout-gutter: 1.25rem;
+  }
+}
+
 @media (min-width: 768px) {
   :root {
     --site-header-h: 104px;
+    --layout-gutter: 1.5rem;
+  }
+}
+
+/* lg+ — one consistent desktop gutter on small/large/xl/2xl screens */
+@media (min-width: 1024px) {
+  :root {
+    --layout-gutter: 2rem;
   }
 }
 
@@ -193,6 +223,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
   body {
@@ -202,6 +233,14 @@
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
+    min-height: 100dvh;
+    font-size: 1rem;
+  }
+  @media (min-width: 768px) {
+    body { font-size: 1.0625rem; }
+  }
+  @media (min-width: 1024px) {
+    body { font-size: 1.125rem; }
   }
 
   h1, h2, h3 {
@@ -288,8 +327,256 @@
   .shadow-card-hover-custom { box-shadow: var(--shadow-card-hover); }
   .shadow-glow-custom       { box-shadow: var(--shadow-glow); }
 
-  .section-padding   { padding: clamp(64px, 10vw, 128px) 0; }
-  .container-padding { padding-left: clamp(16px, 5vw, 80px); padding-right: clamp(16px, 5vw, 80px); }
+  /*
+   * Full-width layout wrap — same gutter on every desktop size (lg, xl, 2xl).
+   * Use on header, hero inner, page sections, footer.
+   */
+  .layout-wrap {
+    width: 100%;
+    max-width: var(--layout-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--layout-gutter);
+    padding-right: var(--layout-gutter);
+  }
+
+  .section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 640px) {
+    .section-padding { padding-top: 4rem; padding-bottom: 4rem; }
+  }
+  @media (min-width: 768px) {
+    .section-padding { padding-top: 5rem; padding-bottom: 5rem; }
+  }
+  @media (min-width: 1024px) {
+    .section-padding { padding-top: 6rem; padding-bottom: 6rem; }
+  }
+  @media (min-width: 1280px) {
+    .section-padding { padding-top: 7rem; padding-bottom: 7rem; }
+  }
+  @media (min-width: 1536px) {
+    .section-padding { padding-top: 8rem; padding-bottom: 8rem; }
+  }
+
+  .container-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-padding { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+  @media (min-width: 768px) {
+    .container-padding { padding-left: 2rem; padding-right: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container-padding { padding-left: 2.5rem; padding-right: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .container-padding { padding-left: 3rem; padding-right: 3rem; }
+  }
+  @media (min-width: 1536px) {
+    .container-padding { padding-left: 3.5rem; padding-right: 3.5rem; }
+  }
+  @media (min-width: 1920px) {
+    .container-padding { padding-left: 4rem; padding-right: 4rem; }
+  }
+
+  .site-container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px) {
+    .site-container { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+  @media (min-width: 768px) {
+    .site-container { padding-left: 2rem; padding-right: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .site-container { max-width: 1320px; padding-left: 2.5rem; padding-right: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .site-container { max-width: 1400px; padding-left: 3rem; padding-right: 3rem; }
+  }
+  @media (min-width: 1536px) {
+    .site-container { max-width: 1480px; padding-left: 3.5rem; padding-right: 3.5rem; }
+  }
+  @media (min-width: 1920px) {
+    .site-container { max-width: 1560px; padding-left: 4rem; padding-right: 4rem; }
+  }
+
+  /* ── Hero typography (mobile → 3xl) ── */
+  .text-hero-title {
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+    font-size: 2rem;
+  }
+  @media (min-width: 375px)  { .text-hero-title { font-size: 2.125rem; } }
+  @media (min-width: 640px)  { .text-hero-title { font-size: 2.625rem; } }
+  @media (min-width: 768px)  { .text-hero-title { font-size: 3.125rem; } }
+  @media (min-width: 1024px) { .text-hero-title { font-size: 3.75rem; } }
+  @media (min-width: 1280px) { .text-hero-title { font-size: 4.5rem; } }
+  @media (min-width: 1536px) { .text-hero-title { font-size: 5rem; } }
+  @media (min-width: 1920px) { .text-hero-title { font-size: 5.75rem; } }
+
+  .text-hero-body {
+    line-height: 1.65;
+    text-shadow: 0 1px 16px rgba(0, 0, 0, 0.45);
+    font-size: 0.875rem;
+  }
+  @media (min-width: 640px)  { .text-hero-body { font-size: 0.9375rem; } }
+  @media (min-width: 768px)  { .text-hero-body { font-size: 1rem; } }
+  @media (min-width: 1024px) { .text-hero-body { font-size: 1.0625rem; } }
+  @media (min-width: 1280px) { .text-hero-body { font-size: 1.125rem; } }
+  @media (min-width: 1536px) { .text-hero-body { font-size: 1.1875rem; } }
+  @media (min-width: 1920px) { .text-hero-body { font-size: 1.25rem; } }
+
+  .text-hero-eyebrow { font-size: 0.625rem; letter-spacing: 0.24em; }
+  @media (min-width: 640px)  { .text-hero-eyebrow { font-size: 0.6875rem; } }
+  @media (min-width: 768px)  { .text-hero-eyebrow { font-size: 0.75rem; } }
+
+  .text-hero-meta { font-size: 0.6875rem; letter-spacing: 0.08em; }
+  @media (min-width: 640px)  { .text-hero-meta { font-size: 0.75rem; } }
+  @media (min-width: 768px)  { .text-hero-meta { font-size: 0.8125rem; } }
+
+  .text-hero-trust { font-size: 0.625rem; letter-spacing: 0.14em; }
+  @media (min-width: 640px)  { .text-hero-trust { font-size: 0.6875rem; } }
+  @media (min-width: 768px)  { .text-hero-trust { font-size: 0.75rem; } }
+
+  /* ── Page titles (h1 on inner pages) ── */
+  .text-page-title {
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-size: 1.875rem;
+  }
+  @media (min-width: 640px)  { .text-page-title { font-size: 2.25rem; } }
+  @media (min-width: 768px)  { .text-page-title { font-size: 2.75rem; } }
+  @media (min-width: 1024px) { .text-page-title { font-size: 3.25rem; } }
+  @media (min-width: 1280px) { .text-page-title { font-size: 3.75rem; } }
+  @media (min-width: 1536px) { .text-page-title { font-size: 4.25rem; } }
+  @media (min-width: 1920px) { .text-page-title { font-size: 4.5rem; } }
+
+  /* ── Section titles (h2) ── */
+  .text-section-title {
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-size: 1.625rem;
+  }
+  @media (min-width: 640px)  { .text-section-title { font-size: 1.875rem; } }
+  @media (min-width: 768px)  { .text-section-title { font-size: 2.125rem; } }
+  @media (min-width: 1024px) { .text-section-title { font-size: 2.5rem; } }
+  @media (min-width: 1280px) { .text-section-title { font-size: 2.875rem; } }
+  @media (min-width: 1536px) { .text-section-title { font-size: 3.125rem; } }
+  @media (min-width: 1920px) { .text-section-title { font-size: 3.5rem; } }
+
+  /* ── Section subtitles / body copy ── */
+  .text-section-subtitle {
+    line-height: 1.7;
+    font-size: 0.875rem;
+  }
+  @media (min-width: 640px)  { .text-section-subtitle { font-size: 0.9375rem; } }
+  @media (min-width: 768px)  { .text-section-subtitle { font-size: 1rem; } }
+  @media (min-width: 1024px) { .text-section-subtitle { font-size: 1.0625rem; } }
+  @media (min-width: 1280px) { .text-section-subtitle { font-size: 1.125rem; } }
+
+  .text-body-lg {
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  @media (min-width: 768px)  { .text-body-lg { font-size: 1rem; } }
+  @media (min-width: 1024px) { .text-body-lg { font-size: 1.0625rem; } }
+  @media (min-width: 1280px) { .text-body-lg { font-size: 1.125rem; } }
+
+  /* ── Stat numbers ── */
+  .text-stat-value {
+    line-height: 1;
+    font-size: 2rem;
+  }
+  @media (min-width: 640px)  { .text-stat-value { font-size: 2.5rem; } }
+  @media (min-width: 768px)  { .text-stat-value { font-size: 2.75rem; } }
+  @media (min-width: 1024px) { .text-stat-value { font-size: 3.25rem; } }
+  @media (min-width: 1280px) { .text-stat-value { font-size: 3.75rem; } }
+  @media (min-width: 1536px) { .text-stat-value { font-size: 4rem; } }
+
+  /* ── Card titles ── */
+  .text-card-title { font-size: 1rem; }
+  @media (min-width: 768px)  { .text-card-title { font-size: 1.0625rem; } }
+  @media (min-width: 1024px) { .text-card-title { font-size: 1.125rem; } }
+
+  .text-card-body { font-size: 0.8125rem; line-height: 1.6; }
+  @media (min-width: 768px)  { .text-card-body { font-size: 0.875rem; } }
+  @media (min-width: 1024px) { .text-card-body { font-size: 0.9375rem; } }
+
+  /* ── Buttons ── */
+  .btn-agency-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+    font-size: 0.6875rem;
+    padding: 0.75rem 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .btn-agency-primary { font-size: 0.75rem; padding: 0.875rem 1.5rem; }
+  }
+  @media (min-width: 768px) {
+    .btn-agency-primary { font-size: 0.8125rem; padding: 1rem 1.75rem; }
+  }
+  @media (min-width: 1024px) {
+    .btn-agency-primary { font-size: 0.8125rem; padding: 1rem 2rem; }
+  }
+
+  .btn-agency-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+    font-size: 0.6875rem;
+    padding: 0.75rem 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .btn-agency-secondary { font-size: 0.75rem; padding: 0.875rem 1.5rem; }
+  }
+  @media (min-width: 768px) {
+    .btn-agency-secondary { font-size: 0.8125rem; padding: 1rem 1.75rem; }
+  }
+  @media (min-width: 1024px) {
+    .btn-agency-secondary { font-size: 0.8125rem; padding: 1rem 2rem; }
+  }
+
+  .text-display-sm {
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display-md {
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .text-display-lg {
+    font-size: clamp(2.25rem, 5vw + 0.5rem, 4.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
 
   .noise-texture::before {
     content: '';
@@ -314,11 +601,14 @@
 @layer components {
   .section-eyebrow {
     font-family: var(--font-body);
-    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent-primary);
+    font-size: 0.75rem;
+  }
+  @media (min-width: 1024px) {
+    .section-eyebrow { font-size: 0.8125rem; }
   }
 
   .fancy-divider {
@@ -420,8 +710,77 @@
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+/* ── Header mega menu (agency-style) ── */
+.mega-menu-panel {
+  background: color-mix(in srgb, var(--bg-primary) 96%, transparent);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-xl);
+}
+
+.mega-menu-grid-bg {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 80% at 30% 0%, black 20%, transparent 75%);
+  opacity: 0.45;
+}
+
+.mega-featured-card {
+  border: 1px solid color-mix(in srgb, var(--border) 80%, #ff6a00 20%);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 92%, #ff6a00 8%) 0%, var(--surface) 55%, var(--bg-secondary) 100%);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.mega-featured-card:hover {
+  border-color: color-mix(in srgb, #ff6a00 45%, var(--border));
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+.mega-promo-aside {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.dark .mega-menu-grid-bg {
+  opacity: 0.28;
+}
+
+.dark .mega-featured-card {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 88%, #ff6a00 12%) 0%, var(--surface) 50%, #0f0f0f 100%);
+}
+
 /* MU animated mark (header asset pack) */
 .mu-mark-animated:hover {
   transform: scale(1.04);
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Agency hero — subtle grid depth over cinematic slides */
+.hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, black 0%, transparent 85%);
+}
+
+.hero-capability-card {
+  animation: hero-card-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

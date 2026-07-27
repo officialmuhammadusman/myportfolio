@@ -15,7 +15,7 @@ function DynIcon({ name, size = 20 }: { name: string; size?: number }) {
 
 export function ProjectDetailClient({ project, related }: { project: Project; related: Project[] }) {
   return (
-    <div className="min-h-screen pt-12" style={{ background: "var(--bg-primary)" }}>
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
 
       {/* Back link */}
       <div className="max-w-[1280px] mx-auto container-padding pt-4 pb-0">

@@ -5,6 +5,7 @@ import { ExternalLink, Github, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { projects } from "@/data/projects";
 import type { ProjectCategory } from "@/types";
+import { PageShell } from "@/components/layout/PageShell";
 
 const filters: { label: string; value: string }[] = [
   { label: "All", value: "all" },
@@ -23,25 +24,21 @@ export function ProjectsClientPage() {
   );
 
   return (
-    <div className="min-h-screen pt-16 pb-20" style={{ background: "var(--bg-primary)" }}>
-      <div className="max-w-[1280px] mx-auto container-padding">
-
+    <div className="min-h-screen pb-12 sm:pb-16 md:pb-20" style={{ background: "var(--bg-primary)" }}>
+      <PageShell>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-10 sm:mb-12 md:mb-14"
         >
           <span className="section-eyebrow">Portfolio</span>
           <div className="fancy-divider" />
-          <h1
-            className="font-display font-bold mt-2 mb-4"
-            style={{ fontSize: "clamp(36px, 6vw, 72px)", color: "var(--text-primary)" }}
-          >
+          <h1 className="font-display mt-2 mb-3 text-3xl font-bold text-[var(--text-primary)] sm:mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
             My Work
           </h1>
-          <p className="text-lg max-w-xl" style={{ color: "var(--text-secondary)" }}>
+          <p className="max-w-2xl text-base sm:text-lg lg:text-xl" style={{ color: "var(--text-secondary)" }}>
             Three production systems demonstrating architectural thinking, technical depth, and production-grade quality.
           </p>
         </motion.div>
@@ -51,14 +48,14 @@ export function ProjectsClientPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-wrap gap-2 mb-12 pb-6 border-b"
+          className="mb-8 flex flex-wrap gap-2 border-b pb-4 sm:mb-10 sm:gap-2.5 sm:pb-5 md:mb-12 md:pb-6"
           style={{ borderColor: "var(--border)" }}
         >
           {filters.map((f) => (
             <button
               key={f.value}
               onClick={() => setActive(f.value)}
-              className="px-5 py-2 text-sm font-medium rounded-[6px] border transition-all duration-200"
+              className="rounded-[6px] border px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-4 sm:py-2 sm:text-sm md:px-5"
               style={{
                 background: active === f.value ? "var(--accent-primary)" : "var(--surface)",
                 color: active === f.value ? "white" : "var(--text-secondary)",
@@ -205,7 +202,7 @@ export function ProjectsClientPage() {
             <p style={{ color: "var(--text-muted)" }}>No projects in this category yet.</p>
           </div>
         )}
-      </div>
+      </PageShell>
     </div>
   );
 }

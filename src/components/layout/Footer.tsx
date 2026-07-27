@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Heart } from "lucide-react";
 import { NAV_LINKS, PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
 import { externalLinkProps } from "@/lib/utils";
+import { PageShell } from "@/components/layout/PageShell";
 import theme from "@/lib/theme";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -23,10 +24,9 @@ export function Footer() {
       {/* Subtle decorative accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/40 to-transparent" />
 
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
-
+      <PageShell compact className="!py-0">
         {/* ── Main Footer Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-16">
+        <div className="grid grid-cols-1 gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 md:py-14 lg:grid-cols-3 lg:gap-12 lg:py-16 xl:gap-14">
 
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-5">
@@ -34,11 +34,11 @@ export function Footer() {
               <div className="w-10 h-10 rounded-[8px] bg-accent-primary flex items-center justify-center">
                 <span className="text-white font-display font-bold text-[15px]">MU</span>
               </div>
-              <span className="font-display font-semibold text-lg text-[var(--text-primary)] group-hover:text-accent-primary transition-colors">
+              <span className="font-display text-base font-semibold text-[var(--text-primary)] transition-colors group-hover:text-accent-primary sm:text-lg">
                 {PERSONAL_INFO.firstName}<span className="text-accent-primary">.</span>
               </span>
             </Link>
-            <p className="text-[14px] text-[var(--text-secondary)] leading-relaxed max-w-[240px]">
+            <p className="max-w-[240px] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
               {PERSONAL_INFO.bioShort.slice(0, 100)}...
             </p>
             {/* Availability pill */}
@@ -114,7 +114,7 @@ export function Footer() {
             <span className="text-accent-primary font-medium">TypeScript</span>
           </p>
         </div>
-      </div>
+      </PageShell>
     </footer>
   );
 }

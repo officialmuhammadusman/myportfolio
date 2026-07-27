@@ -176,10 +176,11 @@ export interface Testimonial {
 
 // Contact Form
 export type ContactSubject =
-  | "Job Opportunity"
-  | "Project Collaboration"
-  | "Freelance Work"
-  | "Speaking/Mentorship"
+  | "Full-Stack Product Build"
+  | "AI / RAG / Agentic System"
+  | "Backend & API Development"
+  | "MVP / Startup Launch"
+  | "Freelance / Upwork Project"
   | "General Inquiry";
 
 export interface ContactFormData {

@@ -27,7 +27,7 @@ const duplicated = [...techStack, ...techStack];
 export function TechStrip() {
   return (
     <div
-      className="relative w-full overflow-hidden py-10 border-y"
+      className="relative w-full overflow-hidden border-y py-7 sm:py-8 md:py-10 lg:py-12"
       style={{ borderColor: "var(--border)", background: "var(--bg-secondary)" }}
     >
       {/* Fade masks */}
@@ -52,7 +52,7 @@ export function TechStrip() {
               style={{ color: "var(--text-muted)", flexShrink: 0 }}
             />
             <span
-              className="text-sm font-medium whitespace-nowrap"
+              className="whitespace-nowrap text-xs font-medium sm:text-sm"
               style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
             >
               {tech.name}

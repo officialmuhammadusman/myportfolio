@@ -2,11 +2,12 @@
 import { motion } from "framer-motion";
 import { Download, MapPin, ArrowRight } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/constants";
+import { PageShell } from "@/components/layout/PageShell";
 
 export function AboutHero() {
   return (
     <section
-      className="pt-16 pb-20 border-b relative overflow-hidden"
+      className="relative overflow-hidden border-b pb-14 pt-6 sm:pb-16 md:pb-20 lg:pb-24"
       style={{ borderColor: "var(--border)", background: "var(--bg-primary)" }}
     >
       <div
@@ -24,8 +25,8 @@ export function AboutHero() {
         03
       </div>
 
-      <div className="relative z-10 max-w-[1280px] mx-auto container-padding">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <PageShell className="relative z-10">
+        <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           {/* Left text */}
           <div>
             <motion.span
@@ -42,8 +43,7 @@ export function AboutHero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-display font-bold mt-2 mb-6"
-              style={{ fontSize: "clamp(36px, 6vw, 72px)", color: "var(--text-primary)" }}
+              className="font-display mt-2 mb-4 text-3xl font-bold text-[var(--text-primary)] sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl"
             >
               Crafting scalable
               <br />
@@ -54,8 +54,8 @@ export function AboutHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg leading-relaxed mb-8"
-              style={{ color: "var(--text-secondary)", maxWidth: "520px" }}
+              className="mb-6 max-w-xl text-sm leading-relaxed sm:mb-8 sm:text-base md:text-lg"
+              style={{ color: "var(--text-secondary)" }}
             >
               {PERSONAL_INFO.bio}
             </motion.p>
@@ -113,7 +113,7 @@ export function AboutHero() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

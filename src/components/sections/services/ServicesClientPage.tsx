@@ -7,6 +7,7 @@ import { SERVICES, SERVICE_PROCESS } from "@/data/services";
 import { PERSONAL_INFO } from "@/lib/constants";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { brandIcons } from "@/lib/brandAssets";
+import { PageShell } from "@/components/layout/PageShell";
 
 const serviceIconBase: Record<string, string> = {
   "product-engineering": brandIcons.services.fullstack,
@@ -17,29 +18,26 @@ const serviceIconBase: Record<string, string> = {
 
 export function ServicesClientPage() {
   return (
-    <div className="min-h-screen pt-16 pb-20" style={{ background: "var(--bg-primary)" }}>
-      <div className="max-w-[1280px] mx-auto container-padding">
+    <div className="min-h-screen pb-12 sm:pb-16 md:pb-20" style={{ background: "var(--bg-primary)" }}>
+      <PageShell>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-3xl"
+          className="mb-10 max-w-3xl sm:mb-12 md:mb-14"
         >
           <span className="section-eyebrow">Services</span>
           <div className="fancy-divider" />
-          <h1
-            className="font-display font-bold mt-2 mb-4"
-            style={{ fontSize: "clamp(36px, 6vw, 72px)", color: "var(--text-primary)" }}
-          >
+          <h1 className="font-display mt-2 mb-3 text-3xl font-bold text-[var(--text-primary)] sm:mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
             Services built to ship
           </h1>
-          <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-base sm:text-lg lg:text-xl" style={{ color: "var(--text-secondary)" }}>
             Software agency for founders and businesses — full-stack products, AI/RAG systems,
             backends, and cloud delivery. Clear scope. Weekly progress. Production-ready code.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-20">
+        <div className="mb-14 grid gap-4 sm:gap-5 md:mb-16 md:grid-cols-2 md:gap-6 lg:mb-20">
           {SERVICES.map((service, index) => {
             const iconBase = serviceIconBase[service.id] ?? brandIcons.services.fullstack;
 
@@ -50,7 +48,7 @@ export function ServicesClientPage() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="group scroll-mt-32 rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+                className="group scroll-mt-32 rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] sm:p-6 md:p-7"
                 style={{
                   background: "var(--surface)",
                   borderColor: "var(--border)",
@@ -71,12 +69,12 @@ export function ServicesClientPage() {
                     <BrandIcon base={iconBase} tone="base" size={24} className="group-hover:hidden" />
                     <BrandIcon base={iconBase} tone="hover" size={24} className="hidden group-hover:block" />
                   </div>
-                  <h2 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>
+                  <h2 className="text-card-title font-semibold text-[var(--text-primary)] sm:text-lg md:text-xl">
                     {service.title}
                   </h2>
                 </div>
 
-                <p className="mb-3 text-[15px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                <p className="text-card-body mb-3" style={{ color: "var(--text-secondary)" }}>
                   {service.description}
                 </p>
                 <p className="mb-5 text-[14px] font-medium" style={{ color: "var(--text-primary)" }}>
@@ -173,10 +171,10 @@ export function ServicesClientPage() {
           </Link>
         </motion.div>
 
-        <p className="mt-8 text-center text-sm" style={{ color: "var(--text-muted)" }}>
+        <p className="mt-8 text-center text-xs sm:text-sm" style={{ color: "var(--text-muted)" }}>
           {PERSONAL_INFO.name} · Software Agency · {PERSONAL_INFO.locationRemote}
         </p>
-      </div>
+      </PageShell>
     </div>
   );
 }

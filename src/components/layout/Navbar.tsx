@@ -5,20 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { toggleMobileMenu, closeMobileMenu } from "@/store/slices/uiSlice";
 import { useNavbarScroll, useThemeToggle, useLockBodyScroll } from "@/hooks";
 import { NAV_LINKS, PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
-import { HEADER_MEGA, HEADER_MOTION, type MegaPanel } from "@/data/headerMega";
+import { externalNavLinkProps, isExternalNavHref } from "@/lib/navHref";
+import { HEADER_MEGA, HEADER_MOTION, getHeaderMegaPreloadAssets } from "@/data/headerMega";
+import { MegaMenuPanels, getPanelSections, type MegaKey } from "@/components/layout/MegaMenu";
 import { brandIcons } from "@/lib/brandAssets";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { BrandMenuToggle } from "@/components/ui/BrandMenuToggle";
 import { cn } from "@/lib/utils";
 import theme from "@/lib/theme";
-
-type MegaKey = keyof typeof HEADER_MEGA;
+import {
+  getHeaderAvatarClassName,
+  getHeaderAvatarSrc,
+  getHeaderLogoSurface,
+  getHeaderWordmarkClassName,
+  getHeaderWordmarkSrc,
+} from "@/lib/brandLogos";
 
 const socialCircleBase: Record<string, string> = {
   github: brandIcons.social.githubCircle,
@@ -32,7 +38,7 @@ export function Navbar() {
   const reduceMotion = useReducedMotion();
   const isMobileMenuOpen = useSelector((s: RootState) => s.ui.isMobileMenuOpen);
   const isScrolled = useNavbarScroll(12);
-  const { isDark, toggle, mounted } = useThemeToggle();
+  const { isDark, toggle, mounted, resolvedTheme } = useThemeToggle();
 
   const [openMega, setOpenMega] = useState<MegaKey | null>(null);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>("services");
@@ -45,6 +51,14 @@ export function Navbar() {
     if (openTimer.current) clearTimeout(openTimer.current);
     if (closeTimer.current) clearTimeout(closeTimer.current);
   };
+
+  useEffect(() => {
+    const urls = getHeaderMegaPreloadAssets();
+    urls.forEach((url) => {
+      const img = new window.Image();
+      img.src = url;
+    });
+  }, []);
 
   useEffect(() => {
     dispatch(closeMobileMenu());
@@ -81,18 +95,30 @@ export function Navbar() {
   const isActive = (href: string) =>
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
-  const logoSrc = isDark
-    ? "/images/logo/logo-horizontal-lockup-dark.png"
-    : "/images/logo/logo-horizontal-lockup-light.png";
+  const logoSurface = getHeaderLogoSurface({
+    resolvedTheme,
+    mobileMenuOpen: isMobileMenuOpen,
+    mounted,
+  });
+  const wordmarkSrc = getHeaderWordmarkSrc(logoSurface);
+  const avatarSrc = getHeaderAvatarSrc();
+  const wordmarkClassName = getHeaderWordmarkClassName(logoSurface);
+  const avatarClassName = getHeaderAvatarClassName();
 
-  const activePanel: MegaPanel | null = openMega ? HEADER_MEGA[openMega] : null;
   const headerElevated = isScrolled || !!openMega || isMobileMenuOpen;
+  const isHome = pathname === "/";
+  const isHeroOverlay =
+    isHome && !isScrolled && !openMega && !isMobileMenuOpen;
+
+  const whatsappUrl =
+    SOCIAL_LINKS.find((s) => s.icon === "whatsapp")?.url ?? "/contact";
 
   const megaKeyForHref = (href: string): MegaKey | null => {
     if (href === "/services") return "services";
     if (href === "/projects") return "work";
     if (href === "/about") return "about";
     if (href === "/blog") return "insights";
+    if (href === "/contact") return "contact";
     return null;
   };
 
@@ -105,7 +131,15 @@ export function Navbar() {
         style={{
           zIndex: isMobileMenuOpen ? theme.zIndex.modal + 2 : theme.zIndex.navbar,
         }}
-        className="fixed top-0 left-0 right-0 w-full bg-[var(--bg-primary)]"
+        className={cn(
+          "fixed top-0 left-0 right-0 w-full transition-[background,box-shadow] duration-300",
+          isMobileMenuOpen
+            ? "bg-[#0A0A0A]"
+            : isHeroOverlay
+              ? "bg-[#0A0A0A]/35 backdrop-blur-xl"
+              : "bg-[var(--bg-primary)]",
+          isHeroOverlay && "shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
+        )}
       >
         {/* Utility strip — always opaque */}
         <div
@@ -113,69 +147,105 @@ export function Navbar() {
             "hidden border-b transition-colors duration-300 md:block",
             isMobileMenuOpen
               ? "border-white/10 bg-[#0A0A0A] text-[#FFF7ED]/70"
-              : "border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
+              : isHeroOverlay
+                ? "border-white/10 bg-black/20 text-[#FFF7ED]/75"
+                : "border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
           )}
         >
-          <div className="mx-auto flex h-9 w-full max-w-[1400px] items-center justify-between px-5 text-[11px] font-medium tracking-wide md:px-8 lg:px-10">
-            <div className="flex items-center gap-2">
-              <BrandIcon base={brandIcons.ui.availability} tone="base" size={10} />
-              <span>{PERSONAL_INFO.availabilityText}</span>
-              <span className="mx-2 opacity-30">|</span>
-              <span className="opacity-70">{PERSONAL_INFO.locationRemote}</span>
+          <div className="layout-wrap flex h-9 w-full items-center justify-between gap-4 text-xs font-medium tracking-wide lg:text-sm">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+              <BrandIcon
+                base={brandIcons.ui.availability}
+                tone={isHeroOverlay || isMobileMenuOpen ? "orange" : "base"}
+                size={10}
+              />
+              <span className="shrink-0">{PERSONAL_INFO.availabilityText}</span>
+              <span className="hidden opacity-30 sm:inline">|</span>
+              <span className="hidden truncate opacity-80 sm:inline">
+                USA · UK · KSA · UAE · Remote
+              </span>
             </div>
-            <a
-              href={`mailto:${PERSONAL_INFO.email}`}
-              className="inline-flex items-center gap-1.5 transition-colors hover:text-[#FF6A00]"
-            >
+            <div className="flex shrink-0 items-center gap-4">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "hidden items-center gap-1.5 transition-colors hover:text-[#FF6A00] lg:inline-flex",
+                  isHeroOverlay || isMobileMenuOpen ? "text-[#FFF7ED]/80" : ""
+                )}
+              >
+                <BrandIcon
+                  base={brandIcons.cta.whatsapp}
+                  tone={isHeroOverlay || isMobileMenuOpen ? "orange" : "orange"}
+                  size={14}
+                />
+                WhatsApp
+              </a>
+              <a
+                href={`mailto:${PERSONAL_INFO.email}`}
+                className={cn(
+                  "inline-flex items-center gap-1.5 transition-colors hover:text-[#FF6A00]",
+                  isHeroOverlay ? "text-[#FFF7ED]/85" : ""
+                )}
+              >
               <BrandIcon
                 base={brandIcons.cta.email}
                 tone={isMobileMenuOpen ? "white" : "orange"}
                 size={14}
               />
               {PERSONAL_INFO.email}
-            </a>
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Main bar — always opaque solid (never see hero through it) */}
+        {/* Main bar */}
         <div
           className={cn(
             "border-b transition-all duration-300",
             isMobileMenuOpen
               ? "border-white/10 bg-[#0A0A0A]"
-              : "border-[var(--border)] bg-[var(--bg-primary)]",
-            headerElevated && !isMobileMenuOpen && "shadow-[var(--shadow-sm)]"
+              : isHeroOverlay
+                ? "border-white/10 bg-transparent"
+                : "border-[var(--border)] bg-[var(--bg-primary)]",
+            headerElevated && !isMobileMenuOpen && !isHeroOverlay && "shadow-[var(--shadow-sm)]"
           )}
         >
-          <nav className="mx-auto flex h-[68px] w-full max-w-[1400px] items-center justify-between gap-4 px-5 md:px-8 lg:px-10">
+          <nav className="layout-wrap flex h-[68px] w-full items-center justify-between gap-3 md:gap-5 lg:gap-6">
             <Link
               href="/"
-              className="group relative z-[2] flex items-center gap-2.5 shrink-0"
+              className="group relative z-[2] flex shrink-0 items-center gap-2.5"
               onClick={() => dispatch(closeMobileMenu())}
             >
-              {isMobileMenuOpen ? (
+              {mounted ? (
                 <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={brandIcons.ui.muMarkAnimated}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-8 w-8"
+                  <Image
+                    key={`avatar-${avatarSrc}`}
+                    src={avatarSrc}
+                    alt={`${PERSONAL_INFO.name} Software Agency`}
+                    width={36}
+                    height={36}
+                    priority
+                    unoptimized
+                    className={avatarClassName}
                   />
-                  <span className="hidden xs:block text-[13px] font-semibold tracking-wide text-[#FFF7ED] sm:inline">
-                    {PERSONAL_INFO.name}
-                  </span>
+                  <Image
+                    key={`wordmark-${wordmarkSrc}`}
+                    src={wordmarkSrc}
+                    alt={`${PERSONAL_INFO.name} Software Agency`}
+                    width={240}
+                    height={44}
+                    priority
+                    unoptimized
+                    className={wordmarkClassName}
+                  />
                 </>
               ) : (
-                <Image
-                  src={logoSrc}
-                  alt={`${PERSONAL_INFO.name} Software Agency`}
-                  width={220}
-                  height={40}
-                  priority
-                  className="h-8 w-auto transition-transform duration-300 group-hover:scale-[1.02] md:h-9"
-                />
+                <>
+                  <span className="inline-block h-9 w-9 rounded-full md:hidden" aria-hidden />
+                  <span className="hidden h-10 w-[160px] md:inline-block" aria-hidden />
+                </>
               )}
             </Link>
 
@@ -199,30 +269,24 @@ export function Navbar() {
                         aria-haspopup="true"
                         onClick={() => setOpenMega(isOpen ? null : megaKey)}
                         className={cn(
-                          "inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13px] font-medium transition-colors",
+                          "inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors lg:text-[15px]",
                           active || isOpen
                             ? "text-[#FF6A00]"
-                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                            : isHeroOverlay
+                              ? "text-[#FFF7ED]/75 hover:text-[#FFF7ED]"
+                              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         )}
                       >
                         {link.label}
-                        <motion.span
-                          animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="inline-flex"
-                        >
-                          <ChevronDown
+                          <BrandIcon
+                            base={brandIcons.ui.chevron}
+                            tone={active || isOpen ? "orange" : isHeroOverlay ? "white" : "base"}
                             size={14}
-                            strokeWidth={2.25}
                             className={cn(
-                              "shrink-0 transition-colors",
-                              active || isOpen
-                                ? "text-[#FF6A00]"
-                                : "text-[var(--text-secondary)]"
+                              "shrink-0 transition-transform duration-200",
+                              isOpen && "rotate-180"
                             )}
-                            aria-hidden
                           />
-                        </motion.span>
                       </button>
                     </li>
                   );
@@ -233,10 +297,12 @@ export function Navbar() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "relative block rounded-md px-3.5 py-2 text-[13px] font-medium transition-colors",
+                        "relative block rounded-md px-3 py-2 text-sm font-medium transition-colors lg:text-[15px]",
                         active
                           ? "text-[#FF6A00]"
-                          : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                          : isHeroOverlay
+                            ? "text-[#FFF7ED]/75 hover:text-[#FFF7ED]"
+                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       )}
                     >
                       {link.label}
@@ -266,7 +332,9 @@ export function Navbar() {
                     "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
                     isMobileMenuOpen
                       ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
-                      : "border-[var(--border)] hover:border-[#FF6A00]/40"
+                      : isHeroOverlay
+                        ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
+                        : "border-[var(--border)] hover:border-[#FF6A00]/40"
                   )}
                 >
                   <AnimatePresence mode="wait" initial={false}>
@@ -280,7 +348,9 @@ export function Navbar() {
                     >
                       <BrandIcon
                         base={isDark ? brandIcons.ui.sun : brandIcons.ui.moon}
-                        tone={isMobileMenuOpen || isDark ? "orange" : "black"}
+                        tone={
+                          isMobileMenuOpen || isDark || isHeroOverlay ? "orange" : "black"
+                        }
                         size={18}
                       />
                     </motion.span>
@@ -288,9 +358,24 @@ export function Navbar() {
                 </button>
               )}
 
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "hidden items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] transition-all duration-250 md:inline-flex lg:px-5 lg:py-3 lg:text-sm",
+                  isHeroOverlay
+                    ? "border-white/25 bg-white/5 text-[#FFF7ED] hover:border-[#FF6A00]/60 hover:bg-white/10"
+                    : "border-[var(--border)] text-[var(--text-primary)] hover:border-[#FF6A00]/40"
+                )}
+              >
+                <BrandIcon base={brandIcons.cta.whatsapp} tone="orange" size={16} />
+                <span className="hidden xl:inline">WhatsApp</span>
+              </a>
+
               <Link
                 href="/contact"
-                className="hidden items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition-all duration-250 hover:brightness-110 hover:shadow-[0_8px_28px_rgba(255,106,0,0.35)] md:inline-flex"
+                className="hidden items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition-all duration-250 hover:brightness-110 hover:shadow-[0_8px_28px_rgba(255,106,0,0.35)] md:inline-flex md:px-6 md:py-3 md:text-sm"
                 style={{ background: "#FF6A00" }}
               >
                 Let&apos;s Talk
@@ -300,140 +385,23 @@ export function Navbar() {
               <BrandMenuToggle
                 open={isMobileMenuOpen}
                 onClick={() => dispatch(toggleMobileMenu())}
-                tone={isMobileMenuOpen ? "dark" : "light"}
+                tone={isMobileMenuOpen || isHeroOverlay ? "dark" : "light"}
                 className="lg:hidden"
               />
             </div>
           </nav>
         </div>
 
-        {/* Desktop mega panel */}
-        <AnimatePresence>
-          {activePanel && (
-            <motion.div
-              key={activePanel.id}
-              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: HEADER_MOTION.panelDuration, ease: HEADER_MOTION.ease }}
-              onMouseEnter={() => keepOpen(activePanel.id as MegaKey)}
-              onMouseLeave={scheduleClose}
-              className="absolute left-0 right-0 hidden overflow-hidden border-b border-[var(--border)] bg-[var(--bg-primary)]/98 backdrop-blur-xl lg:block"
-              style={{ boxShadow: "var(--shadow-lg)" }}
-            >
-              <Image
-                src={brandIcons.images.glowOrb}
-                alt=""
-                width={480}
-                height={480}
-                className="pointer-events-none absolute -right-10 -top-24 h-80 w-80 opacity-40"
-              />
-
-              <div className="relative mx-auto grid w-full max-w-[1400px] grid-cols-[1.3fr_0.9fr] gap-8 px-5 py-8 md:px-8 lg:px-10">
-                <div>
-                  <div className="mb-4 flex items-center gap-3">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
-                      {activePanel.eyebrow}
-                    </p>
-                    <span className="h-px flex-1 max-w-[72px] bg-gradient-to-r from-[#FF6A00] to-transparent" />
-                  </div>
-
-                  <motion.div
-                    initial="hidden"
-                    animate="show"
-                    variants={{
-                      hidden: {},
-                      show: { transition: { staggerChildren: HEADER_MOTION.itemStagger } },
-                    }}
-                    className={cn(
-                      "grid gap-3",
-                      activePanel.links.length > 3 ? "grid-cols-2" : "grid-cols-1"
-                    )}
-                  >
-                    {activePanel.links.map((item) => (
-                      <motion.div
-                        key={item.id}
-                        variants={{
-                          hidden: { opacity: 0, y: 10 },
-                          show: { opacity: 1, y: 0 },
-                        }}
-                      >
-                        <Link
-                          href={item.href}
-                          onClick={() => setOpenMega(null)}
-                          className="group flex gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition-all duration-200 hover:border-[#FF6A00]/40 hover:shadow-[var(--shadow-md)]"
-                        >
-                          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#FF6A00]/10 transition-colors group-hover:bg-[#FF6A00]/16">
-                            <BrandIcon base={item.iconBase} tone="base" size={24} className="group-hover:hidden" />
-                            <BrandIcon
-                              base={item.iconBase}
-                              tone="hover"
-                              size={24}
-                              className="hidden group-hover:block"
-                            />
-                          </span>
-                          <span className="min-w-0">
-                            <span className="mb-0.5 flex items-center gap-2">
-                              <span className="text-[14px] font-semibold text-[var(--text-primary)] group-hover:text-[#FF6A00]">
-                                {item.label}
-                              </span>
-                              {item.badge && (
-                                <span className="rounded-full bg-[#FF6A00]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#FF6A00]">
-                                  {item.badge}
-                                </span>
-                              )}
-                            </span>
-                            <span className="block text-[12px] leading-relaxed text-[var(--text-secondary)]">
-                              {item.description}
-                            </span>
-                          </span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </div>
-
-                {/* Promo panel */}
-                <div className="relative flex min-h-[280px] flex-col justify-end overflow-hidden rounded-2xl bg-[#0A0A0A] text-[#FFF7ED]">
-                  {activePanel.promo.imageSrc && (
-                    <Image
-                      src={activePanel.promo.imageSrc}
-                      alt=""
-                      fill
-                      className="object-cover opacity-55"
-                      sizes="420px"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/75 to-transparent" />
-                  <div className="relative z-[1] space-y-4 p-6">
-                    <Image
-                      src={brandIcons.ui.muMarkAnimated}
-                      alt=""
-                      width={36}
-                      height={36}
-                      className="h-9 w-9 mu-mark-animated"
-                    />
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#FFB347]">
-                      Software Agency
-                    </p>
-                    <h3 className="font-display text-2xl font-semibold leading-tight">
-                      {activePanel.promo.title}
-                    </h3>
-                    <p className="text-[13px] leading-relaxed text-white/65">{activePanel.promo.text}</p>
-                    <Link
-                      href={activePanel.promo.ctaHref}
-                      onClick={() => setOpenMega(null)}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#FF6A00] py-3 text-[12px] font-bold uppercase tracking-[0.12em] text-white"
-                    >
-                      {activePanel.promo.ctaLabel}
-                      <BrandIcon base={brandIcons.cta.startProject} tone="white" size={14} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Desktop mega panels — kept mounted so icons are never fetched late */}
+        <div className="relative hidden lg:block">
+          <MegaMenuPanels
+            openMega={openMega}
+            reduceMotion={reduceMotion}
+            keepOpen={keepOpen}
+            scheduleClose={scheduleClose}
+            onNavigate={() => setOpenMega(null)}
+          />
+        </div>
       </motion.header>
 
       {/* Mobile / tablet full-screen menu */}
@@ -460,7 +428,7 @@ export function Navbar() {
                 : { clipPath: "inset(0 0 100% 0)", opacity: 1 }
             }
             transition={{ duration: 0.48, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 flex flex-col bg-[#0A0A0A] lg:hidden"
+            className="fixed inset-0 flex flex-col overflow-y-auto overscroll-contain bg-[#0A0A0A] lg:hidden"
             style={{ zIndex: theme.zIndex.modal }}
           >
             <div
@@ -480,10 +448,10 @@ export function Navbar() {
               exit="closed"
               variants={{
                 open: {
-                  transition: { staggerChildren: 0.055, delayChildren: 0.18 },
+                  transition: { staggerChildren: 0.04, delayChildren: 0 },
                 },
                 closed: {
-                  transition: { staggerChildren: 0.03, staggerDirection: -1 },
+                  transition: { staggerChildren: 0.02, staggerDirection: -1 },
                 },
               }}
               className="relative flex min-h-0 flex-1 flex-col px-5 pb-6 pt-3 md:px-8"
@@ -498,7 +466,7 @@ export function Navbar() {
                 Navigate
               </motion.p>
 
-              <nav className="flex-1 overflow-y-auto overscroll-contain pr-1">
+              <nav className="flex-1 pr-1">
                 {(Object.keys(HEADER_MEGA) as MegaKey[]).map((key, index) => {
                   const panel = HEADER_MEGA[key];
                   const expanded = mobileAccordion === key;
@@ -533,65 +501,83 @@ export function Navbar() {
                         </motion.span>
                       </button>
 
-                      <AnimatePresence initial={false}>
-                        {expanded && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                            className="overflow-hidden"
-                          >
-                            <div className="space-y-1 pb-3.5">
-                              {panel.links.map((item) => (
-                                <Link
-                                  key={item.id}
-                                  href={item.href}
-                                  className="flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors active:bg-white/8 hover:bg-white/5"
-                                >
-                                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6A00]/14">
-                                    <BrandIcon base={item.iconBase} tone="orange" size={18} />
-                                  </span>
-                                  <span className="min-w-0">
-                                    <span className="block text-[13px] font-semibold text-[#FFF7ED]">
-                                      {item.label}
-                                    </span>
-                                    <span className="mt-0.5 block truncate text-[11px] text-white/45">
-                                      {item.description}
-                                    </span>
-                                  </span>
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
+                      <div
+                        className={cn(
+                          "grid transition-[grid-template-rows] duration-200 ease-out",
+                          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                         )}
-                      </AnimatePresence>
+                      >
+                        <div className="overflow-hidden">
+                          <div className="space-y-4 pb-3.5">
+                            {getPanelSections(panel).map((section) => (
+                              <div key={section.id}>
+                                <p className="mb-2 px-2.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#FF6A00]/75">
+                                  {section.title}
+                                </p>
+                                <div className="space-y-1">
+                                  {section.links.map((item) => {
+                                    const rowClassName =
+                                      "flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors active:bg-white/8 hover:bg-white/5";
+                                    const rowInner = (
+                                      <>
+                                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6A00]/14">
+                                          <BrandIcon base={item.iconBase} tone="orange" size={18} />
+                                        </span>
+                                        <span className="min-w-0 flex-1">
+                                          <span className="flex flex-wrap items-center gap-2">
+                                            <span className="text-[13px] font-semibold text-[#FFF7ED]">
+                                              {item.label}
+                                            </span>
+                                            {item.badge && (
+                                              <span className="rounded-full bg-[#FF6A00]/20 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#FFB347]">
+                                                {item.badge}
+                                              </span>
+                                            )}
+                                          </span>
+                                          <span className="mt-0.5 block text-[11px] leading-snug text-white/45">
+                                            {item.description}
+                                          </span>
+                                        </span>
+                                      </>
+                                    );
+
+                                    if (isExternalNavHref(item.href)) {
+                                      return (
+                                        <a
+                                          key={item.id}
+                                          href={item.href}
+                                          tabIndex={expanded ? 0 : -1}
+                                          className={rowClassName}
+                                          onClick={() => dispatch(closeMobileMenu())}
+                                          {...externalNavLinkProps(item.href)}
+                                        >
+                                          {rowInner}
+                                        </a>
+                                      );
+                                    }
+
+                                    return (
+                                      <Link
+                                        key={item.id}
+                                        href={item.href}
+                                        tabIndex={expanded ? 0 : -1}
+                                        className={rowClassName}
+                                        onClick={() => dispatch(closeMobileMenu())}
+                                      >
+                                        {rowInner}
+                                      </Link>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </motion.div>
                   );
                 })}
 
-                <motion.div
-                  variants={{
-                    closed: { opacity: 0, y: 18 },
-                    open: { opacity: 1, y: 0 },
-                  }}
-                  className="border-b border-white/10"
-                >
-                  <Link
-                    href="/contact"
-                    className="flex w-full items-center justify-between gap-3 py-3.5"
-                  >
-                    <span className="flex items-baseline gap-3">
-                      <span className="font-mono text-[10px] tracking-widest text-[#FF6A00]/70">
-                        05
-                      </span>
-                      <span className="text-[1.35rem] font-semibold tracking-tight text-[#FFF7ED] md:text-[1.5rem]">
-                        Contact
-                      </span>
-                    </span>
-                    <BrandIcon base={brandIcons.cta.letsTalk} tone="orange" size={18} />
-                  </Link>
-                </motion.div>
               </nav>
 
               <motion.div
@@ -604,11 +590,12 @@ export function Navbar() {
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <Image
-                      src="/images/logo/logo-social-avatar.png"
+                      src={avatarSrc}
                       alt=""
                       width={36}
                       height={36}
-                      className="h-9 w-9 rounded-full"
+                      unoptimized
+                      className="h-9 w-9 shrink-0 rounded-full"
                     />
                     <div className="min-w-0">
                       <p className="truncate text-[13px] font-semibold text-[#FFF7ED]">

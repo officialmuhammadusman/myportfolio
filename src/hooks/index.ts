@@ -5,6 +5,7 @@ import type { RootState } from "@/store";
 import { toggleTheme } from "@/store/slices/themeSlice";
 import { setIsScrolled } from "@/store/slices/uiSlice";
 import { useTheme as useNextTheme } from "next-themes";
+import { lockBodyScroll } from "@/lib/scrollLock";
 
 // ─────────────────────────────────────────
 // USE SCROLL Y
@@ -111,14 +112,8 @@ export function useBackToTop(threshold = 400) {
 // ─────────────────────────────────────────
 export function useLockBodyScroll(locked: boolean) {
   useEffect(() => {
-    if (locked) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (!locked) return;
+    return lockBodyScroll();
   }, [locked]);
 }
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { HERO_STUDIO } from "@/data/hero";
+import { PageShell } from "@/components/layout/PageShell";
 
 /**
  * Equal-frame studio strip — solves mixed photo shapes by locking every
@@ -15,7 +16,7 @@ export function StudioPresence() {
 
   return (
     <section
-      className="relative overflow-hidden border-y border-white/5 bg-[#0A0A0A] py-16 sm:py-20 md:py-24"
+      className="relative overflow-hidden border-y border-white/5 bg-[#0A0A0A] py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28"
       aria-label="Studio presence"
     >
       <div
@@ -26,23 +27,14 @@ export function StudioPresence() {
         }}
       />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 md:px-10 lg:px-12">
-        <div className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-xl">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="h-px w-8 bg-[#FF6A00]" />
-              <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#FF6A00]">
-                The practice
-              </span>
+      <PageShell compact className="relative !py-0">
+        <div className="mb-8 flex flex-col gap-4 sm:mb-10 md:mb-12 md:flex-row md:items-end md:justify-between lg:mb-14">
+          <div className="max-w-xl lg:max-w-2xl">
+            <div className="mb-3 flex items-center gap-3 sm:mb-4">
+              <span className="h-px w-6 bg-[#FF6A00] sm:w-8" />
+              <span className="section-eyebrow text-[#FF6A00]">The practice</span>
             </div>
-            <h2
-              className="font-display text-[#FFF7ED]"
-              style={{
-                fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.02em",
-              }}
-            >
+            <h2 className="font-display text-3xl leading-[1.1] tracking-[-0.02em] text-[#FFF7ED] sm:text-4xl md:text-5xl lg:text-6xl">
               How the work gets done —
               <span className="italic text-[#FFB347]"> from plan to delivery.</span>
             </h2>
@@ -50,7 +42,7 @@ export function StudioPresence() {
 
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-[#FFF7ED]/70 transition-colors hover:text-[#FF6A00]"
+            className="group inline-flex items-center gap-2 text-xs font-semibold text-[#FFF7ED]/70 transition-colors hover:text-[#FF6A00] sm:text-sm"
           >
             About the agency
             <ArrowUpRight
@@ -60,8 +52,7 @@ export function StudioPresence() {
           </Link>
         </div>
 
-        {/* Equal frames — object-cover inside fixed aspect boxes */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 lg:grid-cols-4 lg:gap-5 xl:gap-6">
           {HERO_STUDIO.map((shot, i) => (
             <motion.figure
               key={shot.id}
@@ -91,11 +82,11 @@ export function StudioPresence() {
                       "linear-gradient(180deg, transparent 45%, rgba(10,10,10,0.85) 100%)",
                   }}
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#FF6A00] sm:text-[11px]">
+                <figcaption className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3 md:p-4">
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#FF6A00] sm:text-[10px] md:text-[11px]">
                     {String(i + 1).padStart(2, "0")} · {shot.label}
                   </p>
-                  <p className="mt-1 text-sm font-medium text-[#FFF7ED] sm:text-[15px]">
+                  <p className="mt-0.5 text-xs font-medium text-[#FFF7ED] sm:mt-1 sm:text-sm md:text-[15px]">
                     {shot.caption}
                   </p>
                 </figcaption>
@@ -103,7 +94,7 @@ export function StudioPresence() {
             </motion.figure>
           ))}
         </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

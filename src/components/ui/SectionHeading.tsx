@@ -1,12 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import theme from "@/lib/theme";
 
 interface SectionHeadingProps {
   eyebrow?: string;
   title: string;
-  titleAccent?: string;       // Part of title in accent color
+  titleAccent?: string;
   subtitle?: string;
   align?: "left" | "center" | "right";
   size?: "sm" | "md" | "lg";
@@ -14,16 +13,22 @@ interface SectionHeadingProps {
   animate?: boolean;
 }
 
-const sizeMap = {
-  sm: { title: "text-3xl md:text-4xl", subtitle: "text-[15px]" },
-  md: { title: "text-4xl md:text-5xl", subtitle: "text-[16px]" },
-  lg: { title: "text-5xl md:text-6xl", subtitle: "text-[17px]" },
+const titleSizeMap = {
+  sm: "text-3xl sm:text-4xl lg:text-[2.75rem]",
+  md: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
+  lg: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
+};
+
+const subtitleSizeMap = {
+  sm: "text-base lg:text-lg",
+  md: "text-base sm:text-lg lg:text-xl",
+  lg: "text-lg sm:text-xl lg:text-[1.375rem]",
 };
 
 const alignMap = {
-  left:   "items-start text-left",
+  left: "items-start text-left",
   center: "items-center text-center",
-  right:  "items-end text-right",
+  right: "items-end text-right",
 };
 
 export function SectionHeading({
@@ -47,31 +52,28 @@ export function SectionHeading({
     : {};
 
   return (
-    // @ts-ignore — motion vs div props
+    // @ts-expect-error motion vs div props
     <Wrapper
-      className={cn("flex flex-col gap-4", alignMap[align], className)}
+      className={cn("flex flex-col gap-3 sm:gap-4", alignMap[align], className)}
       {...wrapperProps}
     >
-      {/* Eyebrow label */}
       {eyebrow && (
         <div className="flex items-center gap-3">
           {align !== "right" && (
-            <div className="w-8 h-px bg-accent-primary shrink-0" />
+            <div className="h-px w-6 shrink-0 bg-accent-primary sm:w-8" />
           )}
           <span className="section-eyebrow">{eyebrow}</span>
           {align === "right" && (
-            <div className="w-8 h-px bg-accent-primary shrink-0" />
+            <div className="h-px w-6 shrink-0 bg-accent-primary sm:w-8" />
           )}
         </div>
       )}
 
-      {/* Main title */}
       <h2
         className={cn(
-          "font-display font-bold text-[var(--text-primary)] leading-[1.1]",
-          sizeMap[size].title
+          "font-display font-bold leading-[1.1] tracking-[-0.025em] text-[var(--text-primary)]",
+          titleSizeMap[size]
         )}
-        style={{ letterSpacing: "-0.025em" }}
       >
         {title}
         {titleAccent && (
@@ -82,12 +84,11 @@ export function SectionHeading({
         )}
       </h2>
 
-      {/* Subtitle */}
       {subtitle && (
         <p
           className={cn(
-            "text-[var(--text-secondary)] leading-relaxed max-w-[600px]",
-            sizeMap[size].subtitle,
+            "max-w-3xl leading-relaxed text-[var(--text-secondary)]",
+            subtitleSizeMap[size],
             align === "center" && "mx-auto"
           )}
         >

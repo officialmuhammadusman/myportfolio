@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { Toaster } from "react-hot-toast";
 import { PERSONAL_INFO } from "@/lib/constants";
+import { MainShell } from "@/components/layout/MainShell";
 import { PageTransitionProvider } from "@/components/providers/PageTransitionProvider";
 
 export const metadata: Metadata = {
@@ -61,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Hardcoded heights (not CSS vars) so content never starts under the nav.
                 68px = main bar (mobile) · 104px = utility 36px + main bar 68px (md+)
               */}
-              <main className="min-h-screen pt-[68px] md:pt-[104px]">{children}</main>
+              <MainShell>{children}</MainShell>
               <Footer />
               <BackToTop />
               <Toaster

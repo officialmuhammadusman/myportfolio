@@ -30,6 +30,8 @@ export function BrandIcon({
       width={size}
       height={size}
       draggable={false}
+      loading="eager"
+      decoding="async"
       className={cn("object-contain select-none", className)}
       style={{ width: size, height: size }}
     />
