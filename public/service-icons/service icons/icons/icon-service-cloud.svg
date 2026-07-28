@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-label="Data &amp; Cloud">
+<defs></defs>
+<path d="M18 40H45C50 40 54 36 54 31C54 26 50 22 45 22H44C42 16 37 12 31 12C24 12 19 16 17 22H16C11 22 8 26 8 31C8 36 12 40 18 40Z" fill="none" stroke="#FF6A00" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" />
+<path d="M18 29C18 27 22 26 27 26C32 26 36 27 36 29V35C36 37 32 38 27 38C22 38 18 37 18 35V29Z" fill="none" stroke="#FFB347" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" />
+<path d="M18 29C18 31 22 32 27 32C32 32 36 31 36 29" fill="none" stroke="#FFB347" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" />
+<circle cx="47" cy="43" r="3" fill="none" stroke="#FFB347" stroke-width="2.3" />
+<line x1="40" y1="38" x2="44" y2="41" stroke="#FFB347" stroke-width="2.2" stroke-linecap="square" />
+<line x1="47" y1="32" x2="47" y2="40" stroke="#FFB347" stroke-width="2.2" stroke-linecap="square" />
+</svg>

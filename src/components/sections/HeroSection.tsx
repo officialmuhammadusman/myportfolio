@@ -24,7 +24,6 @@ import { brandIcons } from "@/lib/brandAssets";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { cn } from "@/lib/utils";
 
-const easeOut = [0.22, 1, 0.36, 1] as const;
 const writeEase = [0.4, 0.0, 0.2, 1] as const;
 const CROSSFADE_S = 1.1;
 
@@ -86,7 +85,6 @@ export function HeroSection() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [progressKey, setProgressKey] = useState(0);
-  const [entered, setEntered] = useState(false);
 
   const whatsappUrl =
     SOCIAL_LINKS.find((s) => s.icon === "whatsapp")?.url ?? "/contact";
@@ -95,11 +93,6 @@ export function HeroSection() {
     setIndex((next + HERO_SLIDES.length) % HERO_SLIDES.length);
     setProgressKey((k) => k + 1);
   });
-
-  useEffect(() => {
-    const t = window.setTimeout(() => setEntered(true), reduceMotion ? 0 : 50);
-    return () => window.clearTimeout(t);
-  }, [reduceMotion]);
 
   useEffect(() => {
     if (reduceMotion || paused) return;
@@ -206,8 +199,7 @@ export function HeroSection() {
           <div className="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl">
               <motion.div
                 initial={false}
-                animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-                transition={{ duration: 0.55, ease: easeOut }}
+                animate={{ opacity: 1, y: 0 }}
                 className="mb-4 flex flex-wrap items-center gap-2 sm:mb-5 sm:gap-3"
               >
                 <Image
@@ -284,8 +276,7 @@ export function HeroSection() {
               {/* CTAs */}
               <motion.div
                 initial={false}
-                animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-                transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
+                animate={{ opacity: 1, y: 0 }}
                 className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
               >
                 <Link
@@ -316,8 +307,7 @@ export function HeroSection() {
               {/* Stats */}
               <motion.div
                 initial={false}
-                animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                transition={{ duration: 0.65, delay: 0.28, ease: easeOut }}
+                animate={{ opacity: 1, y: 0 }}
                 className="mt-6 grid grid-cols-2 gap-3 sm:mt-7 sm:grid-cols-4 sm:gap-4"
               >
                 {HERO_STATS.map((stat) => (
@@ -338,8 +328,7 @@ export function HeroSection() {
               {/* Service pills */}
               <motion.div
                 initial={false}
-                animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                transition={{ duration: 0.65, delay: 0.32, ease: easeOut }}
+                animate={{ opacity: 1, y: 0 }}
                 className="mt-5 flex flex-wrap gap-2 sm:mt-6"
               >
                 {HERO_SERVICE_PILLS.map((pill) => (
@@ -355,8 +344,7 @@ export function HeroSection() {
               {/* Tech proof + trust */}
               <motion.div
                 initial={false}
-                animate={entered ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.65, delay: 0.38 }}
+                animate={{ opacity: 1 }}
                 className="mt-5 space-y-3 sm:mt-6"
               >
                 <div className="flex flex-wrap gap-2">
@@ -388,8 +376,7 @@ export function HeroSection() {
         {/* Slide navigator with labels */}
         <motion.div
           initial={false}
-          animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ duration: 0.65, delay: 0.32, ease: easeOut }}
+          animate={{ opacity: 1, y: 0 }}
           className="relative z-20 mt-4 w-full sm:mt-5"
           role="tablist"
           aria-label="Hero scenes"

@@ -16,7 +16,12 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 export function StatsSection() {
-  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+  // fallbackInView avoids opacity:0 flash before IntersectionObserver hydrates
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+    fallbackInView: true,
+  });
 
   return (
     <section
@@ -38,9 +43,8 @@ export function StatsSection() {
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-start p-4 sm:p-5 md:p-8 lg:p-10"
                 style={{ background: "var(--bg-secondary)" }}
               >
@@ -49,7 +53,7 @@ export function StatsSection() {
                   {inView ? (
                     <CountUp end={stat.value} duration={2} delay={i * 0.1} />
                   ) : (
-                    0
+                    <>{stat.value}</>
                   )}
                   <span style={{ color: "var(--accent-primary)" }}>{stat.suffix}</span>
                 </div>

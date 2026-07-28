@@ -125,7 +125,7 @@ export function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.45, ease: HEADER_MOTION.ease }}
         style={{

@@ -1,3 +1,5 @@
+import { brandIcons } from "@/lib/brandAssets";
+
 export interface ServiceItem {
   id: string;
   title: string;
@@ -7,9 +9,11 @@ export interface ServiceItem {
   outcome: string;
   deliverables: string[];
   stack: string[];
-  icon: string;
-  /** Path once designer assets arrive */
-  iconSrc?: string;
+  /** Brand icon base path (no extension / tone) */
+  iconBase: string;
+  /** Large tile mark for panels */
+  tileSrc: string;
+  homeTags: string[];
 }
 
 /**
@@ -42,8 +46,9 @@ export const SERVICES: ServiceItem[] = [
       "Zustand",
       "TanStack Query",
     ],
-    icon: "Layers",
-    iconSrc: "/images/brand/header/icons/services/icon-service-fullstack.svg",
+    iconBase: brandIcons.services.fullstack,
+    tileSrc: `${brandIcons.services.fullstackTile}.svg`,
+    homeTags: ["Next.js", "React", "TypeScript", "SaaS"],
   },
   {
     id: "ai-agentic",
@@ -70,8 +75,9 @@ export const SERVICES: ServiceItem[] = [
       "ChromaDB",
       "Agentic AI",
     ],
-    icon: "Sparkles",
-    iconSrc: "/images/brand/header/icons/services/icon-service-ai.svg",
+    iconBase: brandIcons.services.ai,
+    tileSrc: `${brandIcons.services.aiTile}.svg`,
+    homeTags: ["RAG", "LangGraph", "OpenAI", "Agents"],
   },
   {
     id: "backend-apis",
@@ -98,8 +104,9 @@ export const SERVICES: ServiceItem[] = [
       "Socket.io",
       "Microservices",
     ],
-    icon: "Server",
-    iconSrc: "/images/brand/header/icons/services/icon-service-backend.svg",
+    iconBase: brandIcons.services.backend,
+    tileSrc: `${brandIcons.services.backendTile}.svg`,
+    homeTags: ["NestJS", "REST", "Auth", "Realtime"],
   },
   {
     id: "data-cloud",
@@ -127,10 +134,34 @@ export const SERVICES: ServiceItem[] = [
       "Docker",
       "Vercel",
     ],
-    icon: "Rocket",
-    iconSrc: "/images/brand/header/icons/services/icon-service-mvp.svg",
+    iconBase: brandIcons.services.cloud,
+    tileSrc: `${brandIcons.services.cloudTile}.svg`,
+    homeTags: ["PostgreSQL", "AWS", "Docker", "Stripe"],
+  },
+  {
+    id: "mobile-apps",
+    title: "Mobile Apps (React Native)",
+    shortTitle: "Mobile Apps",
+    eyebrow: "Mobile",
+    description:
+      "Cross-platform mobile products with React Native — polished UI, API-backed flows, and release-ready builds for iOS and Android.",
+    outcome: "One codebase. Native feel. Production mobile.",
+    deliverables: [
+      "React Native app architecture",
+      "Auth, notifications & offline-ready UX",
+      "API integration with Nest/Node backends",
+      "App store–ready build pipelines",
+      "Shared design systems with web",
+    ],
+    stack: ["React Native", "TypeScript", "Expo", "REST APIs", "Push"],
+    iconBase: brandIcons.services.mobile,
+    tileSrc: `${brandIcons.services.mobileTile}.svg`,
+    homeTags: ["React Native", "iOS", "Android", "Expo"],
   },
 ];
+
+/** Homepage runway — all five capabilities in agency order */
+export const HOME_SERVICES = SERVICES;
 
 export const SERVICE_PROCESS = [
   {
@@ -154,3 +185,16 @@ export const SERVICE_PROCESS = [
     text: "Deploy, document, hand over, and support so you can grow with confidence.",
   },
 ] as const;
+
+export const HOME_SERVICES_COPY = {
+  eyebrow: "Services",
+  title: "Capabilities built",
+  titleAccent: "to ship.",
+  support:
+    "Full-stack, AI/RAG, cloud, and mobile — scoped clearly and delivered for production teams worldwide.",
+  ctaPrimary: "Start a Project",
+  ctaSecondary: "View all services",
+  footerLine: "Clear scope · Weekly progress · Production delivery",
+} as const;
+
+

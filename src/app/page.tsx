@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/sections/HeroSection";
-import { TechStrip } from "@/components/sections/TechStrip";
+import { TrustStrip } from "@/components/sections/TrustStrip";
+import { HomeServicesSection } from "@/components/sections/HomeServicesSection";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutTeaser } from "@/components/sections/AboutTeaser";
@@ -16,7 +17,8 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <TechStrip />
+      <TrustStrip />
+      <HomeServicesSection />
       <FeaturedProjects />
       <StatsSection />
       <AboutTeaser />

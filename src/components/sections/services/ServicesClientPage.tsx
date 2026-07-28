@@ -6,15 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { SERVICES, SERVICE_PROCESS } from "@/data/services";
 import { PERSONAL_INFO } from "@/lib/constants";
 import { BrandIcon } from "@/components/ui/BrandIcon";
-import { brandIcons } from "@/lib/brandAssets";
 import { PageShell } from "@/components/layout/PageShell";
-
-const serviceIconBase: Record<string, string> = {
-  "product-engineering": brandIcons.services.fullstack,
-  "ai-agentic": brandIcons.services.ai,
-  "backend-apis": brandIcons.services.backend,
-  "data-cloud": brandIcons.services.mvp,
-};
 
 export function ServicesClientPage() {
   return (
@@ -33,15 +25,12 @@ export function ServicesClientPage() {
           </h1>
           <p className="text-base sm:text-lg lg:text-xl" style={{ color: "var(--text-secondary)" }}>
             Software agency for founders and businesses — full-stack products, AI/RAG systems,
-            backends, and cloud delivery. Clear scope. Weekly progress. Production-ready code.
+            backends, cloud, and mobile. Clear scope. Weekly progress. Production-ready code.
           </p>
         </motion.div>
 
         <div className="mb-14 grid gap-4 sm:gap-5 md:mb-16 md:grid-cols-2 md:gap-6 lg:mb-20">
-          {SERVICES.map((service, index) => {
-            const iconBase = serviceIconBase[service.id] ?? brandIcons.services.fullstack;
-
-            return (
+          {SERVICES.map((service, index) => (
               <motion.article
                 key={service.id}
                 id={service.id}
@@ -66,8 +55,8 @@ export function ServicesClientPage() {
                     className="flex h-11 w-11 items-center justify-center rounded-xl"
                     style={{ background: "rgba(255, 106, 0, 0.12)" }}
                   >
-                    <BrandIcon base={iconBase} tone="base" size={24} className="group-hover:hidden" />
-                    <BrandIcon base={iconBase} tone="hover" size={24} className="hidden group-hover:block" />
+                    <BrandIcon base={service.iconBase} tone="base" size={24} className="group-hover:hidden" />
+                    <BrandIcon base={service.iconBase} tone="hover" size={24} className="hidden group-hover:block" />
                   </div>
                   <h2 className="text-card-title font-semibold text-[var(--text-primary)] sm:text-lg md:text-xl">
                     {service.title}
@@ -102,8 +91,7 @@ export function ServicesClientPage() {
                   ))}
                 </ul>
               </motion.article>
-            );
-          })}
+          ))}
         </div>
 
         <motion.section

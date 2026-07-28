@@ -18,10 +18,14 @@ export const brandIcons = {
     ai: `${HEADER}/icons/services/icon-service-ai`,
     backend: `${HEADER}/icons/services/icon-service-backend`,
     mvp: `${HEADER}/icons/services/icon-service-mvp`,
+    cloud: `${HEADER}/icons/services/icon-service-cloud`,
+    mobile: `${HEADER}/icons/services/icon-service-mobile`,
     fullstackTile: `${HEADER}/icons/services/icon-service-fullstack-tile`,
     aiTile: `${HEADER}/icons/services/icon-service-ai-tile`,
     backendTile: `${HEADER}/icons/services/icon-service-backend-tile`,
     mvpTile: `${HEADER}/icons/services/icon-service-mvp-tile`,
+    cloudTile: `${HEADER}/icons/services/icon-service-cloud-tile`,
+    mobileTile: `${HEADER}/icons/services/icon-service-mobile-tile`,
   },
   work: {
     featured: `${HEADER}/icons/work/icon-work-featured`,
@@ -72,6 +76,8 @@ export const brandIcons = {
     insightsCover: `${HEADER}/images/img-mega-insights-cover.png`,
     projectPlaceholder: `${HEADER}/images/img-project-thumb-placeholder.png`,
     glowOrb: `${HEADER}/images/header-glow-orb.png`,
+    servicesAtmosphere: `${HEADER}/images/img-services-atmosphere-plate.webp`,
+    servicesFeatured: `${HEADER}/images/img-services-featured-panel.webp`,
   },
   muMark: `${HEADER}/mu-mark.svg`,
 } as const;
