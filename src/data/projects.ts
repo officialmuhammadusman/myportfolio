@@ -1,8 +1,383 @@
 import type { Project } from "@/types";
 
 export const projects: Project[] = [
-  
-
+  {
+    id: "mejora-tu-dolor",
+    slug: "mejora-tu-dolor",
+    title: "Mejora Tu Dolor — Telemedicine Platform",
+    shortDescription:
+      "Telemedicine platform for chronic pain specialists — video booking, Webpay payments, async medical reviews, and specialist dashboards live in Chile.",
+    longDescription:
+      "Mejora Tu Dolor connects patients with certified chronic-pain specialists through secure teleconsultations. The platform covers the full care journey: time-slot booking, Webpay payment, automated email confirmation with secure video links, asynchronous multi-file medical review (labs, imaging, diagnostic charts), specialist dashboards consolidating patient history, and cross-regional physician referral flows.",
+    category: ["full-stack", "frontend", "backend"],
+    status: "completed",
+    year: "2025",
+    isFeatured: true,
+    heroImage: "/images/projects/live/mejora-tu-dolor.png",
+    screenshots: ["/images/projects/live/mejora-tu-dolor.png"],
+    liveUrl: "https://mejoratudolor.cl",
+    techStack: [
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
+      { name: "Node.js", color: "#FFFFFF", bgColor: "#539E43" },
+      { name: "PostgreSQL", color: "#FFFFFF", bgColor: "#336791" },
+      { name: "Tailwind CSS", color: "#FFFFFF", bgColor: "#0F172A" },
+      { name: "Webpay", color: "#FFFFFF", bgColor: "#FF6A00" },
+    ],
+    badges: [
+      { label: "Live in Chile", icon: "Globe" },
+      { label: "Webpay Payments", icon: "CreditCard" },
+      { label: "Video Consults", icon: "Video" },
+      { label: "Async Reviews", icon: "FileText" },
+    ],
+    features: [
+      {
+        icon: "Calendar",
+        title: "Video Consultation Booking",
+        description:
+          "End-to-end booking flow with time-slot selection, confirmation, and secure video access links delivered by email after payment.",
+      },
+      {
+        icon: "CreditCard",
+        title: "Webpay Payment Integration",
+        description:
+          "Secure Chilean Webpay checkout wired into the appointment flow with transparent pricing and automated confirmation.",
+      },
+      {
+        icon: "FileUp",
+        title: "Async Medical Review Module",
+        description:
+          "Patients upload diagnostic charts, lab reports, and imaging for specialist review on a structured ~7-day turnaround.",
+      },
+      {
+        icon: "LayoutDashboard",
+        title: "Specialist Dashboard",
+        description:
+          "Consolidates a patient's full document and consultation history into a single view ahead of each call.",
+      },
+      {
+        icon: "GitBranch",
+        title: "Cross-Regional Referrals",
+        description:
+          "Physicians can route complex cases to specialists across the platform without leaving the care workflow.",
+      },
+      {
+        icon: "Stethoscope",
+        title: "Patient Care Journey",
+        description:
+          "Public site supports specialist search, visit types, reminders, e-prescriptions, FAQ, and health content for chronic conditions.",
+      },
+    ],
+    technicalDecisions: [
+      {
+        title: "Booking + payment as one transactional journey",
+        content:
+          "Appointment availability, Webpay confirmation, and video-link issuance are treated as a single care journey so patients never land in a paid-but-unconfirmed state.",
+      },
+      {
+        title: "Async review for specialist throughput",
+        content:
+          "Heavy clinical document review is separated from live video slots so specialists can triage cases asynchronously before consultations.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Patients needed both live video care and document-heavy specialist review.",
+        solution:
+          "Built dual paths — instant teleconsult booking and a multi-file async review module with specialist routing.",
+      },
+      {
+        problem: "Complex cases required specialists outside the patient's local region.",
+        solution:
+          "Implemented cross-regional referral flow so physicians can hand off cases inside the same platform.",
+      },
+    ],
+    performanceMetrics: [
+      { label: "Care paths", value: "2", unit: "live + async" },
+      { label: "Payment", value: "Webpay", unit: "Chile" },
+      { label: "Status", value: "Live" },
+    ],
+    testCount: "Production QA",
+    testCoverage: "Live product",
+  },
+  {
+    id: "cliender",
+    slug: "cliender",
+    title: "Cliender — Business Management SaaS",
+    shortDescription:
+      "Cloud business management for local operators — POS, appointments, billing, leads, live dashboards, and geolocation marketing.",
+    longDescription:
+      "Cliender is a business management SaaS for local businesses. Core delivery includes point-of-sale and cloud operations modules, unified appointment scheduling with billing and lead tracking, a real-time performance cockpit (employees, clients, social engagement), and geolocation-based targeting for local marketing tools — helping operators run day-to-day work from one platform.",
+    category: ["full-stack", "frontend", "backend"],
+    status: "completed",
+    year: "2025",
+    isFeatured: true,
+    heroImage: "/images/projects/live/cliender.png",
+    screenshots: ["/images/projects/live/cliender.png"],
+    liveUrl: "https://cliender.com",
+    techStack: [
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
+      { name: "Node.js", color: "#FFFFFF", bgColor: "#539E43" },
+      { name: "PostgreSQL", color: "#FFFFFF", bgColor: "#336791" },
+      { name: "Cloud", color: "#FFFFFF", bgColor: "#FF6A00" },
+    ],
+    badges: [
+      { label: "Live SaaS", icon: "Globe" },
+      { label: "POS + CRM", icon: "Store" },
+      { label: "Geo Marketing", icon: "MapPin" },
+      { label: "Live Cockpit", icon: "BarChart2" },
+    ],
+    features: [
+      {
+        icon: "Store",
+        title: "POS & Cloud Operations",
+        description:
+          "Core dashboard modules for point-of-sale and cloud-based day-to-day business management.",
+      },
+      {
+        icon: "Calendar",
+        title: "Appointments + Billing + Leads",
+        description:
+          "Unified system combining scheduling, billing, and lead tracking so operators stop juggling tools.",
+      },
+      {
+        icon: "BarChart2",
+        title: "Real-Time Performance Cockpit",
+        description:
+          "Live views consolidating employee output, client metrics, and social engagement data.",
+      },
+      {
+        icon: "MapPin",
+        title: "Geolocation Marketing",
+        description:
+          "Local targeting tools that help businesses run location-aware campaigns from the same platform.",
+      },
+      {
+        icon: "MessageSquare",
+        title: "Omnichannel Business Ops",
+        description:
+          "Product surface supports CRM-style follow-up, inventory-aware ops, and marketing channels around the local business workflow.",
+      },
+      {
+        icon: "Layers",
+        title: "Modular Vertical Delivery",
+        description:
+          "Built to serve local service businesses with modules that can expand across sales, ops, and media workflows.",
+      },
+    ],
+    technicalDecisions: [
+      {
+        title: "One cockpit instead of tool sprawl",
+        content:
+          "Appointments, billing, leads, and performance metrics share one operational model so local teams get a single source of truth.",
+      },
+      {
+        title: "Geo as a first-class marketing signal",
+        content:
+          "Location targeting is wired into marketing tools rather than bolted on as a separate campaign spreadsheet.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Local businesses were losing leads and time across disconnected POS, calendar, and marketing tools.",
+        solution:
+          "Unified core modules into one cloud cockpit with live operational metrics.",
+      },
+    ],
+    performanceMetrics: [
+      { label: "Modules", value: "POS + CRM + Geo" },
+      { label: "Status", value: "Live" },
+    ],
+    testCount: "Production QA",
+    testCoverage: "Live product",
+  },
+  {
+    id: "hrms-portal",
+    slug: "hrms-portal",
+    title: "HRMS Portal — Enterprise People Platform",
+    shortDescription:
+      "Enterprise HR platform with admin-configurable RBAC, employees, attendance, hiring, and project modules.",
+    longDescription:
+      "BXTrack HRMS is an enterprise people platform with a dynamic, admin-configurable role-based permission system (permissions assigned per role from the admin panel, not hardcoded). It covers employee onboarding and department hierarchy, attendance and leave with multi-step approvals, hiring/recruitment pipelines, and project/task tracking for teams.",
+    category: ["full-stack", "backend", "frontend"],
+    status: "completed",
+    year: "2025",
+    isFeatured: true,
+    heroImage: "/images/projects/live/hrms-portal.png",
+    screenshots: ["/images/projects/live/hrms-portal.png"],
+    liveUrl: "https://hrms-portal-beta.vercel.app",
+    techStack: [
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
+      { name: "Node.js", color: "#FFFFFF", bgColor: "#539E43" },
+      { name: "PostgreSQL", color: "#FFFFFF", bgColor: "#336791" },
+      { name: "RBAC", color: "#FFFFFF", bgColor: "#FF6A00" },
+    ],
+    badges: [
+      { label: "Dynamic RBAC", icon: "Shield" },
+      { label: "Approvals", icon: "CheckCircle2" },
+      { label: "Hiring Pipeline", icon: "Users" },
+      { label: "Live Beta", icon: "Globe" },
+    ],
+    features: [
+      {
+        icon: "Shield",
+        title: "Dynamic Role-Based Permissions",
+        description:
+          "Admins assign permissions per role from the panel — access rules are configurable, not hardcoded into the app.",
+      },
+      {
+        icon: "Users",
+        title: "Employee Management",
+        description:
+          "Onboarding flows, department hierarchy, and profile records for the full employee lifecycle.",
+      },
+      {
+        icon: "CalendarCheck",
+        title: "Attendance & Leave Approvals",
+        description:
+          "Attendance tracking and leave requests with multi-step approval workflows.",
+      },
+      {
+        icon: "UserPlus",
+        title: "Hiring & Recruitment",
+        description:
+          "Candidate pipeline module for tracking applicants through hiring stages.",
+      },
+      {
+        icon: "Kanban",
+        title: "Project & Task Tracking",
+        description:
+          "Project management module for task assignment and team progress tracking.",
+      },
+      {
+        icon: "Lock",
+        title: "Secure Portal Access",
+        description:
+          "Authenticated employee portal with login and password recovery for workforce access.",
+      },
+    ],
+    technicalDecisions: [
+      {
+        title: "Permissions as data, not code",
+        content:
+          "RBAC is admin-configurable so organizations can evolve roles without shipping a new release for every permission change.",
+      },
+      {
+        title: "Approval workflows as first-class state machines",
+        content:
+          "Leave and attendance approvals use explicit multi-step states so auditability and accountability stay clear.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Hardcoded permissions blocked different client org structures.",
+        solution:
+          "Built a dynamic RBAC matrix configurable from the admin panel.",
+      },
+    ],
+    performanceMetrics: [
+      { label: "Core modules", value: "5+" },
+      { label: "Access model", value: "Dynamic RBAC" },
+      { label: "Status", value: "Live beta" },
+    ],
+    testCount: "Production QA",
+    testCoverage: "Live product",
+  },
+  {
+    id: "padel-connect",
+    slug: "padel-connect",
+    title: "Padel Connect — Club & Matchmaking Platform",
+    shortDescription:
+      "Smart padel platform with club-owner dashboard, skill-based matchmaking, player app flows, and subscription landing.",
+    longDescription:
+      "Padel Connect is a dual-sided sports platform: a club-owner web dashboard for managing matches, player-level upgrades, and club operations; skill-level matchmaking for fair pairing; player-facing mobile flows to view/join matches, approve or decline requests, and track availability; plus a marketing landing with feature sections, pricing tiers, store CTAs, and subscription-based access.",
+    category: ["full-stack", "frontend", "real-time"],
+    status: "completed",
+    year: "2025",
+    isFeatured: true,
+    heroImage: "/images/projects/live/padel-connect.png",
+    screenshots: ["/images/projects/live/padel-connect.png"],
+    liveUrl: "https://padel-fe.vercel.app",
+    techStack: [
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
+      { name: "React Native", color: "#FFFFFF", bgColor: "#0A0A0A" },
+      { name: "Node.js", color: "#FFFFFF", bgColor: "#539E43" },
+      { name: "Tailwind CSS", color: "#FFFFFF", bgColor: "#0F172A" },
+    ],
+    badges: [
+      { label: "Club Dashboard", icon: "LayoutDashboard" },
+      { label: "Matchmaking", icon: "Users" },
+      { label: "Mobile App", icon: "Smartphone" },
+      { label: "Subscriptions", icon: "CreditCard" },
+    ],
+    features: [
+      {
+        icon: "LayoutDashboard",
+        title: "Club-Owner Dashboard",
+        description:
+          "Web dashboard for managing matches, approving player-level upgrade requests, and overseeing club operations.",
+      },
+      {
+        icon: "Users",
+        title: "Skill-Based Matchmaking",
+        description:
+          "Matchmaking logic pairs players by skill level so games stay competitive and fair.",
+      },
+      {
+        icon: "Smartphone",
+        title: "Player Mobile Flows",
+        description:
+          "Core screens for viewing/joining matches, approving or declining requests, and tracking availability.",
+      },
+      {
+        icon: "Megaphone",
+        title: "Marketing Landing",
+        description:
+          "Growth landing with feature sections, pricing tiers, and App Store / Play Store integration points.",
+      },
+      {
+        icon: "CreditCard",
+        title: "Subscription Access Model",
+        description:
+          "Tiered plans control platform access for clubs and players.",
+      },
+      {
+        icon: "Trophy",
+        title: "Dual Product Surface",
+        description:
+          "One system serving club operators and players with synchronized match and availability workflows.",
+      },
+    ],
+    technicalDecisions: [
+      {
+        title: "Skill as the matchmaking primitive",
+        content:
+          "Pairing is driven by skill level so club quality and player retention stay higher than random open matches.",
+      },
+      {
+        title: "Club ops + player app as one product",
+        content:
+          "Approvals, upgrades, and availability are shared across dashboard and mobile so operations stay consistent.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Clubs needed operations control while players needed a fast mobile match experience.",
+        solution:
+          "Split surfaces — web dashboard for clubs, mobile flows for players — on shared matchmaking rules.",
+      },
+    ],
+    performanceMetrics: [
+      { label: "Surfaces", value: "Web + Mobile" },
+      { label: "Model", value: "Subscriptions" },
+      { label: "Status", value: "Live" },
+    ],
+    testCount: "Production QA",
+    testCoverage: "Live product",
+  },
 
   {
     id: "1",
@@ -13,7 +388,7 @@ export const projects: Project[] = [
     category: ["full-stack", "performance"],
     status: "completed",
     year: "2025",
-    isFeatured: true,
+    isFeatured: false,
     heroImage: "/images/projects/vendorhub-hero.jpg",
     screenshots: [
       "/images/projects/vendorhub-1.jpg",

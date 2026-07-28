@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { HomeServicesSection } from "@/components/sections/HomeServicesSection";
-import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
+import { HomeFeaturedWorkSection } from "@/components/sections/HomeFeaturedWorkSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutTeaser } from "@/components/sections/AboutTeaser";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -19,7 +19,7 @@ export default function HomePage() {
       <HeroSection />
       <TrustStrip />
       <HomeServicesSection />
-      <FeaturedProjects />
+      <HomeFeaturedWorkSection />
       <StatsSection />
       <AboutTeaser />
       <TestimonialsSection />

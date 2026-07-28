@@ -191,7 +191,7 @@ export const HOME_SERVICES_COPY = {
   title: "Capabilities built",
   titleAccent: "to ship.",
   support:
-    "Full-stack, AI/RAG, cloud, and mobile — scoped clearly and delivered for production teams worldwide.",
+    "End-to-end product engineering across web, AI, cloud, and mobile — from clear scope to production delivery.",
   ctaPrimary: "Start a Project",
   ctaSecondary: "View all services",
   footerLine: "Clear scope · Weekly progress · Production delivery",

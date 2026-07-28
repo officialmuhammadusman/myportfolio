@@ -58,7 +58,7 @@ export function HomeServicesSection() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#FFF7ED]/70 sm:mt-5 sm:text-base md:text-lg">
+          <p className="mx-auto mt-5 max-w-[34rem] text-[0.9375rem] leading-[1.7] text-[#FFF7ED]/78 sm:mt-6 sm:text-base md:text-[1.0625rem]">
             {HOME_SERVICES_COPY.support}
           </p>
         </header>
