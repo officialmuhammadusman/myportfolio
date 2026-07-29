@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" role="img" aria-label="Architect">
+
+<rect x="10" y="12" width="12" height="10" rx="1.5" stroke="#0A0A0A" stroke-width="1.75"/>
+<rect x="26" y="12" width="12" height="10" rx="1.5" stroke="#0A0A0A" stroke-width="1.75"/>
+<rect x="18" y="28" width="12" height="10" rx="1.5" stroke="#0A0A0A" stroke-width="1.75"/>
+<path d="M16 22V25H22V28M32 22V25H26V28" stroke="#0A0A0A" stroke-width="1.6" stroke-linecap="round"/>
+
+</svg>

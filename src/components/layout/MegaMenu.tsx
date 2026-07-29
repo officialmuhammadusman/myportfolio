@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { HERO_STATS } from "@/data/hero";
 import {
   HEADER_MEGA,
@@ -266,19 +266,13 @@ function MegaPromoAside({
   );
 }
 
-export function MegaMenuDropdown({
+function MegaMenuInner({
   megaKey,
   isOpen,
-  reduceMotion,
-  onKeepOpen,
-  onScheduleClose,
   onNavigate,
 }: {
   megaKey: MegaKey;
   isOpen: boolean;
-  reduceMotion: boolean | null;
-  onKeepOpen: () => void;
-  onScheduleClose: () => void;
   onNavigate: () => void;
 }) {
   const panel = HEADER_MEGA[megaKey];
@@ -287,22 +281,7 @@ export function MegaMenuDropdown({
   const sectionCount = sections.length;
 
   return (
-    <motion.div
-      initial={false}
-      animate={
-        reduceMotion
-          ? { opacity: isOpen ? 1 : 0 }
-          : { opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -8 }
-      }
-      transition={{ duration: HEADER_MOTION.panelDuration, ease: HEADER_MOTION.ease }}
-      onMouseEnter={onKeepOpen}
-      onMouseLeave={onScheduleClose}
-      aria-hidden={!isOpen}
-      className={cn(
-        "mega-menu-panel absolute left-0 right-0 overflow-hidden border-b border-[var(--border)]",
-        isOpen ? "pointer-events-auto visible z-[1]" : "pointer-events-none invisible z-0"
-      )}
-    >
+    <>
       <div aria-hidden className="mega-menu-grid-bg pointer-events-none absolute inset-0" />
       <div
         aria-hidden
@@ -378,7 +357,7 @@ export function MegaMenuDropdown({
 
         <MegaPromoAside panel={panel} isOpen={isOpen} onNavigate={onNavigate} />
       </div>
-    </motion.div>
+    </>
   );
 }
 
@@ -396,18 +375,24 @@ export function MegaMenuPanels({
   onNavigate: () => void;
 }) {
   return (
-    <>
-      {(Object.keys(HEADER_MEGA) as MegaKey[]).map((key) => (
-        <MegaMenuDropdown
-          key={key}
-          megaKey={key}
-          isOpen={openMega === key}
-          reduceMotion={reduceMotion}
-          onKeepOpen={() => keepOpen(key)}
-          onScheduleClose={scheduleClose}
-          onNavigate={onNavigate}
-        />
-      ))}
-    </>
+    <AnimatePresence initial={false}>
+      {openMega && (
+        <motion.div
+          key="mega-menu-shell"
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -3 }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -3 }}
+          transition={{
+            duration: HEADER_MOTION.panelDuration,
+            ease: HEADER_MOTION.ease,
+          }}
+          onMouseEnter={() => keepOpen(openMega)}
+          onMouseLeave={scheduleClose}
+          className="mega-menu-panel pointer-events-auto absolute left-0 right-0 z-[1] overflow-hidden border-b border-[var(--border)]"
+        >
+          <MegaMenuInner megaKey={openMega} isOpen onNavigate={onNavigate} />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

@@ -44,11 +44,11 @@ export function TrustStrip() {
         >
           {/* Row 1 — Availability + regions */}
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col items-center gap-3 text-center lg:items-start lg:text-left">
               <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#FF6A00] sm:text-[11px]">
                 {TRUST_STRIP.eyebrow}
               </span>
-              <div className="inline-flex items-center gap-2.5">
+              <div className="inline-flex items-center justify-center gap-2.5 lg:justify-start">
                 <span className="relative flex h-2 w-2 shrink-0">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6A00] opacity-50" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#FF6A00] shadow-[0_0_12px_rgba(255,106,0,0.85)]" />

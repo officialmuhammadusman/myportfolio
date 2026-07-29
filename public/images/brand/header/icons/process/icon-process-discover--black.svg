@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" role="img" aria-label="Discover">
+
+<circle cx="24" cy="24" r="14" stroke="#0A0A0A" stroke-width="1.75"/>
+<circle cx="24" cy="24" r="5.5" stroke="#0A0A0A" stroke-width="1.75"/>
+<circle cx="24" cy="24" r="2" fill="#0A0A0A"/>
+<line x1="34" y1="34" x2="40" y2="40" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round"/>
+
+</svg>

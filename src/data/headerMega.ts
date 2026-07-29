@@ -617,9 +617,9 @@ export const HEADER_MEGA: Record<string, MegaPanel> = {
 };
 
 export const HEADER_MOTION = {
-  openDelayMs: 60,
-  closeDelayMs: 160,
-  panelDuration: 0.2,
+  openDelayMs: 0,
+  closeDelayMs: 100,
+  panelDuration: 0.14,
   itemStagger: 0,
   ease: [0.22, 1, 0.36, 1] as const,
 } as const;

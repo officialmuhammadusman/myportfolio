@@ -33,6 +33,15 @@ export const brandIcons = {
     caseStudy: `${HEADER}/icons/work/icon-work-case-study`,
     liveDemo: `${HEADER}/icons/work/icon-work-live-demo`,
   },
+  process: {
+    discover: `${HEADER}/icons/process/icon-process-discover`,
+    architect: `${HEADER}/icons/process/icon-process-architect`,
+    build: `${HEADER}/icons/process/icon-process-build`,
+    launch: `${HEADER}/icons/process/icon-process-launch`,
+    partnership: `${HEADER}/icons/process/icon-process-partnership`,
+    visibility: `${HEADER}/icons/process/icon-process-visibility`,
+    production: `${HEADER}/icons/process/icon-process-production`,
+  },
   about: {
     story: `${HEADER}/icons/about/icon-about-story`,
     skills: `${HEADER}/icons/about/icon-about-skills`,
@@ -78,6 +87,10 @@ export const brandIcons = {
     glowOrb: `${HEADER}/images/header-glow-orb.png`,
     servicesAtmosphere: `${HEADER}/images/img-services-atmosphere-plate.webp`,
     servicesFeatured: `${HEADER}/images/img-services-featured-panel.webp`,
+    processDiscover: `${HEADER}/images/process-01-discover.webp`,
+    processArchitect: `${HEADER}/images/process-02-architect.webp`,
+    processBuild: `${HEADER}/images/process-03-build.webp`,
+    processLaunch: `${HEADER}/images/process-04-launch.webp`,
   },
   muMark: `${HEADER}/mu-mark.svg`,
 } as const;

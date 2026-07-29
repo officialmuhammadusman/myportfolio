@@ -42,13 +42,11 @@ export function Navbar() {
 
   const [openMega, setOpenMega] = useState<MegaKey | null>(null);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>("services");
-  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useLockBodyScroll(isMobileMenuOpen);
 
   const clearTimers = () => {
-    if (openTimer.current) clearTimeout(openTimer.current);
     if (closeTimer.current) clearTimeout(closeTimer.current);
   };
 
@@ -79,7 +77,7 @@ export function Navbar() {
 
   const scheduleOpen = (key: MegaKey) => {
     clearTimers();
-    openTimer.current = setTimeout(() => setOpenMega(key), HEADER_MOTION.openDelayMs);
+    setOpenMega(key);
   };
 
   const scheduleClose = () => {
@@ -107,8 +105,8 @@ export function Navbar() {
 
   const headerElevated = isScrolled || !!openMega || isMobileMenuOpen;
   const isHome = pathname === "/";
-  const isHeroOverlay =
-    isHome && !isScrolled && !openMega && !isMobileMenuOpen;
+  const isHeaderOnHero = isHome && !isScrolled && !isMobileMenuOpen;
+  const isHeroGlass = isHeaderOnHero && !openMega;
 
   const whatsappUrl =
     SOCIAL_LINKS.find((s) => s.icon === "whatsapp")?.url ?? "/contact";
@@ -135,10 +133,10 @@ export function Navbar() {
           "fixed top-0 left-0 right-0 w-full transition-[background,box-shadow] duration-300",
           isMobileMenuOpen
             ? "bg-[#0A0A0A]"
-            : isHeroOverlay
+            : isHeroGlass
               ? "bg-[#0A0A0A]/35 backdrop-blur-xl"
               : "bg-[var(--bg-primary)]",
-          isHeroOverlay && "shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
+          isHeroGlass && "shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
         )}
       >
         {/* Utility strip — always opaque */}
@@ -147,7 +145,7 @@ export function Navbar() {
             "hidden border-b transition-colors duration-300 md:block",
             isMobileMenuOpen
               ? "border-white/10 bg-[#0A0A0A] text-[#FFF7ED]/70"
-              : isHeroOverlay
+              : isHeroGlass
                 ? "border-white/10 bg-black/20 text-[#FFF7ED]/75"
                 : "border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
           )}
@@ -156,7 +154,7 @@ export function Navbar() {
             <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
               <BrandIcon
                 base={brandIcons.ui.availability}
-                tone={isHeroOverlay || isMobileMenuOpen ? "orange" : "base"}
+                tone={isHeroGlass || isMobileMenuOpen ? "orange" : "base"}
                 size={10}
               />
               <span className="shrink-0">{PERSONAL_INFO.availabilityText}</span>
@@ -172,12 +170,12 @@ export function Navbar() {
                 rel="noopener noreferrer"
                 className={cn(
                   "hidden items-center gap-1.5 transition-colors hover:text-[#FF6A00] lg:inline-flex",
-                  isHeroOverlay || isMobileMenuOpen ? "text-[#FFF7ED]/80" : ""
+                  isHeroGlass || isMobileMenuOpen ? "text-[#FFF7ED]/80" : ""
                 )}
               >
                 <BrandIcon
                   base={brandIcons.cta.whatsapp}
-                  tone={isHeroOverlay || isMobileMenuOpen ? "orange" : "orange"}
+                  tone={isHeroGlass || isMobileMenuOpen ? "orange" : "orange"}
                   size={14}
                 />
                 WhatsApp
@@ -186,7 +184,7 @@ export function Navbar() {
                 href={`mailto:${PERSONAL_INFO.email}`}
                 className={cn(
                   "inline-flex items-center gap-1.5 transition-colors hover:text-[#FF6A00]",
-                  isHeroOverlay ? "text-[#FFF7ED]/85" : ""
+                  isHeroGlass ? "text-[#FFF7ED]/85" : ""
                 )}
               >
               <BrandIcon
@@ -206,10 +204,10 @@ export function Navbar() {
             "border-b transition-all duration-300",
             isMobileMenuOpen
               ? "border-white/10 bg-[#0A0A0A]"
-              : isHeroOverlay
+              : isHeroGlass
                 ? "border-white/10 bg-transparent"
                 : "border-[var(--border)] bg-[var(--bg-primary)]",
-            headerElevated && !isMobileMenuOpen && !isHeroOverlay && "shadow-[var(--shadow-sm)]"
+            headerElevated && !isMobileMenuOpen && !isHeroGlass && "shadow-[var(--shadow-sm)]"
           )}
         >
           <nav className="layout-wrap flex h-[68px] w-full items-center justify-between gap-3 md:gap-5 lg:gap-6">
@@ -272,7 +270,7 @@ export function Navbar() {
                           "inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors lg:text-[15px]",
                           active || isOpen
                             ? "text-[#FF6A00]"
-                            : isHeroOverlay
+                            : isHeroGlass
                               ? "text-[#FFF7ED]/75 hover:text-[#FFF7ED]"
                               : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         )}
@@ -280,7 +278,7 @@ export function Navbar() {
                         {link.label}
                           <BrandIcon
                             base={brandIcons.ui.chevron}
-                            tone={active || isOpen ? "orange" : isHeroOverlay ? "white" : "base"}
+                            tone={active || isOpen ? "orange" : isHeroGlass ? "white" : "base"}
                             size={14}
                             className={cn(
                               "shrink-0 transition-transform duration-200",
@@ -300,7 +298,7 @@ export function Navbar() {
                         "relative block rounded-md px-3 py-2 text-sm font-medium transition-colors lg:text-[15px]",
                         active
                           ? "text-[#FF6A00]"
-                          : isHeroOverlay
+                          : isHeroGlass
                             ? "text-[#FFF7ED]/75 hover:text-[#FFF7ED]"
                             : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                       )}
@@ -332,7 +330,7 @@ export function Navbar() {
                     "hidden h-10 w-10 items-center justify-center rounded-full border transition-colors lg:flex",
                     isMobileMenuOpen
                       ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
-                      : isHeroOverlay
+                      : isHeroGlass
                         ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
                         : "border-[var(--border)] hover:border-[#FF6A00]/40"
                   )}
@@ -349,7 +347,7 @@ export function Navbar() {
                       <BrandIcon
                         base={isDark ? brandIcons.ui.sun : brandIcons.ui.moon}
                         tone={
-                          isMobileMenuOpen || isDark || isHeroOverlay ? "orange" : "black"
+                          isMobileMenuOpen || isDark || isHeroGlass ? "orange" : "black"
                         }
                         size={18}
                       />
@@ -364,7 +362,7 @@ export function Navbar() {
                 rel="noopener noreferrer"
                 className={cn(
                   "btn-action btn-action-accent !hidden !w-auto !px-4 !py-2.5 !text-xs lg:!inline-flex lg:!px-5 lg:!py-2.5 lg:!text-[13px]",
-                  !isHeroOverlay &&
+                  !isHeroGlass &&
                     "border-[var(--border)] !bg-transparent text-[var(--text-primary)] hover:border-[#FF6A00]/45 hover:!bg-[#FF6A00]/08"
                 )}
               >
@@ -383,7 +381,7 @@ export function Navbar() {
               <BrandMenuToggle
                 open={isMobileMenuOpen}
                 onClick={() => dispatch(toggleMobileMenu())}
-                tone={isMobileMenuOpen || isHeroOverlay ? "dark" : "light"}
+                tone={isMobileMenuOpen || isHeroGlass ? "dark" : "light"}
                 className="lg:hidden"
               />
             </div>

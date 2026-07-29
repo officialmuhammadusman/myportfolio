@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" role="img" aria-label="Production-first">
+
+<path d="M14 30V18L24 12L34 18V30L24 36L14 30Z" stroke="#FF6A00" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M24 12V36M14 18L34 30M34 18L14 30" stroke="#FF6A00" stroke-width="1.35" opacity="0.85"/>
+
+</svg>
