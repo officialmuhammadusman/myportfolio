@@ -329,7 +329,7 @@ export function Navbar() {
                   }}
                   aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                   className={cn(
-                    "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
+                    "hidden h-10 w-10 items-center justify-center rounded-full border transition-colors lg:flex",
                     isMobileMenuOpen
                       ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
                       : isHeroOverlay
@@ -363,10 +363,9 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "hidden items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] transition-all duration-250 md:inline-flex lg:px-5 lg:py-3 lg:text-sm",
-                  isHeroOverlay
-                    ? "border-white/25 bg-white/5 text-[#FFF7ED] hover:border-[#FF6A00]/60 hover:bg-white/10"
-                    : "border-[var(--border)] text-[var(--text-primary)] hover:border-[#FF6A00]/40"
+                  "btn-action btn-action-accent !hidden !w-auto !px-4 !py-2.5 !text-xs lg:!inline-flex lg:!px-5 lg:!py-2.5 lg:!text-[13px]",
+                  !isHeroOverlay &&
+                    "border-[var(--border)] !bg-transparent text-[var(--text-primary)] hover:border-[#FF6A00]/45 hover:!bg-[#FF6A00]/08"
                 )}
               >
                 <BrandIcon base={brandIcons.cta.whatsapp} tone="orange" size={16} />
@@ -375,11 +374,10 @@ export function Navbar() {
 
               <Link
                 href="/contact"
-                className="hidden items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition-all duration-250 hover:brightness-110 hover:shadow-[0_8px_28px_rgba(255,106,0,0.35)] md:inline-flex md:px-6 md:py-3 md:text-sm"
-                style={{ background: "#FF6A00" }}
+                className="btn-action btn-action-primary !hidden !w-auto !px-5 !py-2.5 !text-xs lg:!inline-flex lg:!px-6 lg:!py-2.5 lg:!text-[13px]"
               >
                 Let&apos;s Talk
-                <BrandIcon base={brandIcons.cta.startProject} tone="white" size={14} />
+                <BrandIcon base={brandIcons.cta.startProject} tone="black" size={14} />
               </Link>
 
               <BrandMenuToggle
@@ -644,11 +642,10 @@ export function Navbar() {
 
                 <Link
                   href="/contact"
-                  className="flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white"
-                  style={{ background: "#FF6A00" }}
+                  className="btn-action btn-action-primary w-full"
                 >
                   Let&apos;s Talk
-                  <BrandIcon base={brandIcons.cta.letsTalk} tone="white" size={14} />
+                  <BrandIcon base={brandIcons.cta.letsTalk} tone="black" size={14} />
                 </Link>
               </motion.div>
             </motion.div>

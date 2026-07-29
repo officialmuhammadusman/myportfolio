@@ -56,7 +56,7 @@ export function HomeFeaturedWorkSection() {
           </p>
         </header>
 
-        <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+        <div className="space-y-3 sm:space-y-4 lg:space-y-5">
           {HOME_FEATURED_CASES.map((item, index) => (
             <CaseStrip
               key={item.id}
@@ -68,10 +68,10 @@ export function HomeFeaturedWorkSection() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:mt-12 lg:mt-14">
+        <div className="mt-10 flex w-full flex-col gap-2.5 sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 lg:mt-14">
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-[#FF6A00] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0A0A0A] transition-all duration-300 hover:bg-[#E85D00] hover:shadow-[0_12px_40px_rgba(255,106,0,0.4)] sm:px-7 sm:text-[13px]"
+            className="btn-action btn-action-primary group"
           >
             {HOME_FEATURED_WORK_COPY.footerCtaPrimary}
             <BrandIcon
@@ -83,7 +83,7 @@ export function HomeFeaturedWorkSection() {
           </Link>
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/[0.05] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#FFF7ED] backdrop-blur-sm transition-all duration-300 hover:border-[#FF6A00]/55 hover:bg-white/[0.08] sm:px-7 sm:text-[13px]"
+            className="btn-action btn-action-secondary group"
           >
             {HOME_FEATURED_WORK_COPY.footerCtaSecondary}
             <ArrowUpRight
@@ -148,7 +148,7 @@ function CaseStrip({
           <div
             className={cn(
               "relative w-full overflow-hidden bg-[#0A0A0A]",
-              featured ? "aspect-[16/10] sm:aspect-[16/9]" : "aspect-[16/10]"
+              featured ? "aspect-[16/11] sm:aspect-[16/10]" : "aspect-[16/11]"
             )}
           >
             <Image
@@ -186,8 +186,8 @@ function CaseStrip({
         </Link>
 
         {/* Copy column */}
-        <div className="relative flex flex-col justify-center px-5 py-6 sm:px-7 sm:py-8 lg:px-9 lg:py-10 xl:px-11">
-          <div className="mb-4 flex items-center gap-3 sm:mb-5">
+        <div className="relative flex flex-col justify-center px-4 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7 xl:px-8">
+          <div className="mb-3 flex items-center gap-3 sm:mb-4">
             <span className="font-display text-sm font-semibold tracking-[0.08em] text-[#FF6A00]/90 sm:text-base">
               {caseItem.index}
             </span>
@@ -197,7 +197,7 @@ function CaseStrip({
             </span>
           </div>
 
-          <h3 className="font-display text-[1.65rem] leading-[1.1] tracking-[-0.025em] text-[#FFF7ED] sm:text-3xl lg:text-[2.15rem]">
+          <h3 className="font-display text-[1.35rem] leading-[1.12] tracking-[-0.025em] text-[#FFF7ED] sm:text-2xl lg:text-[1.75rem]">
             <Link
               href={`/projects/${caseItem.slug}`}
               className="transition-colors duration-300 hover:text-[#FFB347]"
@@ -206,15 +206,15 @@ function CaseStrip({
             </Link>
           </h3>
 
-          <p className="mt-2 text-sm font-medium leading-snug text-[#FFF7ED]/88 sm:mt-3 sm:text-base lg:text-[1.0625rem]">
+          <p className="mt-1.5 text-sm font-medium leading-snug text-[#FFF7ED]/88 sm:mt-2 sm:text-[0.9375rem]">
             {caseItem.headline}
           </p>
 
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-[#FFF7ED]/58 sm:mt-4 sm:text-[0.9375rem]">
+          <p className="mt-2.5 max-w-md text-[13px] leading-relaxed text-[#FFF7ED]/58 sm:mt-3 sm:text-sm">
             {caseItem.summary}
           </p>
 
-          <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
+          <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
             {caseItem.stack.map((tech) => (
               <span
                 key={tech}
@@ -225,10 +225,10 @@ function CaseStrip({
             ))}
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
+          <div className="mt-5 btn-action-row sm:mt-6">
             <Link
               href={`/projects/${caseItem.slug}`}
-              className="group/case inline-flex items-center gap-2 rounded-full bg-[#FF6A00] px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#0A0A0A] transition-all duration-300 hover:bg-[#E85D00] hover:shadow-[0_10px_30px_rgba(255,106,0,0.35)] sm:text-xs"
+              className="btn-action btn-action-primary group/case"
             >
               Case study
               <ArrowUpRight
@@ -240,7 +240,7 @@ function CaseStrip({
               href={caseItem.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/live inline-flex items-center gap-2 rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#FFF7ED] transition-all duration-300 hover:border-[#FF6A00]/55 hover:bg-white/[0.05] sm:text-xs"
+              className="btn-action btn-action-secondary group/live"
             >
               Launch live site
               <ExternalLink

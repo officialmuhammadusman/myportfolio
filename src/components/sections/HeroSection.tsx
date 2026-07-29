@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useEffectEvent, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+  type TouchEvent,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,439 +17,425 @@ import {
 import {
   HERO_AUTOPLAY_MS,
   HERO_HEADER_OFFSET,
-  HERO_OBJECT_POSITION,
-  HERO_SERVICE_PILLS,
+  HERO_IMAGE_TOP,
   HERO_SLIDES,
-  HERO_STATS,
-  HERO_TECH_PROOF,
-  HERO_TRUST,
-  HERO_VIEWPORT_MIN_H,
 } from "@/data/hero";
-import { PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
+import { PERSONAL_INFO } from "@/lib/constants";
 import { brandIcons } from "@/lib/brandAssets";
 import { BrandIcon } from "@/components/ui/BrandIcon";
-import { cn } from "@/lib/utils";
 
-const writeEase = [0.4, 0.0, 0.2, 1] as const;
-const CROSSFADE_S = 1.1;
+const cineEase = [0.16, 1, 0.3, 1] as const;
+const FADE_S = 0.28;
 
-type BoardWriteLineProps = {
-  children: ReactNode;
-  delay?: number;
-  duration?: number;
-  reduceMotion: boolean | null;
-  className?: string;
-  showTip?: boolean;
-};
+type Direction = 1 | -1;
 
-function BoardWriteLine({
-  children,
-  delay = 0,
-  duration = 0.9,
+/** Stacked dissolve — previous slide stays painted (no black blink) */
+function HeroSlides({
+  index,
+  underIndex,
   reduceMotion,
-  className,
-  showTip = true,
-}: BoardWriteLineProps) {
-  if (reduceMotion) {
-    return <span className={`block ${className ?? ""}`}>{children}</span>;
-  }
-
+  objectClassName,
+}: {
+  index: number;
+  underIndex: number;
+  reduceMotion: boolean | null;
+  objectClassName: string;
+}) {
   return (
-    <span className={`relative block overflow-hidden ${className ?? ""}`}>
-      <motion.span
-        className="block will-change-[clip-path,transform]"
-        initial={{ clipPath: "inset(0 100% 0 0)", x: -22 }}
-        animate={{ clipPath: "inset(0 -2% 0 0)", x: 0 }}
-        transition={{ duration, delay, ease: writeEase }}
-      >
-        {children}
-      </motion.span>
-      {showTip ? (
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute top-[18%] bottom-[18%] w-[2px] rounded-full bg-[#FF6A00]"
-          style={{ boxShadow: "0 0 10px rgba(255,106,0,0.9)" }}
-          initial={{ left: "0%", opacity: 0 }}
-          animate={{
-            left: ["0%", "100%"],
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration,
-            delay,
-            ease: writeEase,
-            times: [0, 0.06, 0.88, 1],
-          }}
-        />
-      ) : null}
-    </span>
+    <>
+      {HERO_SLIDES.map((slide, i) => {
+        const isActive = i === index;
+        const isUnder = i === underIndex;
+        const visible = isActive || isUnder;
+
+        return (
+          <motion.div
+            key={slide.id}
+            className="absolute inset-0"
+            initial={false}
+            animate={{
+              opacity: visible ? 1 : 0,
+            }}
+            transition={{
+              opacity: {
+                duration:
+                  reduceMotion || !isActive
+                    ? 0
+                    : FADE_S,
+                ease: cineEase,
+              },
+            }}
+            style={{
+              zIndex: isActive ? 2 : isUnder ? 1 : 0,
+              pointerEvents: isActive ? "auto" : "none",
+            }}
+            aria-hidden={!isActive}
+          >
+            <Image
+              src={slide.src}
+              alt={isActive ? slide.alt : ""}
+              fill
+              priority
+              sizes="100vw"
+              quality={90}
+              className={`object-cover ${objectClassName}`}
+            />
+          </motion.div>
+        );
+      })}
+    </>
   );
 }
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [progressKey, setProgressKey] = useState(0);
+  const [underIndex, setUnderIndex] = useState(0);
+  const [direction, setDirection] = useState<Direction>(1);
+  const touchX = useRef<number | null>(null);
 
-  const whatsappUrl =
-    SOCIAL_LINKS.find((s) => s.icon === "whatsapp")?.url ?? "/contact";
+  const goTo = useEffectEvent((next: number, dir?: Direction) => {
+    const len = HERO_SLIDES.length;
+    const normalized = ((next % len) + len) % len;
+    if (normalized === index) return;
 
-  const goTo = useEffectEvent((next: number) => {
-    setIndex((next + HERO_SLIDES.length) % HERO_SLIDES.length);
-    setProgressKey((k) => k + 1);
+    const inferred: Direction =
+      dir ??
+      (normalized === (index + 1) % len
+        ? 1
+        : normalized === (index - 1 + len) % len
+          ? -1
+          : normalized > index
+            ? 1
+            : -1);
+
+    setUnderIndex(index);
+    setDirection(inferred);
+    setIndex(normalized);
   });
 
   useEffect(() => {
-    if (reduceMotion || paused) return;
-    const id = window.setInterval(() => goTo(index + 1), HERO_AUTOPLAY_MS);
+    if (reduceMotion) return;
+    const id = window.setInterval(
+      () => goTo(index + 1, 1),
+      HERO_AUTOPLAY_MS,
+    );
     return () => window.clearInterval(id);
-  }, [index, paused, reduceMotion]);
+  }, [index, reduceMotion]);
 
   const active = HERO_SLIDES[index];
 
+  const onTouchStart = (e: TouchEvent) => {
+    touchX.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (e: TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx =
+      (e.changedTouches[0]?.clientX ?? touchX.current) - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) < 48) return;
+    if (dx < 0) goTo(index + 1, 1);
+    else goTo(index - 1, -1);
+  };
+
   return (
     <section
-      className={`relative isolate flex w-full flex-col overflow-hidden bg-[#0A0A0A] ${HERO_VIEWPORT_MIN_H}`}
+      className="relative isolate flex w-full flex-col overflow-hidden bg-[#0A0A0A] sm:min-h-[100dvh]"
       aria-roledescription="carousel"
       aria-label="Hero"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
-      {/* Background slides */}
-      <div className="absolute inset-0 z-0" aria-live="polite">
-        {HERO_SLIDES.map((slide, i) => {
-          const on = i === index;
-          return (
-            <motion.div
-              key={slide.id}
-              className="absolute inset-0"
-              initial={false}
-              animate={{ opacity: on ? 1 : 0 }}
-              transition={{
-                opacity: {
-                  duration: reduceMotion ? 0 : CROSSFADE_S,
-                  ease: writeEase,
-                },
-              }}
-              style={{ zIndex: on ? 2 : 1 }}
-              aria-hidden={!on}
-            >
-              <motion.div
-                className="absolute inset-0"
-                initial={false}
-                animate={
-                  reduceMotion
-                    ? { scale: 1 }
-                    : on
-                      ? { scale: [1.05, 1] }
-                      : { scale: 1.03 }
-                }
-                transition={
-                  on && !reduceMotion
-                    ? {
-                        scale: {
-                          duration: HERO_AUTOPLAY_MS / 1000,
-                          ease: "linear",
-                          times: [0, 1],
-                        },
-                      }
-                    : {
-                        scale: { duration: CROSSFADE_S, ease: writeEase },
-                      }
-                }
-              >
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  priority={i <= 2}
-                  sizes="100vw"
-                  quality={92}
-                  className="object-cover"
-                  style={{ objectPosition: HERO_OBJECT_POSITION }}
-                />
-              </motion.div>
-            </motion.div>
-          );
-        })}
-
+      {/* Desktop / tablet: full-bleed background */}
+      <div
+        className={`absolute inset-x-0 bottom-0 z-0 hidden sm:block ${HERO_IMAGE_TOP}`}
+        aria-live="polite"
+      >
+        <HeroSlides
+          index={index}
+          underIndex={underIndex}
+          reduceMotion={reduceMotion}
+          objectClassName="object-[60%_28%] lg:object-[68%_30%]"
+        />
         <div
           className="pointer-events-none absolute inset-0 z-[3]"
           style={{
             background: `
-              linear-gradient(105deg,
+              linear-gradient(100deg,
                 rgba(10,10,10,0.97) 0%,
-                rgba(10,10,10,0.9) 34%,
-                rgba(10,10,10,0.55) 58%,
-                rgba(10,10,10,0.25) 78%,
-                rgba(10,10,10,0.4) 100%
+                rgba(10,10,10,0.9) 24%,
+                rgba(10,10,10,0.55) 42%,
+                rgba(10,10,10,0.18) 62%,
+                rgba(10,10,10,0.08) 82%,
+                rgba(10,10,10,0.35) 100%
               ),
               linear-gradient(180deg,
-                rgba(10,10,10,0.55) 0%,
-                transparent 16%,
-                transparent 52%,
+                rgba(10,10,10,0.45) 0%,
+                transparent 14%,
+                transparent 58%,
                 rgba(10,10,10,0.92) 100%
               )
             `,
           }}
         />
         <div
-          className="hero-grid-overlay pointer-events-none absolute inset-0 z-[3] opacity-[0.35]"
           aria-hidden
+          className="pointer-events-none absolute inset-0 z-[4] opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(90deg, transparent, transparent 119px, rgba(255,247,237,0.35) 120px)",
+          }}
         />
       </div>
 
       <div
-        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-6 sm:pb-8 md:pb-10 lg:pb-12`}
+        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-6 sm:pb-10`}
       >
-        <div className="flex flex-1 flex-col justify-center py-6 sm:py-8 lg:py-10">
-          <div className="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl">
-              <motion.div
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-4 flex flex-wrap items-center gap-2 sm:mb-5 sm:gap-3"
-              >
+        <div className="relative flex flex-1 flex-col justify-center py-5 sm:py-8 lg:py-10">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={`ghost-${active.id}`}
+              aria-hidden
+              initial={reduceMotion ? false : { opacity: 0, x: -30 }}
+              animate={{ opacity: 0.06, x: 0 }}
+              exit={
+                reduceMotion
+                  ? undefined
+                  : { opacity: 0, transition: { duration: 0.2 } }
+              }
+              transition={{ duration: 0.55, ease: cineEase }}
+              className="pointer-events-none absolute -left-2 top-1/2 hidden -translate-y-[58%] select-none font-display text-[14rem] leading-none tracking-[-0.08em] text-[#FFF7ED] lg:block xl:text-[16rem]"
+            >
+              {String(index + 1).padStart(2, "0")}
+            </motion.span>
+          </AnimatePresence>
+
+          <div className="relative w-full max-w-2xl lg:max-w-3xl">
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: cineEase }}
+            >
+              <div className="mb-3 hidden items-center gap-3 sm:flex">
                 <Image
                   src={brandIcons.ui.muMarkAnimated}
                   alt=""
-                  width={28}
-                  height={28}
-                  className="mu-mark-animated h-7 w-7"
+                  width={36}
+                  height={36}
+                  className="mu-mark-animated h-8 w-8 sm:h-9 sm:w-9"
                 />
-                <span className="text-sm font-semibold tracking-wide text-[#FFF7ED]/90 lg:text-base">
-                  {PERSONAL_INFO.name}
-                </span>
-                <span className="hidden h-1 w-1 rounded-full bg-[#FF6A00] sm:inline-block" />
-              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#FFB347]/90 lg:text-sm">
-                Full-Stack · AI Engineer
-              </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FFB347] sm:text-xs">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6A00] opacity-60" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF6A00]" />
-                  </span>
-                  Available
-                </span>
-              </motion.div>
-
-              <div className="relative min-h-[9.5rem] sm:min-h-[11rem] md:min-h-[12.5rem] lg:min-h-[13.5rem]">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={active.id}
-                    initial={reduceMotion ? false : { opacity: 1 }}
-                    animate={{ opacity: 1 }}
-                    exit={
-                      reduceMotion
-                        ? undefined
-                        : { opacity: 0, transition: { duration: 0.22 } }
-                    }
-                  >
-                    <div className="mb-3 flex items-center gap-3 sm:mb-4">
-                      <span className="h-px w-6 bg-[#FF6A00] sm:w-8 md:w-10" />
-                      <span className="text-xs font-bold uppercase tracking-[0.24em] text-[#FF6A00] lg:text-sm">
-                        {active.eyebrow}
-                      </span>
-                    </div>
-
-                    <h1 className="font-display text-[2.125rem] leading-[1.05] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]">
-                      <BoardWriteLine reduceMotion={reduceMotion} duration={0.9}>
-                        {active.title}
-                      </BoardWriteLine>
-                      <BoardWriteLine
-                        reduceMotion={reduceMotion}
-                        duration={0.9}
-                        className="mt-1"
-                        showTip={false}
-                      >
-                        <span className="text-gradient italic">{active.titleAccent}</span>
-                      </BoardWriteLine>
-                    </h1>
-
-                    <BoardWriteLine
-                      reduceMotion={reduceMotion}
-                      delay={0.12}
-                      duration={1.05}
-                      showTip={false}
-                      className="mt-4 max-w-xl sm:mt-5 lg:max-w-2xl"
-                    >
-                      <p className="text-sm leading-relaxed text-[#FFF7ED]/78 sm:text-base md:text-lg lg:text-[1.125rem]">
-                        {active.support}
-                      </p>
-                    </BoardWriteLine>
-                  </motion.div>
-                </AnimatePresence>
               </div>
 
-              {/* CTAs */}
+              <p className="text-center font-display text-[1.85rem] leading-[0.95] tracking-[-0.035em] text-[#FFF7ED] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
+                {PERSONAL_INFO.name}
+              </p>
+
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:mt-4 sm:justify-start sm:gap-x-4">
+                <p className="text-center text-[11px] font-bold uppercase tracking-[0.18em] text-[#FF6A00] sm:text-left sm:text-[13px] sm:tracking-[0.22em]">
+                  Full-Stack Developer · AI Engineer
+                </p>
+                <span className="hidden items-center gap-2 text-[11px] font-medium tracking-[0.06em] text-[#FFF7ED]/55 sm:inline-flex">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6A00] opacity-55" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF6A00]" />
+                  </span>
+                  Available for engagement
+                </span>
+              </div>
+
               <motion.div
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+                aria-hidden
+                className="mx-auto mt-3 h-px w-full max-w-[12rem] origin-center bg-gradient-to-r from-transparent via-[#FF6A00] to-transparent sm:mx-0 sm:mt-4 sm:max-w-md sm:origin-left sm:bg-gradient-to-r sm:from-[#FF6A00] sm:via-[#FF6A00]/55 sm:to-transparent"
+                initial={reduceMotion ? false : { scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: cineEase }}
+              />
+
+              {/* Per-slide: 3-word headline + short 2-line description */}
+              <AnimatePresence mode="wait" custom={direction} initial={false}>
+                <motion.div
+                  key={active.id}
+                  custom={direction}
+                  className="mt-5 sm:mt-8"
+                  initial={
+                    reduceMotion
+                      ? false
+                      : (dir: Direction) => ({
+                          opacity: 0,
+                          y: dir >= 0 ? 12 : -12,
+                        })
+                  }
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={
+                    reduceMotion
+                      ? undefined
+                      : (dir: Direction) => ({
+                          opacity: 0,
+                          y: dir >= 0 ? -8 : 8,
+                          transition: { duration: 0.18, ease: cineEase },
+                        })
+                  }
+                  transition={{ duration: 0.32, ease: cineEase }}
+                >
+                  <h1 className="whitespace-nowrap text-center font-display text-[1.7rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-left sm:text-[2.6rem] md:text-[3.15rem] lg:text-[3.6rem]">
+                    {active.title}{" "}
+                    <span className="text-gradient italic">
+                      {active.titleAccent}
+                    </span>
+                  </h1>
+
+                  <p className="mx-auto mt-3 max-w-md text-center text-[14px] leading-[1.55] text-[#FFF7ED]/75 sm:hidden">
+                    {active.supportMobile}
+                  </p>
+                  <p className="mt-4 hidden max-w-xl text-left text-base leading-[1.55] text-[#FFF7ED]/78 sm:block sm:text-lg md:text-[1.1rem] md:leading-[1.55]">
+                    {active.support}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              <div
+                className="mt-6 hidden flex-wrap items-center gap-2 sm:mt-8 sm:flex"
+                role="tablist"
+                aria-label="Focus areas"
               >
+                {HERO_SLIDES.map((slide, i) => {
+                  const on = i === index;
+                  return (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={on}
+                      onClick={() =>
+                        goTo(i, i > index ? 1 : i < index ? -1 : direction)
+                      }
+                      className={`relative rounded-md px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] transition ${
+                        on
+                          ? "bg-[#FF6A00] text-[#0A0A0A]"
+                          : "border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 hover:border-white/25 hover:text-[#FFF7ED]"
+                      }`}
+                    >
+                      {slide.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="mt-5 sm:mt-10"
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: cineEase }}
+            >
+              <p className="mb-4 hidden font-mono text-[10px] uppercase tracking-[0.2em] text-[#FFF7ED]/4 sm:mb-5 sm:block sm:text-[11px]">
+                {PERSONAL_INFO.locationRemote}
+              </p>
+
+              <div className="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row sm:gap-3">
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-[#FF6A00] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0A0A0A] transition-all duration-300 hover:bg-[#E85D00] hover:shadow-[0_12px_40px_rgba(255,106,0,0.42)] sm:px-7 sm:py-4 sm:text-sm"
+                  className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
                 >
                   Start a Project
-                  <BrandIcon base={brandIcons.cta.startProject} tone="black" size={16} />
+                  <BrandIcon
+                    base={brandIcons.cta.startProject}
+                    tone="black"
+                    size={16}
+                  />
                 </Link>
                 <Link
                   href="/projects"
-                  className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-white/25 bg-white/[0.06] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#FFF7ED] backdrop-blur-md transition-all duration-300 hover:border-[#FF6A00]/55 hover:bg-white/[0.1] sm:px-7 sm:py-4 sm:text-sm"
+                  className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
                 >
                   View Work
-                  <BrandIcon base={brandIcons.work.featured} tone="orange" size={16} />
+                  <BrandIcon
+                    base={brandIcons.work.featured}
+                    tone="black"
+                    size={16}
+                  />
                 </Link>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#FF6A00]/35 bg-[#FF6A00]/10 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#FFB347] transition-all duration-300 hover:bg-[#FF6A00]/18 sm:px-7 sm:py-4 sm:text-sm"
-                >
-                  WhatsApp
-                  <BrandIcon base={brandIcons.cta.whatsapp} tone="orange" size={16} />
-                </a>
-              </motion.div>
+              </div>
+            </motion.div>
+          </div>
 
-              {/* Stats */}
-              <motion.div
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 grid grid-cols-2 gap-3 sm:mt-7 sm:grid-cols-4 sm:gap-4"
-              >
-                {HERO_STATS.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 backdrop-blur-sm sm:px-4 sm:py-3.5"
-                  >
-                    <p className="font-display text-xl font-semibold text-[#FFF7ED] sm:text-2xl">
-                      {stat.value}
-                    </p>
-                    <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-[#FFF7ED]/50 sm:text-[11px]">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* Service pills */}
-              <motion.div
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-5 flex flex-wrap gap-2 sm:mt-6"
-              >
-                {HERO_SERVICE_PILLS.map((pill) => (
-                  <span
-                    key={pill}
-                    className="rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/8 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#FFB347]/90 sm:text-[11px]"
-                  >
-                    {pill}
-                  </span>
-                ))}
-              </motion.div>
-
-              {/* Tech proof + trust */}
-              <motion.div
-                initial={false}
-                animate={{ opacity: 1 }}
-                className="mt-5 space-y-3 sm:mt-6"
-              >
-                <div className="flex flex-wrap gap-2">
-                  {HERO_TECH_PROOF.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-white/10 bg-black/25 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#FFF7ED]/55 sm:text-[11px]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <ul className="flex flex-wrap items-center gap-x-1 gap-y-2">
-                  {HERO_TRUST.map((item, i) => (
-                    <li key={item} className="flex items-center gap-2">
-                      {i > 0 && (
-                        <span className="mx-1 hidden h-1 w-1 rounded-full bg-[#FF6A00]/70 sm:inline-block" />
-                      )}
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#FFF7ED]/48 sm:text-xs">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+          {/* Mobile: image stacked below text (not behind) */}
+          <div
+            className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 sm:hidden"
+            aria-live="polite"
+          >
+            <HeroSlides
+              index={index}
+              underIndex={underIndex}
+              reduceMotion={reduceMotion}
+              objectClassName="object-[88%_30%]"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 z-[3]"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(10,10,10,0.15) 0%, transparent 35%, rgba(10,10,10,0.45) 100%)",
+              }}
+            />
           </div>
         </div>
 
-        {/* Slide navigator with labels */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative z-20 mt-4 w-full sm:mt-5"
-          role="tablist"
-          aria-label="Hero scenes"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-              setPaused(false);
-            }
-          }}
-        >
-          <div className="mb-2 hidden items-center justify-between gap-4 sm:flex">
-            {HERO_SLIDES.map((slide, i) => {
-              const on = i === index;
-              return (
-                <button
-                  key={`label-${slide.id}`}
-                  type="button"
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "text-[10px] font-bold uppercase tracking-[0.18em] transition-colors md:text-[11px]",
-                    on ? "text-[#FF6A00]" : "text-[#FFF7ED]/35 hover:text-[#FFF7ED]/60"
-                  )}
-                >
-                  {slide.label}
-                </button>
-              );
-            })}
-          </div>
-          <div className="flex items-center gap-2">
-            {HERO_SLIDES.map((slide, i) => {
-              const on = i === index;
-              return (
-                <button
-                  key={slide.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={on}
-                  aria-label={slide.label}
-                  onClick={() => goTo(i)}
-                  className="group relative h-1.5 flex-1 overflow-hidden rounded-full bg-white/20 transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A00]"
-                >
-                  {on && !reduceMotion ? (
-                    <span
-                      key={progressKey}
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#FF6A00] to-[#FFB347]"
-                      style={{
-                        width: "100%",
-                        transformOrigin: "left center",
-                        transform: "scaleX(0)",
-                        animation: `mu-hero-progress ${HERO_AUTOPLAY_MS}ms linear forwards`,
-                        animationPlayState: paused ? "paused" : "running",
+        <div className="mt-5 flex w-full justify-center pb-1 sm:mt-auto">
+          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-[#0A0A0A]/6 px-3.5 py-2.5 backdrop-blur-md sm:gap-4 sm:px-5">
+            <button
+              type="button"
+              aria-label="Previous slide"
+              onClick={() => goTo(index - 1, -1)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00]"
+            >
+              ‹
+            </button>
+
+            <div
+              className="flex items-center gap-2"
+              role="tablist"
+              aria-label="Hero slides"
+            >
+              {HERO_SLIDES.map((slide, i) => {
+                const on = i === index;
+                return (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={on}
+                    aria-label={`Go to slide ${i + 1}: ${slide.label}`}
+                    onClick={() =>
+                      goTo(i, i > index ? 1 : i < index ? -1 : direction)
+                    }
+                    className="flex h-7 items-center justify-center"
+                  >
+                    <motion.span
+                      className="block h-1.5 rounded-full"
+                      animate={{
+                        width: on ? 28 : 8,
+                        backgroundColor: on
+                          ? "#FF6A00"
+                          : "rgba(255,247,237,0.35)",
                       }}
+                      transition={{ duration: 0.25, ease: cineEase }}
                     />
-                  ) : (
-                    <span
-                      className={`absolute inset-0 rounded-full transition-opacity duration-300 ${
-                        on ? "bg-[#FF6A00] opacity-100" : "opacity-0"
-                      }`}
-                    />
-                  )}
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              aria-label="Next slide"
+              onClick={() => goTo(index + 1, 1)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00]"
+            >
+              ›
+            </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

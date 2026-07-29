@@ -1,5 +1,10 @@
 const BASE = "/muhammad_usman_hero_slider_updated";
 
+export interface HeroStat {
+  value: string;
+  label: string;
+}
+
 export interface HeroSlide {
   id: string;
   src: string;
@@ -7,14 +12,18 @@ export interface HeroSlide {
   alt: string;
   label: string;
   eyebrow: string;
+  /** Short headline lead (≈2 words) */
   title: string;
+  /** Accent word — full headline ≈ 3 short words */
   titleAccent: string;
+  /** Desktop: ~2 short lines */
   support: string;
-}
-
-export interface HeroStat {
-  value: string;
-  label: string;
+  /** Mobile: shorter, still accurate */
+  supportMobile: string;
+  stats: HeroStat[];
+  pills: string[];
+  tech: string[];
+  trust: string[];
 }
 
 export const HERO_SLIDES: HeroSlide[] = [
@@ -24,11 +33,29 @@ export const HERO_SLIDES: HeroSlide[] = [
     src4k: `${BASE}/4k/01-hero-laptop-primary-16x9-3840x2160.jpg`,
     alt: "Muhammad Usman — full-stack & SaaS product engineering",
     label: "SaaS",
-    eyebrow: "Full-Stack · SaaS · Custom Software",
-    title: "Ship SaaS & custom",
-    titleAccent: "software that scales.",
+    eyebrow: "Full-Stack Developer",
+    title: "Scale your",
+    titleAccent: "SaaS.",
     support:
-      "Production-ready platforms — dashboards, billing, RBAC, subscriptions & business workflows — built with Next.js, React, TypeScript, Node.js, and PostgreSQL.",
+      "Revenue-ready platforms with billing, dashboards, and access control. Built to launch and grow with your users.",
+    supportMobile:
+      "Billing, dashboards, and access control. Built to launch fast. Ready to grow with your users.",
+    stats: [
+      { value: "5+", label: "SaaS modules shipped" },
+      { value: "RBAC", label: "Roles & permissions" },
+      { value: "Live", label: "Billing & subscriptions" },
+      { value: "24h", label: "Client response" },
+    ],
+    pills: [
+      "SaaS platforms",
+      "Dashboards",
+      "Billing",
+      "RBAC",
+      "Multi-tenant",
+      "Custom software",
+    ],
+    tech: ["Next.js 15", "React", "TypeScript", "Node.js", "PostgreSQL", "Stripe"],
+    trust: ["Full-stack product engineering", "Production SaaS delivery", "Clear weekly milestones"],
   },
   {
     id: "desk-trust",
@@ -36,11 +63,29 @@ export const HERO_SLIDES: HeroSlide[] = [
     src4k: `${BASE}/4k/02-hero-desk-trust-16x9-3840x2160.jpg`,
     alt: "Muhammad Usman — AI and RAG engineering",
     label: "AI",
-    eyebrow: "AI Engineer · RAG · LangGraph",
-    title: "Build AI & RAG systems",
-    titleAccent: "that stay grounded.",
+    eyebrow: "AI Engineer",
+    title: "Ground your",
+    titleAccent: "AI.",
     support:
-      "LLM integrations with LangChain & LangGraph — Corrective RAG, Self-RAG, multi-agent supervisors, Pinecone/ChromaDB retrieval & SQL agents for production use.",
+      "Intelligent systems tied to your business data. Accurate answers, clear accountability, ready for live products.",
+    supportMobile:
+      "AI grounded in your business data. Accurate answers you can trust. Built for live products.",
+    stats: [
+      { value: "RAG", label: "Grounded answers" },
+      { value: "Agents", label: "LangGraph workflows" },
+      { value: "SQL", label: "Data-aware agents" },
+      { value: "Prod", label: "LLM features live" },
+    ],
+    pills: [
+      "Corrective RAG",
+      "Self-RAG",
+      "Multi-agent",
+      "Vector search",
+      "SQL agents",
+      "OpenAI / Gemini",
+    ],
+    tech: ["LangGraph", "LangChain", "OpenAI", "Pinecone", "ChromaDB", "Python"],
+    trust: ["AI that stays grounded", "Production LLM pipelines", "Tool-calling & supervisors"],
   },
   {
     id: "thinking-plan",
@@ -48,11 +93,29 @@ export const HERO_SLIDES: HeroSlide[] = [
     src4k: `${BASE}/4k/03-hero-thinking-plan-16x9-3840x2160.jpg`,
     alt: "Muhammad Usman — mobile and web app development",
     label: "Mobile",
-    eyebrow: "Web Apps · React Native · APIs",
-    title: "Web & mobile apps",
-    titleAccent: "from one engineer.",
+    eyebrow: "Full-Stack Developer",
+    title: "Web to",
+    titleAccent: "mobile.",
     support:
-      "Full-stack web with Next.js plus React Native mobile apps — club dashboards, player flows, realtime features, NestJS/Express APIs & OpenAPI-documented backends.",
+      "One roadmap across web and mobile. Shared APIs, consistent UX, and releases that ship together.",
+    supportMobile:
+      "Web and mobile on one roadmap. Shared APIs and consistent UX. Releases that ship together.",
+    stats: [
+      { value: "Web", label: "Next.js products" },
+      { value: "App", label: "React Native flows" },
+      { value: "API", label: "Nest / Express" },
+      { value: "RT", label: "Realtime sync" },
+    ],
+    pills: [
+      "React Native",
+      "Player apps",
+      "Club dashboards",
+      "Realtime",
+      "REST APIs",
+      "OpenAPI",
+    ],
+    tech: ["React Native", "Next.js", "NestJS", "Socket.io", "PostgreSQL", "Tailwind"],
+    trust: ["Web + mobile together", "Shared API layer", "Realtime-ready delivery"],
   },
   {
     id: "client-delivery",
@@ -60,11 +123,29 @@ export const HERO_SLIDES: HeroSlide[] = [
     src4k: `${BASE}/4k/04-hero-client-delivery-16x9-3840x2160.jpg`,
     alt: "Muhammad Usman — client delivery and telemedicine platforms",
     label: "Deliver",
-    eyebrow: "Telemedicine · HRMS · Marketplaces",
-    title: "Domain modules",
-    titleAccent: "already proven in production.",
+    eyebrow: "Full-Stack Developer",
+    title: "Proven live",
+    titleAccent: "platforms.",
     support:
-      "Telemedicine booking & async reviews, HRMS with dynamic permissions, multi-vendor marketplaces, payments (Stripe/Webpay) & geolocation marketing tools.",
+      "Telemedicine, HRMS, and marketplaces already in production. Real users, payments, and workflows.",
+    supportMobile:
+      "Telemedicine, HRMS, and marketplaces already live. Real users and payments in production. Not slideware demos.",
+    stats: [
+      { value: "Live", label: "Telemedicine flows" },
+      { value: "HR", label: "Dynamic RBAC" },
+      { value: "Pay", label: "Stripe / Webpay" },
+      { value: "Geo", label: "Local marketing" },
+    ],
+    pills: [
+      "Telemedicine",
+      "HRMS",
+      "Marketplaces",
+      "Payments",
+      "Async reviews",
+      "Geo marketing",
+    ],
+    tech: ["Next.js", "PostgreSQL", "Stripe", "Webpay", "RBAC", "Cloudinary"],
+    trust: ["Domain systems shipped", "Payments in production", "Configurable permissions"],
   },
   {
     id: "authority-standing",
@@ -72,51 +153,48 @@ export const HERO_SLIDES: HeroSlide[] = [
     src4k: `${BASE}/4k/05-hero-authority-standing-16x9-3840x2160.jpg`,
     alt: "Muhammad Usman — full-stack AI software agency",
     label: "Partner",
-    eyebrow: "Software Agency · Remote Worldwide",
-    title: "Your full-stack AI",
-    titleAccent: "engineering partner.",
+    eyebrow: "Full-Stack Developer · AI Engineer",
+    title: "Your delivery",
+    titleAccent: "partner.",
     support:
-      "2+ years shipping production systems for founders & businesses — performance, security, maintainability & clear delivery across USA, UK, KSA, UAE & remote.",
+      "Clear scope and weekly progress. Systems that stay yours across USA, UK, KSA, UAE, and remote.",
+    supportMobile:
+      "Clear scope from day one. Weekly delivery you can track. Systems that stay yours worldwide.",
+    stats: [
+      { value: "2+", label: "Years of delivery" },
+      { value: "5", label: "Global markets" },
+      { value: "5+", label: "Products live" },
+      { value: "24h", label: "Client response" },
+    ],
+    pills: [
+      "Full-stack",
+      "AI systems",
+      "SaaS",
+      "Mobile",
+      "APIs",
+      "Remote partnership",
+    ],
+    tech: ["Next.js", "Node.js", "LangGraph", "PostgreSQL", "AWS", "Vercel"],
+    trust: [
+      "USA · UK · KSA · UAE · Remote",
+      "Direct accountable delivery",
+      "Production over prototypes",
+    ],
   },
 ];
 
-export const HERO_STATS: HeroStat[] = [
-  { value: "5+", label: "Products in production" },
-  { value: "2+", label: "Years of delivery" },
-  { value: "5", label: "Global markets" },
-  { value: "24h", label: "Client response" },
-];
-
-export const HERO_TECH_PROOF = [
-  "Next.js 15",
-  "React Native",
-  "NestJS",
-  "PostgreSQL",
-  "LangGraph",
-  "Stripe",
-  "OpenAI",
-  "AWS",
-] as const;
-
-export const HERO_SERVICE_PILLS = [
-  "SaaS platforms",
-  "Custom software",
-  "Mobile apps",
-  "AI / RAG",
-  "Backend APIs",
-  "HRMS & enterprise",
-] as const;
-
 export const HERO_OBJECT_POSITION = "72% center";
 
-export const HERO_TRUST = [
-  "Full-stack · AI engineer",
-  "USA · UK · KSA · UAE · Remote",
-  "SaaS · Mobile · RAG · APIs",
-] as const;
+/** Shared fallback stats (mega menu / global proof) */
+export const HERO_STATS: HeroStat[] =
+  HERO_SLIDES.find((s) => s.id === "authority-standing")?.stats ??
+  HERO_SLIDES[0].stats;
 
-export const HERO_AUTOPLAY_MS = 5000;
+/** Auto-advance every 3 seconds — snappy hold */
+export const HERO_AUTOPLAY_MS = 3000;
 
 export const HERO_VIEWPORT_MIN_H = "min-h-[100dvh]";
 
-export const HERO_HEADER_OFFSET = "pt-[68px] md:pt-[104px]";
+/** Content + image share this top line (clears fixed header) */
+export const HERO_HEADER_OFFSET = "pt-[92px] md:pt-[132px] lg:pt-[140px]";
+export const HERO_IMAGE_TOP = "top-[92px] md:top-[132px] lg:top-[140px]";

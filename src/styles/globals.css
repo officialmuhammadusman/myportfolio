@@ -93,10 +93,10 @@
   --site-header-h: 68px;
 
   /*
-   * Site gutters — mobile/tablet scale up; ALL desktops (lg+) share the same gutter.
-   * Content uses full width minus this padding (no narrow max-width column).
+   * Site gutters — header + body share the same left/right inset.
+   * Mobile/tablet: modest. Desktop → XL → 2XL: progressively roomier.
    */
-  --layout-gutter: 1rem;
+  --layout-gutter: 1.5rem;
   --layout-max: 100%;
 
   --bg-primary:       #FFFBF5;
@@ -143,21 +143,38 @@
 
 @media (min-width: 640px) {
   :root {
-    --layout-gutter: 1.25rem;
+    --layout-gutter: 1.75rem;
   }
 }
 
 @media (min-width: 768px) {
   :root {
     --site-header-h: 104px;
-    --layout-gutter: 1.5rem;
+    --layout-gutter: 2.25rem;
   }
 }
 
-/* lg+ — one consistent desktop gutter on small/large/xl/2xl screens */
 @media (min-width: 1024px) {
   :root {
-    --layout-gutter: 2rem;
+    --layout-gutter: 3.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --layout-gutter: 4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --layout-gutter: 5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --layout-gutter: 6rem;
   }
 }
 
@@ -361,26 +378,84 @@
   }
 
   .container-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--layout-gutter);
+    padding-right: var(--layout-gutter);
+  }
+
+  /* Action buttons — slight radius (not pill), full-width on mobile */
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
   }
   @media (min-width: 640px) {
-    .container-padding { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .btn-action {
+      width: auto;
+      padding: 0.875rem 1.75rem;
+      font-size: 0.8125rem;
+    }
   }
-  @media (min-width: 768px) {
-    .container-padding { padding-left: 2rem; padding-right: 2rem; }
+
+  .btn-action-primary {
+    background: #ff6a00;
+    color: #0a0a0a;
   }
-  @media (min-width: 1024px) {
-    .container-padding { padding-left: 2.5rem; padding-right: 2.5rem; }
+  .btn-action-primary:hover {
+    background: #e85d00;
+    box-shadow: 0 12px 40px rgba(255, 106, 0, 0.4);
   }
-  @media (min-width: 1280px) {
-    .container-padding { padding-left: 3rem; padding-right: 3rem; }
+
+  .btn-action-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff7ed;
+    backdrop-filter: blur(8px);
   }
-  @media (min-width: 1536px) {
-    .container-padding { padding-left: 3.5rem; padding-right: 3.5rem; }
+  .btn-action-secondary:hover {
+    border-color: rgba(255, 106, 0, 0.55);
+    background: rgba(255, 255, 255, 0.08);
   }
-  @media (min-width: 1920px) {
-    .container-padding { padding-left: 4rem; padding-right: 4rem; }
+
+  .btn-action-accent {
+    border: 1px solid rgba(255, 106, 0, 0.35);
+    background: rgba(255, 106, 0, 0.1);
+    color: #ffb347;
+  }
+  .btn-action-accent:hover {
+    background: rgba(255, 106, 0, 0.18);
+  }
+
+  .btn-action-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .btn-action-row > .btn-action {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.6875rem;
+  }
+  @media (min-width: 640px) {
+    .btn-action-row > .btn-action {
+      flex: 0 1 auto;
+      padding-left: 1.75rem;
+      padding-right: 1.75rem;
+      font-size: 0.8125rem;
+    }
   }
 
   .site-container {

@@ -64,7 +64,7 @@ export function HomeServicesSection() {
         </header>
 
         {/* Two-column services — unchanged */}
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:gap-10 xl:gap-14">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(240px,0.75fr)] lg:gap-8 xl:gap-10">
           <div className="min-w-0">
             <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
               {HOME_SERVICES.map((service, index) => (
@@ -91,8 +91,8 @@ export function HomeServicesSection() {
           </div>
 
           <aside className="relative hidden lg:block">
-            <div className="sticky top-28 overflow-hidden rounded-2xl border border-white/10 bg-[#141414]/80 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm">
-              <div className="relative aspect-[4/5] w-full overflow-hidden">
+            <div className="sticky top-28 overflow-hidden rounded-xl border border-white/10 bg-[#141414]/80 shadow-[0_20px_60px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+              <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
                   src={brandIcons.images.servicesFeatured}
                   alt="Muhammad Usman — software agency delivery"
@@ -118,16 +118,16 @@ export function HomeServicesSection() {
                         : { opacity: 0, y: -10, transition: { duration: 0.2 } }
                     }
                     transition={{ duration: 0.45, ease: easeOut }}
-                    className="absolute inset-x-0 bottom-0 p-6 xl:p-7"
+                    className="absolute inset-x-0 bottom-0 p-5 xl:p-6"
                   >
-                    <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#0A0A0A]/70 backdrop-blur-md">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#0A0A0A]/70 backdrop-blur-md">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={active.tileSrc}
                         alt=""
-                        width={36}
-                        height={36}
-                        className="h-9 w-9 object-contain"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 object-contain"
                       />
                     </div>
                     <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FF6A00]">
@@ -136,7 +136,7 @@ export function HomeServicesSection() {
                       ).padStart(2, "0")}{" "}
                       · {active.eyebrow}
                     </p>
-                    <h3 className="font-display text-2xl tracking-tight text-[#FFF7ED] xl:text-[1.75rem]">
+                    <h3 className="font-display text-xl tracking-tight text-[#FFF7ED] xl:text-[1.5rem]">
                       {active.shortTitle}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-[#FFF7ED]/72">
@@ -144,7 +144,7 @@ export function HomeServicesSection() {
                     </p>
                     <Link
                       href={`/services#${active.id}`}
-                      className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFB347] transition hover:text-[#FF6A00]"
+                      className="mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFB347] transition hover:text-[#FF6A00]"
                     >
                       Explore capability
                       <ArrowUpRight size={14} />
@@ -157,10 +157,10 @@ export function HomeServicesSection() {
         </div>
 
         {/* CTAs after services content */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:mt-12 lg:mt-14">
+        <div className="mt-10 flex w-full flex-col gap-2.5 sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 lg:mt-14">
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-[#FF6A00] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0A0A0A] transition-all duration-300 hover:bg-[#E85D00] hover:shadow-[0_12px_40px_rgba(255,106,0,0.4)] sm:px-7 sm:text-[13px]"
+            className="btn-action btn-action-primary group"
           >
             {HOME_SERVICES_COPY.ctaPrimary}
             <BrandIcon
@@ -172,7 +172,7 @@ export function HomeServicesSection() {
           </Link>
           <Link
             href="/services"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/[0.05] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#FFF7ED] backdrop-blur-sm transition-all duration-300 hover:border-[#FF6A00]/55 hover:bg-white/[0.08] sm:px-7 sm:text-[13px]"
+            className="btn-action btn-action-secondary group"
           >
             {HOME_SERVICES_COPY.ctaSecondary}
             <ArrowUpRight
@@ -233,7 +233,7 @@ function ServiceRow({
 
       <Link
         href={`/services#${service.id}`}
-        className="flex flex-col gap-3 px-3 py-5 sm:px-4 sm:py-6 md:flex-row md:items-center md:gap-6 lg:gap-8"
+        className="flex flex-col gap-2.5 px-3 py-4 sm:px-4 sm:py-5 md:flex-row md:items-center md:gap-5 lg:gap-6"
         onClick={(e) => {
           if (
             typeof window !== "undefined" &&
@@ -259,17 +259,17 @@ function ServiceRow({
 
           <div
             className={cn(
-              "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 sm:h-12 sm:w-12",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-all duration-300 sm:h-10 sm:w-10",
               active
                 ? "border-[#FF6A00]/45 bg-[#FF6A00]/12"
                 : "border-white/10 bg-white/[0.03] group-hover:border-[#FF6A00]/30"
             )}
           >
-            <span className="relative h-6 w-6">
+            <span className="relative h-5 w-5">
               <BrandIcon
                 base={service.iconBase}
                 tone="white"
-                size={24}
+                size={20}
                 className={cn(
                   "absolute inset-0 transition-opacity duration-300",
                   active ? "opacity-0" : "opacity-100 group-hover:opacity-0"
@@ -278,7 +278,7 @@ function ServiceRow({
               <BrandIcon
                 base={service.iconBase}
                 tone="orange"
-                size={24}
+                size={20}
                 className={cn(
                   "absolute inset-0 transition-opacity duration-300",
                   active ? "opacity-100" : "opacity-0 group-hover:opacity-100"
@@ -291,7 +291,7 @@ function ServiceRow({
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <h3
                 className={cn(
-                  "font-display text-xl tracking-tight text-[#FFF7ED] transition-transform duration-300 sm:text-2xl md:text-[1.65rem]",
+                  "font-display text-lg tracking-tight text-[#FFF7ED] transition-transform duration-300 sm:text-xl md:text-[1.35rem]",
                   active && "md:translate-x-1"
                 )}
               >
