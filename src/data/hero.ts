@@ -5,180 +5,181 @@ export interface HeroStat {
   label: string;
 }
 
+export interface HeroCta {
+  label: string;
+  href: string;
+}
+
 export interface HeroSlide {
   id: string;
   src: string;
   src4k: string;
   alt: string;
+  /** Tab chip: PRODUCT | WEB | MOBILE | AI | PARTNER */
   label: string;
-  eyebrow: string;
-  /** Short headline lead (≈2 words) */
+  /** Upper category line */
+  category: string;
+  /** Headline line 1 */
   title: string;
-  /** Accent word — full headline ≈ 3 short words */
+  /** Headline line 2 (accent) */
   titleAccent: string;
-  /** Desktop: ~2 short lines */
+  /** Desktop description */
   support: string;
-  /** Mobile: shorter, still accurate */
+  /** Mobile description (slightly shorter) */
   supportMobile: string;
+  /** Proof / availability line above markets */
+  proof: string;
+  primaryCta: HeroCta;
+  secondaryCta: HeroCta;
   stats: HeroStat[];
   pills: string[];
   tech: string[];
   trust: string[];
 }
 
+export const HERO_ROLE_LINE =
+  "Full-Stack Developer · AI Engineer · Product Partner";
+
+export const HERO_MARKETS = "USA · UK · KSA · UAE · Remote";
+
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: "laptop-primary",
+    id: "product-engineering",
     src: `${BASE}/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/01-hero-laptop-primary-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — full-stack & SaaS product engineering",
-    label: "SaaS",
-    eyebrow: "Full-Stack Developer",
-    title: "Scale your",
-    titleAccent: "SaaS.",
+    alt: "Muhammad Usman — product engineering",
+    label: "PRODUCT",
+    category: "Product Engineering",
+    title: "I build digital products",
+    titleAccent: "from concept to scale.",
     support:
-      "Revenue-ready platforms with billing, dashboards, and access control. Built to launch and grow with your users.",
+      "I help startups and businesses transform ideas into reliable digital products—from planning and design to development, deployment and long-term support.",
     supportMobile:
-      "Billing, dashboards, and access control. Built to launch fast. Ready to grow with your users.",
+      "I help startups and businesses turn ideas into reliable digital products—from planning to development, deployment and support.",
+    proof: "Available for selected projects",
+    primaryCta: { label: "Start a Project", href: "/contact" },
+    secondaryCta: { label: "View Selected Work", href: "/projects" },
+    stats: [
+      { value: "5+", label: "Products live" },
+      { value: "2+", label: "Years of delivery" },
+      { value: "5", label: "Global markets" },
+      { value: "24h", label: "Client response" },
+    ],
+    pills: ["Product", "SaaS", "Web", "Mobile", "AI"],
+    tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
+    trust: ["Available for selected projects", HERO_MARKETS],
+  },
+  {
+    id: "web-engineering",
+    src: `${BASE}/web-1080/04-hero-client-delivery-16x9-1920x1080.jpg`,
+    src4k: `${BASE}/4k/04-hero-client-delivery-16x9-3840x2160.jpg`,
+    alt: "Muhammad Usman — web engineering",
+    label: "WEB",
+    category: "Web Engineering",
+    title: "Web platforms built",
+    titleAccent: "for real business growth.",
+    support:
+      "I design and develop scalable SaaS platforms, dashboards, customer portals and business systems focused on performance, security and long-term maintainability.",
+    supportMobile:
+      "I design scalable SaaS platforms, dashboards and business systems focused on performance, security and maintainability.",
+    proof: "Scalable architecture · Secure APIs · Responsive experiences",
+    primaryCta: { label: "Build Your Platform", href: "/contact" },
+    secondaryCta: { label: "View Web Projects", href: "/projects" },
     stats: [
       { value: "5+", label: "SaaS modules shipped" },
       { value: "RBAC", label: "Roles & permissions" },
       { value: "Live", label: "Billing & subscriptions" },
       { value: "24h", label: "Client response" },
     ],
-    pills: [
-      "SaaS platforms",
-      "Dashboards",
-      "Billing",
-      "RBAC",
-      "Multi-tenant",
-      "Custom software",
-    ],
+    pills: ["SaaS", "Dashboards", "Portals", "APIs"],
     tech: ["Next.js 15", "React", "TypeScript", "Node.js", "PostgreSQL", "Stripe"],
-    trust: ["Full-stack product engineering", "Production SaaS delivery", "Clear weekly milestones"],
+    trust: [
+      "Scalable architecture · Secure APIs · Responsive experiences",
+      HERO_MARKETS,
+    ],
   },
   {
-    id: "desk-trust",
-    src: `${BASE}/web-1080/02-hero-desk-trust-16x9-1920x1080.jpg`,
-    src4k: `${BASE}/4k/02-hero-desk-trust-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — AI and RAG engineering",
-    label: "AI",
-    eyebrow: "AI Engineer",
-    title: "Ground your",
-    titleAccent: "AI.",
-    support:
-      "Intelligent systems tied to your business data. Accurate answers, clear accountability, ready for live products.",
-    supportMobile:
-      "AI grounded in your business data. Accurate answers you can trust. Built for live products.",
-    stats: [
-      { value: "RAG", label: "Grounded answers" },
-      { value: "Agents", label: "LangGraph workflows" },
-      { value: "SQL", label: "Data-aware agents" },
-      { value: "Prod", label: "LLM features live" },
-    ],
-    pills: [
-      "Corrective RAG",
-      "Self-RAG",
-      "Multi-agent",
-      "Vector search",
-      "SQL agents",
-      "OpenAI / Gemini",
-    ],
-    tech: ["LangGraph", "LangChain", "OpenAI", "Pinecone", "ChromaDB", "Python"],
-    trust: ["AI that stays grounded", "Production LLM pipelines", "Tool-calling & supervisors"],
-  },
-  {
-    id: "thinking-plan",
+    id: "mobile-development",
     src: `${BASE}/web-1080/03-hero-thinking-plan-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/03-hero-thinking-plan-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — mobile and web app development",
-    label: "Mobile",
-    eyebrow: "Full-Stack Developer",
-    title: "Web to",
-    titleAccent: "mobile.",
+    alt: "Muhammad Usman — mobile development",
+    label: "MOBILE",
+    category: "Mobile Development",
+    title: "Web to mobile.",
+    titleAccent: "One connected product.",
     support:
-      "One roadmap across web and mobile. Shared APIs, consistent UX, and releases that ship together.",
+      "I build mobile applications that connect seamlessly with your web platform, backend services and existing business systems across iOS and Android.",
     supportMobile:
-      "Web and mobile on one roadmap. Shared APIs and consistent UX. Releases that ship together.",
+      "I build mobile apps that connect with your web platform, backend and business systems across iOS and Android.",
+    proof: "Connected APIs · Consistent UX · Reliable releases",
+    primaryCta: { label: "Build a Mobile App", href: "/contact" },
+    secondaryCta: { label: "View Mobile Work", href: "/projects" },
     stats: [
       { value: "Web", label: "Next.js products" },
       { value: "App", label: "React Native flows" },
       { value: "API", label: "Nest / Express" },
       { value: "RT", label: "Realtime sync" },
     ],
-    pills: [
-      "React Native",
-      "Player apps",
-      "Club dashboards",
-      "Realtime",
-      "REST APIs",
-      "OpenAPI",
-    ],
+    pills: ["React Native", "iOS", "Android", "APIs"],
     tech: ["React Native", "Next.js", "NestJS", "Socket.io", "PostgreSQL", "Tailwind"],
-    trust: ["Web + mobile together", "Shared API layer", "Realtime-ready delivery"],
+    trust: ["Connected APIs · Consistent UX · Reliable releases", HERO_MARKETS],
   },
   {
-    id: "client-delivery",
-    src: `${BASE}/web-1080/04-hero-client-delivery-16x9-1920x1080.jpg`,
-    src4k: `${BASE}/4k/04-hero-client-delivery-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — client delivery and telemedicine platforms",
-    label: "Deliver",
-    eyebrow: "Full-Stack Developer",
-    title: "Proven live",
-    titleAccent: "platforms.",
+    id: "ai-engineering",
+    src: `${BASE}/web-1080/02-hero-desk-trust-16x9-1920x1080.jpg`,
+    src4k: `${BASE}/4k/02-hero-desk-trust-16x9-3840x2160.jpg`,
+    alt: "Muhammad Usman — AI engineering",
+    label: "AI",
+    category: "AI Engineering",
+    title: "AI built around",
+    titleAccent: "real business workflows.",
     support:
-      "Telemedicine, HRMS, and marketplaces already in production. Real users, payments, and workflows.",
+      "I create AI assistants, automation systems and intelligent integrations that improve operations, reduce repetitive work and support better business decisions.",
     supportMobile:
-      "Telemedicine, HRMS, and marketplaces already live. Real users and payments in production. Not slideware demos.",
+      "I create AI assistants and automation that improve operations, cut repetitive work and support better decisions.",
+    proof: "AI agents · Workflow automation · Business integrations",
+    primaryCta: { label: "Explore an AI Project", href: "/contact" },
+    secondaryCta: { label: "View AI Solutions", href: "/services" },
     stats: [
-      { value: "Live", label: "Telemedicine flows" },
-      { value: "HR", label: "Dynamic RBAC" },
-      { value: "Pay", label: "Stripe / Webpay" },
-      { value: "Geo", label: "Local marketing" },
+      { value: "RAG", label: "Grounded answers" },
+      { value: "Agents", label: "LangGraph workflows" },
+      { value: "SQL", label: "Data-aware agents" },
+      { value: "Prod", label: "LLM features live" },
     ],
-    pills: [
-      "Telemedicine",
-      "HRMS",
-      "Marketplaces",
-      "Payments",
-      "Async reviews",
-      "Geo marketing",
+    pills: ["AI agents", "Automation", "Integrations"],
+    tech: ["LangGraph", "LangChain", "OpenAI", "Pinecone", "ChromaDB", "Python"],
+    trust: [
+      "AI agents · Workflow automation · Business integrations",
+      HERO_MARKETS,
     ],
-    tech: ["Next.js", "PostgreSQL", "Stripe", "Webpay", "RBAC", "Cloudinary"],
-    trust: ["Domain systems shipped", "Payments in production", "Configurable permissions"],
   },
   {
-    id: "authority-standing",
+    id: "technology-partnership",
     src: `${BASE}/web-1080/05-hero-authority-standing-16x9-1920x1080.jpg`,
     src4k: `${BASE}/4k/05-hero-authority-standing-16x9-3840x2160.jpg`,
-    alt: "Muhammad Usman — full-stack AI software agency",
-    label: "Partner",
-    eyebrow: "Full-Stack Developer · AI Engineer",
-    title: "Your delivery",
-    titleAccent: "partner.",
+    alt: "Muhammad Usman — technology partnership",
+    label: "PARTNER",
+    category: "Technology Partnership",
+    title: "Your technical partner,",
+    titleAccent: "not just another developer.",
     support:
-      "Clear scope and weekly progress. Systems that stay yours across USA, UK, KSA, UAE, and remote.",
+      "Work directly with me from product discovery and technical planning to development, launch and continuous improvement.",
     supportMobile:
-      "Clear scope from day one. Weekly delivery you can track. Systems that stay yours worldwide.",
+      "Work directly with me from discovery and planning to development, launch and continuous improvement.",
+    proof: "Direct communication · Clear ownership · Reliable delivery",
+    primaryCta: { label: "Let’s Work Together", href: "/contact" },
+    secondaryCta: { label: "Discuss Your Project", href: "/contact" },
     stats: [
       { value: "2+", label: "Years of delivery" },
       { value: "5", label: "Global markets" },
       { value: "5+", label: "Products live" },
       { value: "24h", label: "Client response" },
     ],
-    pills: [
-      "Full-stack",
-      "AI systems",
-      "SaaS",
-      "Mobile",
-      "APIs",
-      "Remote partnership",
-    ],
+    pills: ["Partnership", "Discovery", "Delivery"],
     tech: ["Next.js", "Node.js", "LangGraph", "PostgreSQL", "AWS", "Vercel"],
     trust: [
-      "USA · UK · KSA · UAE · Remote",
-      "Direct accountable delivery",
-      "Production over prototypes",
+      "Direct communication · Clear ownership · Reliable delivery",
+      HERO_MARKETS,
     ],
   },
 ];
@@ -187,7 +188,7 @@ export const HERO_OBJECT_POSITION = "72% center";
 
 /** Shared fallback stats (mega menu / global proof) */
 export const HERO_STATS: HeroStat[] =
-  HERO_SLIDES.find((s) => s.id === "authority-standing")?.stats ??
+  HERO_SLIDES.find((s) => s.id === "technology-partnership")?.stats ??
   HERO_SLIDES[0].stats;
 
 /** Auto-advance every 3 seconds — snappy hold */
@@ -196,5 +197,5 @@ export const HERO_AUTOPLAY_MS = 3000;
 export const HERO_VIEWPORT_MIN_H = "min-h-[100dvh]";
 
 /** Content + image share this top line (clears fixed header) */
-export const HERO_HEADER_OFFSET = "pt-[92px] md:pt-[132px] lg:pt-[140px]";
-export const HERO_IMAGE_TOP = "top-[92px] md:top-[132px] lg:top-[140px]";
+export const HERO_HEADER_OFFSET = "pt-[72px] md:pt-[108px] lg:pt-[112px]";
+export const HERO_IMAGE_TOP = "top-[72px] md:top-[108px] lg:top-[112px]";

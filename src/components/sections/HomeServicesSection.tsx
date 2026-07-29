@@ -32,7 +32,7 @@ export function HomeServicesSection() {
     <section
       id="home-services"
       aria-label="Services"
-      className="relative isolate overflow-hidden bg-[#0A0A0A] pt-8 pb-14 sm:pt-9 sm:pb-16 md:pt-10 md:pb-20 lg:pt-12 lg:pb-24"
+      className="relative isolate overflow-hidden bg-[#0A0A0A] pt-6 pb-14 sm:pt-7 sm:pb-16 md:pt-8 md:pb-20 lg:pt-10 lg:pb-24"
     >
       <div
         aria-hidden

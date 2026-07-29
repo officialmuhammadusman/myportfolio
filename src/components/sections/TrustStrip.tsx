@@ -31,7 +31,7 @@ export function TrustStrip() {
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#FF6A00]/70 to-transparent"
       />
 
-      <div className="layout-wrap relative z-10 py-5 sm:py-6 md:py-7 lg:py-8">
+      <div className="layout-wrap relative z-10 py-3.5 sm:py-4 md:py-5 lg:py-5">
         <motion.div
           initial={false}
           animate={{ opacity: 1, y: 0 }}

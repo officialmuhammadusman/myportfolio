@@ -18,6 +18,8 @@ import {
   HERO_AUTOPLAY_MS,
   HERO_HEADER_OFFSET,
   HERO_IMAGE_TOP,
+  HERO_MARKETS,
+  HERO_ROLE_LINE,
   HERO_SLIDES,
 } from "@/data/hero";
 import { PERSONAL_INFO } from "@/lib/constants";
@@ -190,9 +192,9 @@ export function HeroSection() {
       </div>
 
       <div
-        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-6 sm:pb-10`}
+        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-3 sm:pb-5`}
       >
-        <div className="relative flex flex-1 flex-col justify-center py-5 sm:py-8 lg:py-10">
+        <div className="relative flex flex-1 flex-col justify-center py-3 sm:py-5 lg:py-6">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={`ghost-${active.id}`}
@@ -217,42 +219,34 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: cineEase }}
             >
-              <div className="mb-3 hidden items-center gap-3 sm:flex">
-                <Image
-                  src={brandIcons.ui.muMarkAnimated}
-                  alt=""
-                  width={36}
-                  height={36}
-                  className="mu-mark-animated h-8 w-8 sm:h-9 sm:w-9"
-                />
-              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  key={`cat-${active.id}`}
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                  className="mb-3 text-center text-[10px] font-bold uppercase tracking-[0.28em] text-[#FF6A00] sm:mb-4 sm:text-left sm:text-[11px]"
+                >
+                  {active.category}
+                </motion.p>
+              </AnimatePresence>
 
               <p className="text-center font-display text-[1.85rem] leading-[0.95] tracking-[-0.035em] text-[#FFF7ED] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
                 {PERSONAL_INFO.name}
               </p>
 
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:mt-4 sm:justify-start sm:gap-x-4">
-                <p className="text-center text-[11px] font-bold uppercase tracking-[0.18em] text-[#FF6A00] sm:text-left sm:text-[13px] sm:tracking-[0.22em]">
-                  Full-Stack Developer · AI Engineer
-                </p>
-                <span className="hidden items-center gap-2 text-[11px] font-medium tracking-[0.06em] text-[#FFF7ED]/55 sm:inline-flex">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6A00] opacity-55" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF6A00]" />
-                  </span>
-                  Available for engagement
-                </span>
-              </div>
+              <p className="mt-3 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF6A00] sm:mt-4 sm:text-left sm:text-[12px] sm:tracking-[0.18em]">
+                {HERO_ROLE_LINE}
+              </p>
 
               <motion.div
                 aria-hidden
-                className="mx-auto mt-3 h-px w-full max-w-[12rem] origin-center bg-gradient-to-r from-transparent via-[#FF6A00] to-transparent sm:mx-0 sm:mt-4 sm:max-w-md sm:origin-left sm:bg-gradient-to-r sm:from-[#FF6A00] sm:via-[#FF6A00]/55 sm:to-transparent"
+                className="mx-auto mt-3 h-px w-full max-w-[12rem] origin-center bg-gradient-to-r from-transparent via-[#FF6A00] to-transparent sm:mx-0 sm:mt-4 sm:max-w-md sm:origin-left sm:from-[#FF6A00] sm:via-[#FF6A00]/55 sm:to-transparent"
                 initial={reduceMotion ? false : { scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.7, delay: 0.15, ease: cineEase }}
               />
 
-              {/* Per-slide: 3-word headline + short 2-line description */}
               <AnimatePresence mode="wait" custom={direction} initial={false}>
                 <motion.div
                   key={active.id}
@@ -278,9 +272,9 @@ export function HeroSection() {
                   }
                   transition={{ duration: 0.32, ease: cineEase }}
                 >
-                  <h1 className="whitespace-nowrap text-center font-display text-[1.7rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-left sm:text-[2.6rem] md:text-[3.15rem] lg:text-[3.6rem]">
-                    {active.title}{" "}
-                    <span className="text-gradient italic">
+                  <h1 className="flex flex-col text-center font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
+                    <span className="block w-full">{active.title}</span>
+                    <span className="text-gradient mt-1 block w-full italic sm:mt-1.5">
                       {active.titleAccent}
                     </span>
                   </h1>
@@ -295,7 +289,7 @@ export function HeroSection() {
               </AnimatePresence>
 
               <div
-                className="mt-6 hidden flex-wrap items-center gap-2 sm:mt-8 sm:flex"
+                className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:justify-start"
                 role="tablist"
                 aria-label="Focus areas"
               >
@@ -310,7 +304,7 @@ export function HeroSection() {
                       onClick={() =>
                         goTo(i, i > index ? 1 : i < index ? -1 : direction)
                       }
-                      className={`relative rounded-md px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] transition ${
+                      className={`relative rounded-md px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition sm:px-3 sm:text-[11px] sm:tracking-[0.16em] ${
                         on
                           ? "bg-[#FF6A00] text-[#0A0A0A]"
                           : "border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 hover:border-white/25 hover:text-[#FFF7ED]"
@@ -323,41 +317,48 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            <motion.div
-              className="mt-5 sm:mt-10"
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: cineEase }}
-            >
-              <p className="mb-4 hidden font-mono text-[10px] uppercase tracking-[0.2em] text-[#FFF7ED]/4 sm:mb-5 sm:block sm:text-[11px]">
-                {PERSONAL_INFO.locationRemote}
-              </p>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={`cta-${active.id}`}
+                className="mt-5 sm:mt-10"
+                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.3, ease: cineEase }}
+              >
+                <div className="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row sm:gap-3">
+                  <Link
+                    href={active.primaryCta.href}
+                    className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
+                  >
+                    {active.primaryCta.label}
+                    <BrandIcon
+                      base={brandIcons.cta.startProject}
+                      tone="black"
+                      size={16}
+                    />
+                  </Link>
+                  <Link
+                    href={active.secondaryCta.href}
+                    className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
+                  >
+                    {active.secondaryCta.label}
+                    <BrandIcon
+                      base={brandIcons.work.featured}
+                      tone="black"
+                      size={16}
+                    />
+                  </Link>
+                </div>
 
-              <div className="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row sm:gap-3">
-                <Link
-                  href="/contact"
-                  className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
-                >
-                  Start a Project
-                  <BrandIcon
-                    base={brandIcons.cta.startProject}
-                    tone="black"
-                    size={16}
-                  />
-                </Link>
-                <Link
-                  href="/projects"
-                  className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
-                >
-                  View Work
-                  <BrandIcon
-                    base={brandIcons.work.featured}
-                    tone="black"
-                    size={16}
-                  />
-                </Link>
-              </div>
-            </motion.div>
+                <p className="mt-4 text-center text-[12px] font-medium tracking-[0.03em] text-[#FFF7ED] sm:text-left sm:text-[13px]">
+                  {active.proof}
+                </p>
+                <p className="mt-1.5 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[#FF6A00]/85 sm:text-left sm:text-[11px] sm:tracking-[0.2em]">
+                  {HERO_MARKETS}
+                </p>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Mobile: image stacked below text (not behind) */}
@@ -381,7 +382,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-5 flex w-full justify-center pb-1 sm:mt-auto">
+        <div className="mt-3 flex w-full justify-center pb-0 sm:mt-auto">
           <div className="flex items-center gap-3 rounded-full border border-white/10 bg-[#0A0A0A]/6 px-3.5 py-2.5 backdrop-blur-md sm:gap-4 sm:px-5">
             <button
               type="button"
