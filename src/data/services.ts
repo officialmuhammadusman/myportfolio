@@ -27,14 +27,14 @@ export const SERVICES: ServiceItem[] = [
     shortTitle: "Product Engineering",
     eyebrow: "Build",
     description:
-      "Production web apps with React, Next.js, and TypeScript — fast UI, clean architecture, and deploy-ready code for startups and growing businesses.",
-    outcome: "Ship a scalable product, not a prototype that breaks.",
+      "Production frontend engineering with Next.js, React, Tailwind CSS, Redux Toolkit, TanStack Query, and the supporting libraries needed to ship polished product experiences.",
+    outcome: "Ship a scalable digital product, not just a polished prototype.",
     deliverables: [
-      "Next.js 15 / React 18 apps",
-      "TypeScript + Tailwind UI systems",
-      "Framer Motion experiences",
-      "State: Redux Toolkit / Zustand / TanStack Query",
-      "Jest & React Testing Library",
+      "Next.js / React product apps",
+      "TypeScript + Tailwind design systems",
+      "Framer Motion interactions",
+      "Redux Toolkit / Zustand / TanStack Query state",
+      "Testing and production UI quality",
     ],
     stack: [
       "React 18",
@@ -48,7 +48,7 @@ export const SERVICES: ServiceItem[] = [
     ],
     iconBase: brandIcons.services.fullstack,
     tileSrc: `${brandIcons.services.fullstackTile}.svg`,
-    homeTags: ["Next.js", "React", "TypeScript", "SaaS"],
+    homeTags: ["Next.js", "React", "Tailwind", "TanStack Query"],
   },
   {
     id: "ai-agentic",
@@ -56,28 +56,30 @@ export const SERVICES: ServiceItem[] = [
     shortTitle: "AI & Agentic",
     eyebrow: "Intelligence",
     description:
-      "LLM features that work in production — RAG pipelines, LangChain/LangGraph workflows, and multi-agent systems connected to your product and data.",
-    outcome: "Turn AI into a business feature clients can trust.",
+      "Applied AI systems that work in production, including direct LLM APIs, LangGraph workflows, RAG pipelines, pgvector retrieval, Redis-backed workflows, tool calling, and automation.",
+    outcome: "Turn AI into a reliable product capability, not a demo feature.",
     deliverables: [
-      "OpenAI / Gemini API integrations",
-      "Corrective RAG & Self-RAG flows",
+      "Direct LLM API integrations",
+      "RAG pipelines with grounded retrieval",
       "LangChain / LangGraph agents",
-      "Pinecone / ChromaDB vector search",
-      "Multi-agent & tool-calling workflows",
+      "pgvector / Pinecone / ChromaDB retrieval",
+      "Redis, tool-calling, and agent workflows",
     ],
     stack: [
       "OpenAI",
       "Gemini",
+      "Direct APIs",
       "LangChain",
       "LangGraph",
       "RAG",
+      "pgvector",
       "Pinecone",
       "ChromaDB",
       "Agentic AI",
     ],
     iconBase: brandIcons.services.ai,
     tileSrc: `${brandIcons.services.aiTile}.svg`,
-    homeTags: ["RAG", "LangGraph", "OpenAI", "Agents"],
+    homeTags: ["LangGraph", "Direct LLM APIs", "RAG", "Redis"],
   },
   {
     id: "backend-apis",
@@ -85,19 +87,21 @@ export const SERVICES: ServiceItem[] = [
     shortTitle: "Backend & APIs",
     eyebrow: "Systems",
     description:
-      "Secure Node.js backends with Express/NestJS — REST APIs, auth, WebSockets, and microservice-ready architecture documented with OpenAPI/Swagger.",
-    outcome: "Reliable APIs that scale with your users.",
+      "Secure backend engineering with Node.js, Express, NestJS, MongoDB, PostgreSQL, Python, FastAPI, and the supporting libraries needed for APIs, auth, realtime, and service reliability.",
+    outcome: "Reliable backend architecture that scales with product growth.",
     deliverables: [
-      "Express.js / NestJS services",
+      "Node.js / Express / NestJS / FastAPI services",
       "REST + OpenAPI / Swagger",
       "JWT / OAuth2 authentication",
       "WebSockets / Socket.io realtime",
-      "Microservices-ready structure",
+      "Retries, queues, and service resilience",
     ],
     stack: [
       "Node.js",
       "Express.js",
       "NestJS",
+      "Python",
+      "FastAPI",
       "REST",
       "JWT",
       "OAuth2",
@@ -106,7 +110,7 @@ export const SERVICES: ServiceItem[] = [
     ],
     iconBase: brandIcons.services.backend,
     tileSrc: `${brandIcons.services.backendTile}.svg`,
-    homeTags: ["NestJS", "REST", "Auth", "Realtime"],
+    homeTags: ["Node.js", "Express", "NestJS", "FastAPI"],
   },
   {
     id: "data-cloud",
@@ -114,10 +118,10 @@ export const SERVICES: ServiceItem[] = [
     shortTitle: "Data & Cloud",
     eyebrow: "Platform",
     description:
-      "Databases, caching, payments, media, and cloud deploy — PostgreSQL, MongoDB, Supabase, Redis, Prisma, Stripe, AWS, Docker, and Vercel.",
-    outcome: "A solid data and cloud foundation for growth.",
+      "Data and platform foundations across PostgreSQL, pgvector, MongoDB, Redis, Supabase, Prisma, Docker, AWS, Vercel, and the integrations needed for secure scalable products.",
+    outcome: "A stable product foundation for scale, performance, and reliability.",
     deliverables: [
-      "PostgreSQL / MongoDB / Supabase",
+      "PostgreSQL / pgvector / Supabase",
       "Redis caching & Prisma ORM",
       "Query optimization & indexing",
       "Stripe + Cloudinary integrations",
@@ -125,6 +129,7 @@ export const SERVICES: ServiceItem[] = [
     ],
     stack: [
       "PostgreSQL",
+      "pgvector",
       "MongoDB",
       "Supabase",
       "Redis",
@@ -136,7 +141,7 @@ export const SERVICES: ServiceItem[] = [
     ],
     iconBase: brandIcons.services.cloud,
     tileSrc: `${brandIcons.services.cloudTile}.svg`,
-    homeTags: ["PostgreSQL", "AWS", "Docker", "Stripe"],
+    homeTags: ["PostgreSQL", "MongoDB", "Redis", "pgvector"],
   },
   {
     id: "mobile-apps",
@@ -144,8 +149,8 @@ export const SERVICES: ServiceItem[] = [
     shortTitle: "Mobile Apps",
     eyebrow: "Mobile",
     description:
-      "Cross-platform mobile products with React Native — polished UI, API-backed flows, and release-ready builds for iOS and Android.",
-    outcome: "One codebase. Native feel. Production mobile.",
+      "Cross-platform mobile products with React Native that stay connected with your APIs, business logic, and design system across iOS and Android.",
+    outcome: "One connected product across web, backend, and mobile.",
     deliverables: [
       "React Native app architecture",
       "Auth, notifications & offline-ready UX",
@@ -156,7 +161,7 @@ export const SERVICES: ServiceItem[] = [
     stack: ["React Native", "TypeScript", "Expo", "REST APIs", "Push"],
     iconBase: brandIcons.services.mobile,
     tileSrc: `${brandIcons.services.mobileTile}.svg`,
-    homeTags: ["React Native", "iOS", "Android", "Expo"],
+    homeTags: ["React Native", "iOS", "Android", "Shared APIs"],
   },
 ];
 
@@ -167,34 +172,34 @@ export const SERVICE_PROCESS = [
   {
     step: "01",
     title: "Discover",
-    text: "Clarify goals, users, scope, and success metrics in a short kickoff.",
+    text: "Clarify the business goal, users, scope, constraints, and success metrics before development starts.",
   },
   {
     step: "02",
     title: "Architect",
-    text: "Choose the right stack — frontend, API, data, and AI — for speed and scale.",
+    text: "Choose the right frontend, backend, data, cloud, and AI stack for speed, scale, and maintainability.",
   },
   {
     step: "03",
     title: "Build",
-    text: "Weekly milestones, clean code, tests where it matters, and transparent updates.",
+    text: "Ship through weekly milestones, clean implementation, smart testing, and transparent progress updates.",
   },
   {
     step: "04",
     title: "Launch",
-    text: "Deploy, document, hand over, and support so you can grow with confidence.",
+    text: "Deploy, document, support, and improve the system so it performs reliably after launch.",
   },
 ] as const;
 
 export const HOME_SERVICES_COPY = {
   eyebrow: "Services",
-  title: "Capabilities built",
-  titleAccent: "to ship.",
+  title: "Full-stack and AI engineering",
+  titleAccent: "for real products.",
   support:
-    "End-to-end product engineering across web, AI, cloud, and mobile — from clear scope to production delivery.",
+    "I help startups and growing businesses design, build, and launch production software across product engineering, backend systems, AI workflows, cloud foundations, and connected mobile apps — with clear ownership from planning to delivery.",
   ctaPrimary: "Start a Project",
   ctaSecondary: "View all services",
-  footerLine: "Clear scope · Weekly progress · Production delivery",
+  footerLine: "Product · Backend · AI · Cloud · Mobile",
 } as const;
 
 

@@ -161,6 +161,8 @@ export interface Stat {
   suffix: string;
   label: string;
   icon: string;
+  detail?: string;
+  featured?: boolean;
 }
 
 // Testimonials

@@ -3,6 +3,7 @@ import { TrustStrip } from "@/components/sections/TrustStrip";
 import { HomeServicesSection } from "@/components/sections/HomeServicesSection";
 import { HomeFeaturedWorkSection } from "@/components/sections/HomeFeaturedWorkSection";
 import { HomeHowIWorkSection } from "@/components/sections/HomeHowIWorkSection";
+import { HomeTechStackStrip } from "@/components/sections/HomeTechStackStrip";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutTeaser } from "@/components/sections/AboutTeaser";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -22,6 +23,7 @@ export default function HomePage() {
       <HomeServicesSection />
       <HomeFeaturedWorkSection />
       <HomeHowIWorkSection />
+      <HomeTechStackStrip />
       <StatsSection />
       <AboutTeaser />
       <TestimonialsSection />

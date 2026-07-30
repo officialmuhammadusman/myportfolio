@@ -1,4 +1,4 @@
-import type { NavLink, SocialLink, Stat, PhilosophyItem } from "@/types";
+import type { NavLink, SocialLink, PhilosophyItem } from "@/types";
 
 // ─────────────────────────────────────────
 // PERSONAL INFO
@@ -8,18 +8,22 @@ export const PERSONAL_INFO = {
   firstName: "Muhammad",
   lastName: "Usman",
   role: "Full-Stack & AI Engineer",
-  roleExtended: "Full-Stack · AI Engineer — SaaS, Web Apps, Mobile & RAG Systems",
-  tagline: "I build production SaaS platforms, custom software, mobile apps, and AI/RAG systems for startups and businesses worldwide.",
-  bio: "Full Stack Developer with 2+ years of experience building scalable, production-ready web applications using Next.js, React, Node.js, NestJS, and TypeScript. Experienced in secure SaaS platforms, RESTful APIs, React Native mobile apps, and LLM-powered solutions with LangChain, LangGraph, and RAG — focused on performance, security, and maintainability.",
-  bioShort: "Full-stack & AI engineer — SaaS, custom software, React Native mobile apps, backend APIs & production RAG systems for founders worldwide.",
+  roleExtended:
+    "Full-Stack · AI Engineer — Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph & Direct LLM APIs",
+  tagline:
+    "I design and build production software with Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph, and direct LLM APIs for startups and growing businesses.",
+  bio:
+    "Full-stack and AI engineer building production-ready software across web platforms, backend APIs, React Native mobile apps, cloud infrastructure, and applied AI systems. My core stack includes Next.js, Python, FastAPI, PostgreSQL with pgvector, Redis, LangGraph, and direct LLM APIs, supported by TypeScript, Docker, AWS, and production-focused delivery practices.",
+  bioShort:
+    "Full-stack & AI engineer using Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph, and direct LLM APIs.",
   location: "Islamabad, Pakistan",
   locationRemote: "USA · UK · KSA · UAE · Remote",
   email: "official.muammadusman01@gmail.com",
-  phone: "+92 (311) 352-63300",
+  phone: "+92 (313) 52-63300",
   availability: true,
   availabilityText: "Available for new projects",
   cvUrl: "/usman_cv.pdf",
-  techStack: ["Next.js", "React Native", "NestJS", "PostgreSQL", "LangGraph / RAG"],
+  techStack: ["Next.js", "Python/FastAPI", "PostgreSQL/pgvector", "Redis", "LangGraph"],
   techStackFull: [
     "React 18",
     "Next.js 15",
@@ -33,6 +37,7 @@ export const PERSONAL_INFO = {
     "Express.js",
     "NestJS",
     "PostgreSQL",
+    "pgvector",
     "MongoDB",
     "Supabase",
     "Redis",
@@ -42,6 +47,7 @@ export const PERSONAL_INFO = {
     "Vercel",
     "Stripe",
     "OpenAI",
+    "Direct LLM APIs",
     "LangChain",
     "LangGraph",
     "RAG",
@@ -84,14 +90,9 @@ export const SOCIAL_LINKS = [
 ];
 
 // ─────────────────────────────────────────
-// HOME STATS (animated counters)
+// HOME STATS — re-exported from data/homeStats
 // ─────────────────────────────────────────
-export const HOME_STATS: Stat[] = [
-  { value: 5, suffix: "+", label: "Products in production", icon: "Rocket" },
-  { value: 10, suffix: "+", label: "Client engagements", icon: "Users" },
-  { value: 2, suffix: "+", label: "Years delivering software", icon: "Calendar" },
-  { value: 24, suffix: "h", label: "Typical response time", icon: "Clock" },
-];
+export { HOME_STATS } from "@/data/homeStats";
 
 // ─────────────────────────────────────────
 // WORK PHILOSOPHY
@@ -99,23 +100,27 @@ export const HOME_STATS: Stat[] = [
 export const PHILOSOPHY_ITEMS: PhilosophyItem[] = [
   {
     icon: "Code",
-    statement: "I prioritize writing clean, maintainable code that adheres to SOLID principles and best practices, enabling seamless collaboration and long-term scalability.",
-    highlight: "clean, maintainable code following industry standards",
+    statement:
+      "I build software with long-term ownership in mind: clean architecture, clear boundaries, maintainable code, and systems that are easier to extend instead of rewrite.",
+    highlight: "clean architecture and maintainable systems",
   },
   {
     icon: "Zap",
-    statement: "I optimize application performance through efficient algorithms, code splitting, and modern rendering techniques, ensuring exceptional user experiences across all devices.",
-    highlight: "optimized performance and fast load times",
+    statement:
+      "Performance matters at every layer, from frontend rendering and API latency to database queries, streaming AI responses, and infrastructure costs in production.",
+    highlight: "performance across UI, backend, and AI workloads",
   },
   {
     icon: "FileText",
-    statement: "I maintain comprehensive technical documentation and clear code comments, facilitating knowledge transfer and reducing onboarding time for development teams.",
-    highlight: "thorough documentation and code clarity",
+    statement:
+      "I keep delivery transparent with practical documentation, clear technical decisions, and communication that helps founders and teams understand what is being built and why.",
+    highlight: "clear technical communication and documentation",
   },
   {
     icon: "Rocket",
-    statement: "I deliver projects on schedule with quality assurance, implementing robust testing strategies and continuous integration workflows to ensure production-ready applications.",
-    highlight: "timely delivery with quality assurance",
+    statement:
+      "I focus on production readiness, not demo-only builds, with testing, deployment discipline, security checks, observability, and reliable handover for real business use.",
+    highlight: "production-ready delivery with reliability practices",
   },
 ];
 

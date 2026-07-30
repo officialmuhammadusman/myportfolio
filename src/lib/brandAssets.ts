@@ -91,6 +91,7 @@ export const brandIcons = {
     processArchitect: `${HEADER}/images/process-02-architect.webp`,
     processBuild: `${HEADER}/images/process-03-build.webp`,
     processLaunch: `${HEADER}/images/process-04-launch.webp`,
+    statsAtmosphere: `${HEADER}/images/img-stats-atmosphere-plate.jpg`,
   },
   muMark: `${HEADER}/mu-mark.svg`,
 } as const;

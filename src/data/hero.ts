@@ -53,9 +53,9 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "I build digital products",
     titleAccent: "from concept to scale.",
     support:
-      "I help startups and businesses transform ideas into reliable digital products—from planning and design to development, deployment and long-term support.",
+      "I help startups and businesses turn ideas into production-ready software with Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph, and direct LLM APIs.",
     supportMobile:
-      "I help startups and businesses turn ideas into reliable digital products—from planning to development, deployment and support.",
+      "I help startups and businesses turn ideas into production-ready software with Next.js, FastAPI, PostgreSQL/pgvector, Redis, and AI workflows.",
     proof: "Available for selected projects",
     primaryCta: { label: "Start a Project", href: "/contact" },
     secondaryCta: { label: "View Selected Work", href: "/projects" },
@@ -79,10 +79,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "Web platforms built",
     titleAccent: "for real business growth.",
     support:
-      "I design and develop scalable SaaS platforms, dashboards, customer portals and business systems focused on performance, security and long-term maintainability.",
+      "I design and develop scalable SaaS platforms, dashboards, portals, and internal systems with Next.js on the frontend and production-ready backend APIs behind them.",
     supportMobile:
-      "I design scalable SaaS platforms, dashboards and business systems focused on performance, security and maintainability.",
-    proof: "Scalable architecture · Secure APIs · Responsive experiences",
+      "I design scalable SaaS platforms, dashboards, and business systems with strong frontend delivery and secure APIs.",
+    proof: "Next.js frontend · Secure APIs · Product-ready architecture",
     primaryCta: { label: "Build Your Platform", href: "/contact" },
     secondaryCta: { label: "View Web Projects", href: "/projects" },
     stats: [
@@ -108,10 +108,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "Web to mobile.",
     titleAccent: "One connected product.",
     support:
-      "I build mobile applications that connect seamlessly with your web platform, backend services and existing business systems across iOS and Android.",
+      "I build mobile applications that stay connected with your web platform, backend services, user flows, and core business systems across iOS and Android.",
     supportMobile:
-      "I build mobile apps that connect with your web platform, backend and business systems across iOS and Android.",
-    proof: "Connected APIs · Consistent UX · Reliable releases",
+      "I build mobile apps connected to your web platform, backend, and business systems across iOS and Android.",
+    proof: "Connected APIs · Shared product logic · Reliable releases",
     primaryCta: { label: "Build a Mobile App", href: "/contact" },
     secondaryCta: { label: "View Mobile Work", href: "/projects" },
     stats: [
@@ -134,10 +134,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "AI built around",
     titleAccent: "real business workflows.",
     support:
-      "I create AI assistants, automation systems and intelligent integrations that improve operations, reduce repetitive work and support better business decisions.",
+      "I create AI assistants, RAG pipelines, LangGraph workflows, and intelligent integrations using direct LLM APIs, Redis, and business-connected data systems.",
     supportMobile:
-      "I create AI assistants and automation that improve operations, cut repetitive work and support better decisions.",
-    proof: "AI agents · Workflow automation · Business integrations",
+      "I create AI assistants, RAG, and LangGraph workflows with direct LLM APIs and business-connected data.",
+    proof: "LangGraph · Direct LLM APIs · RAG systems",
     primaryCta: { label: "Explore an AI Project", href: "/contact" },
     secondaryCta: { label: "View AI Solutions", href: "/services" },
     stats: [
@@ -163,10 +163,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "Your technical partner,",
     titleAccent: "not just another developer.",
     support:
-      "Work directly with me from product discovery and technical planning to development, launch and continuous improvement.",
+      "Work directly with me from product discovery and technical planning to engineering, launch, optimization, and continuous product improvement.",
     supportMobile:
-      "Work directly with me from discovery and planning to development, launch and continuous improvement.",
-    proof: "Direct communication · Clear ownership · Reliable delivery",
+      "Work directly with me from discovery and planning to engineering, launch, and continuous improvement.",
+    proof: "Direct communication · Clear ownership · Full-stack execution",
     primaryCta: { label: "Let’s Work Together", href: "/contact" },
     secondaryCta: { label: "Discuss Your Project", href: "/contact" },
     stats: [

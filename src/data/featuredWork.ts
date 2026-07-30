@@ -5,10 +5,10 @@
 
 export const HOME_FEATURED_WORK_COPY = {
   eyebrow: "Selected Work",
-  title: "Work that proves",
-  titleAccent: "the delivery.",
+  title: "Work that reflects",
+  titleAccent: "full-stack execution.",
   support:
-    "Four live products spanning healthcare, SaaS, enterprise HR, and sports tech — open the case study or the running product.",
+    "Live products across healthcare, SaaS, enterprise, and sports tech — showing the kind of frontend, backend, AI, data, and product engineering I build in real projects.",
   footerCtaPrimary: "Start a Project",
   footerCtaSecondary: "Browse all work",
 } as const;
