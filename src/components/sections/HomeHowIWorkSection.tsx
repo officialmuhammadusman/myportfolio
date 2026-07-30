@@ -61,17 +61,17 @@ export function HomeHowIWorkSection() {
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.5, ease: easeOut }}
           style={{ opacity: 1 }}
-          className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-14"
+          className="mx-auto mb-8 max-w-3xl text-center sm:mb-10 lg:mb-12"
         >
           <span className="section-eyebrow">{HOW_I_WORK_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[2.125rem] leading-[1.08] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem]">
+          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             {HOW_I_WORK_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOW_I_WORK_COPY.titleAccent}
             </span>
           </h2>
-          <p className="mx-auto mt-5 max-w-[34rem] text-[0.9375rem] leading-[1.7] text-[#FFF7ED]/78 sm:mt-6 sm:text-base md:text-[1.0625rem]">
+          <p className="mx-auto mt-3 max-w-[32rem] text-sm leading-[1.65] text-[#FFF7ED]/72 sm:mt-4 sm:text-[0.95rem]">
             {HOW_I_WORK_COPY.support}
           </p>
         </motion.header>

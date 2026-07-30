@@ -19,10 +19,10 @@ export interface TrustPillar {
 
 export const HOW_I_WORK_COPY = {
   eyebrow: "HOW I WORK",
-  title: "From product strategy",
+  title: "From strategy",
   titleAccent: "to production systems.",
   support:
-    "A clear engineering process for SaaS, backend, mobile, and AI work, with direct communication, thoughtful architecture, weekly progress, and production-focused delivery.",
+    "A clear process for SaaS, backend, mobile, and AI with direct communication, weekly progress, and production-focused delivery.",
   ctaPrimary: "Start a Project",
   ctaSecondary: "View all services",
   footerLine: "Clear scope · Smart architecture · Reliable execution",

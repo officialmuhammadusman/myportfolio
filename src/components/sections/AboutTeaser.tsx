@@ -62,14 +62,14 @@ export function AboutTeaser() {
           <span className="section-eyebrow">About Me</span>
           <div className="fancy-divider" />
 
-          <h2 className="font-display mt-2 mb-4 text-3xl font-bold leading-[1.1] text-[var(--text-primary)] sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl">
+          <h2 className="font-display mt-2 mb-3 text-[1.65rem] font-bold leading-[1.12] tracking-[-0.03em] text-[var(--text-primary)] sm:mb-4 sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             Building systems that
             <br />
             <span className="text-gradient">actually scale.</span>
           </h2>
 
-          <p className="mb-5 text-base leading-relaxed sm:mb-6 sm:text-lg lg:text-xl" style={{ color: "var(--text-secondary)" }}>
-            {PERSONAL_INFO.bio}
+          <p className="mb-5 max-w-[36rem] text-sm leading-[1.65] sm:mb-6 sm:text-[0.95rem]" style={{ color: "var(--text-secondary)" }}>
+            {PERSONAL_INFO.bioShort}
           </p>
 
           <div className="mb-6 flex items-center gap-2 sm:mb-8">

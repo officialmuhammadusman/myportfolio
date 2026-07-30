@@ -12,6 +12,7 @@ import {
 } from "@/data/services";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { brandIcons } from "@/lib/brandAssets";
+import { cn } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -22,6 +23,7 @@ export function HomeServicesSection() {
       HOME_SERVICES[0]?.id ??
       ""
   );
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const active =
     HOME_SERVICES.find((service) => service.id === activeId) ?? HOME_SERVICES[0];
@@ -44,18 +46,18 @@ export function HomeServicesSection() {
       />
 
       <div className="layout-wrap relative z-10">
-        <header className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-14">
+        <header className="mx-auto mb-8 max-w-3xl text-center sm:mb-10 lg:mb-12">
           <span className="section-eyebrow">{HOME_SERVICES_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
 
-          <h2 className="font-display text-[2.125rem] leading-[1.08] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem]">
+          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             {HOME_SERVICES_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOME_SERVICES_COPY.titleAccent}
             </span>
           </h2>
 
-          <p className="mx-auto mt-5 max-w-[42rem] text-[0.95rem] leading-[1.75] text-[#FFF7ED]/78 sm:mt-6 sm:text-base md:text-[1.05rem]">
+          <p className="mx-auto mt-3 max-w-[32rem] text-sm leading-[1.65] text-[#FFF7ED]/72 sm:mt-4 sm:text-[0.95rem]">
             {HOME_SERVICES_COPY.support}
           </p>
         </header>
@@ -75,15 +77,22 @@ export function HomeServicesSection() {
                   service={service}
                   index={index}
                   active={active.id === service.id}
+                  expanded={expandedId === service.id}
                   reduceMotion={reduceMotion}
                   onActivate={() => setActiveId(service.id)}
+                  onToggleExpand={() =>
+                    setExpandedId((id) =>
+                      id === service.id ? null : service.id
+                    )
+                  }
                 />
               ))}
             </div>
           </div>
 
-          <aside className="relative">
-            <div className="sticky top-28 overflow-hidden rounded-[28px] border border-white/10 bg-[#111111] shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
+          {/* Desktop only — vertically centered beside the list */}
+          <aside className="relative hidden lg:flex lg:items-center lg:self-center">
+            <div className="w-full overflow-hidden rounded-[28px] border border-white/10 bg-[#111111] shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
               <div className="relative aspect-[4/5] w-full overflow-hidden">
                 <Image
                   src={brandIcons.images.servicesFeatured}
@@ -117,7 +126,9 @@ export function HomeServicesSection() {
                         <div>
                           <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FF6A00]">
                             {String(
-                              HOME_SERVICES.findIndex((service) => service.id === active.id) + 1
+                              HOME_SERVICES.findIndex(
+                                (service) => service.id === active.id
+                              ) + 1
                             ).padStart(2, "0")}{" "}
                             / 05
                           </p>
@@ -205,14 +216,18 @@ function ServicePracticeRow({
   service,
   index,
   active,
+  expanded,
   reduceMotion,
   onActivate,
+  onToggleExpand,
 }: {
   service: ServiceItem;
   index: number;
   active: boolean;
+  expanded: boolean;
   reduceMotion: boolean | null;
   onActivate: () => void;
+  onToggleExpand: () => void;
 }) {
   const number = String(index + 1).padStart(2, "0");
 
@@ -227,52 +242,94 @@ function ServicePracticeRow({
         ease: easeOut,
       }}
       style={{ opacity: 1 }}
+      onMouseEnter={onActivate}
+      onFocus={onActivate}
     >
       <Link
         href={`/services#${service.id}`}
-        onMouseEnter={onActivate}
-        onFocus={onActivate}
-        className={`group relative block w-full px-4 py-5 text-left transition-colors duration-300 sm:px-5 sm:py-6 ${
-          active ? "bg-white/[0.04]" : "bg-transparent hover:bg-white/[0.02]"
-        }`}
+        onClick={(e) => {
+          if (
+            typeof window !== "undefined" &&
+            window.matchMedia("(max-width: 1023px)").matches
+          ) {
+            if (!expanded) {
+              e.preventDefault();
+              onActivate();
+              onToggleExpand();
+            }
+          }
+        }}
+        className={cn(
+          "group relative block w-full px-4 py-4 text-left transition-colors duration-300 sm:px-5 sm:py-5",
+          active || expanded
+            ? "bg-white/[0.04]"
+            : "bg-transparent hover:bg-white/[0.02]"
+        )}
       >
         <span
           aria-hidden
-          className={`absolute inset-y-0 left-0 w-[2px] origin-top bg-[#FF6A00] transition-transform duration-500 ${
-            active ? "scale-y-100" : "scale-y-0 group-hover:scale-y-100"
-          }`}
+          className={cn(
+            "absolute inset-y-0 left-0 w-[2px] origin-top bg-[#FF6A00] transition-transform duration-500",
+            active || expanded
+              ? "scale-y-100"
+              : "scale-y-0 group-hover:scale-y-100"
+          )}
         />
 
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3 sm:gap-4">
           <span
-            className={`mt-1 font-mono text-[11px] font-semibold tracking-[0.14em] sm:text-xs ${
-              active ? "text-[#FF6A00]" : "text-[#FFF7ED]/30"
-            }`}
+            className={cn(
+              "mt-1 font-mono text-[11px] font-semibold tracking-[0.14em] sm:text-xs",
+              active || expanded ? "text-[#FF6A00]" : "text-[#FFF7ED]/30"
+            )}
           >
             {number}
           </span>
 
-          <div className="flex min-w-0 flex-1 items-start gap-4">
+          <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-4">
             <div
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-colors duration-300 ${
-                active
+              className={cn(
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors duration-300 sm:h-11 sm:w-11",
+                active || expanded
                   ? "border-[#FF6A00]/35 bg-[#FF6A00]/10"
                   : "border-white/10 bg-white/[0.03] group-hover:border-[#FF6A00]/25"
-              }`}
+              )}
             >
-              <BrandIcon
-                base={service.iconBase}
-                tone={active ? "orange" : "white"}
-                size={22}
-              />
+              <span className="relative h-5 w-5">
+                <BrandIcon
+                  base={service.iconBase}
+                  tone="white"
+                  size={20}
+                  className={cn(
+                    "absolute inset-0 transition-opacity duration-300",
+                    active || expanded
+                      ? "opacity-0"
+                      : "opacity-100 group-hover:opacity-0"
+                  )}
+                />
+                <BrandIcon
+                  base={service.iconBase}
+                  tone="orange"
+                  size={20}
+                  className={cn(
+                    "absolute inset-0 transition-opacity duration-300",
+                    active || expanded
+                      ? "opacity-100"
+                      : "opacity-0 group-hover:opacity-100"
+                  )}
+                />
+              </span>
             </div>
 
             <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <h3
-                  className={`font-display text-[1.35rem] leading-[1.08] tracking-[-0.025em] transition-colors duration-300 sm:text-[1.55rem] ${
-                    active ? "text-[#FFF7ED]" : "text-[#FFF7ED]/88"
-                  }`}
+                  className={cn(
+                    "font-display text-[1.2rem] leading-[1.08] tracking-[-0.025em] transition-all duration-300 sm:text-[1.45rem]",
+                    active || expanded
+                      ? "text-[#FFF7ED] lg:translate-x-0.5"
+                      : "text-[#FFF7ED]/88"
+                  )}
                 >
                   {service.shortTitle}
                 </h3>
@@ -280,27 +337,74 @@ function ServicePracticeRow({
                   {service.eyebrow}
                 </span>
               </div>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#FFF7ED]/62 sm:text-[15px]">
-                {service.description}
-              </p>
-              <p className="mt-3 text-sm font-medium leading-relaxed text-[#FFF7ED]">
+
+              {/* Compact line always visible */}
+              <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-[#FFF7ED]/58 sm:text-[15px]">
                 {service.outcome}
               </p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                {service.homeTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors ${
-                      active
-                        ? "border-[#FF6A00]/24 bg-[#FF6A00]/8 text-[#FFB347]"
-                        : "border-white/10 text-[#FFF7ED]/45"
-                    }`}
+              {/* Mobile: expand detail on tap (small → big) */}
+              <AnimatePresence initial={false}>
+                {expanded && (
+                  <motion.div
+                    initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={
+                      reduceMotion ? undefined : { height: 0, opacity: 0 }
+                    }
+                    transition={{ duration: 0.3, ease: easeOut }}
+                    className="overflow-hidden lg:hidden"
                   >
-                    {tag}
-                  </span>
-                ))}
+                    <p className="mt-3 text-sm leading-relaxed text-[#FFF7ED]/68">
+                      {service.description}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {service.homeTags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF6A00]">
+                      Open full page
+                      <ArrowUpRight size={13} />
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Desktop: full detail always */}
+              <div className="mt-3 hidden lg:block">
+                <p className="max-w-xl text-sm leading-relaxed text-[#FFF7ED]/62 sm:text-[15px]">
+                  {service.description}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {service.homeTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={cn(
+                        "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors",
+                        active
+                          ? "border-[#FF6A00]/24 bg-[#FF6A00]/8 text-[#FFB347]"
+                          : "border-white/10 text-[#FFF7ED]/45"
+                      )}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
+
+              {/* Mobile collapsed hint */}
+              {!expanded && (
+                <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#FFF7ED]/35 lg:hidden">
+                  Tap for details
+                  <ArrowUpRight size={12} className="opacity-70" />
+                </span>
+              )}
             </div>
           </div>
         </div>

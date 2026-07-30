@@ -6,8 +6,8 @@ export const HOME_STATS_COPY = {
   title: "Numbers that reflect",
   titleAccent: "real delivery.",
   support:
-    "Production products, global clients, and reliable communication — the signals founders look for before starting a build.",
-  featuredNote: "Shipped end-to-end — frontend, backend, AI, and cloud.",
+    "Production products, global clients, and reliable communication. What founders look for before a build.",
+  featuredNote: "Shipped end to end across frontend, backend, AI, and cloud.",
   footer: "Full-stack · AI engineering · Direct partnership",
   markets: ["USA", "UK", "KSA", "UAE", "Remote"] as const,
 } as const;

@@ -16,13 +16,16 @@ export function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 text-center sm:mb-12 md:mb-14 lg:mb-16"
+          className="mb-8 text-center sm:mb-10 md:mb-12"
         >
           <span className="section-eyebrow">Testimonials</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display mt-2 text-3xl font-bold text-[var(--text-primary)] sm:text-4xl md:text-5xl lg:text-6xl">
+          <h2 className="font-display mt-2 text-[1.65rem] font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             What people say
           </h2>
+          <p className="mx-auto mt-3 max-w-[28rem] text-sm leading-[1.65] text-[var(--text-secondary)] sm:mt-4 sm:text-[0.95rem]">
+            Feedback from clients and collaborators on delivery, communication, and results.
+          </p>
         </motion.div>
 
         <div className="grid gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">

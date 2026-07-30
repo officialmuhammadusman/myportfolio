@@ -9,7 +9,7 @@ export const PERSONAL_INFO = {
   lastName: "Usman",
   role: "Full-Stack & AI Engineer",
   roleExtended:
-    "Full-Stack · AI Engineer — Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph & Direct LLM APIs",
+    "Full-Stack · AI Engineer. Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph & Direct LLM APIs",
   tagline:
     "I design and build production software with Next.js, Python, FastAPI, PostgreSQL/pgvector, Redis, LangGraph, and direct LLM APIs for startups and growing businesses.",
   bio:

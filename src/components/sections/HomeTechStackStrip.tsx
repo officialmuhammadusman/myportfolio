@@ -126,13 +126,13 @@ export function HomeTechStackStrip() {
         >
           <span className="section-eyebrow">{HOME_TECH_STACK_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.85rem] leading-[1.08] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.25rem] md:text-[2.65rem] lg:text-[3rem]">
+          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             {HOME_TECH_STACK_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOME_TECH_STACK_COPY.titleAccent}
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[36rem] text-sm leading-[1.7] text-[#FFF7ED]/72 sm:text-[0.975rem]">
+          <p className="mx-auto mt-3 max-w-[32rem] text-sm leading-[1.65] text-[#FFF7ED]/72 sm:mt-4 sm:text-[0.95rem]">
             {HOME_TECH_STACK_COPY.support}
           </p>
         </motion.header>

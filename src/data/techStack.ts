@@ -5,7 +5,7 @@ export const HOME_TECH_STACK_COPY = {
   title: "Tools I ship with",
   titleAccent: "in production.",
   support:
-    "A focused stack for product frontend, secure backends, applied AI systems, and cloud delivery — chosen for reliability, not trends.",
+    "A focused stack for frontend, backends, AI systems, and cloud, chosen for reliability, not trends.",
 } as const;
 
 export type TechStackCategoryId =

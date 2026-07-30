@@ -193,10 +193,10 @@ export const SERVICE_PROCESS = [
 
 export const HOME_SERVICES_COPY = {
   eyebrow: "Services",
-  title: "Full-stack and AI engineering",
+  title: "Full-stack and AI",
   titleAccent: "for real products.",
   support:
-    "I help startups and growing businesses design, build, and launch production software across product engineering, backend systems, AI workflows, cloud foundations, and connected mobile apps — with clear ownership from planning to delivery.",
+    "I design, build, and launch production software across web, backend, AI, cloud, and mobile, with clear ownership from plan to delivery.",
   ctaPrimary: "Start a Project",
   ctaSecondary: "View all services",
   footerLine: "Product · Backend · AI · Cloud · Mobile",

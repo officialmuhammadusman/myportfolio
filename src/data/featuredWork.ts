@@ -8,7 +8,7 @@ export const HOME_FEATURED_WORK_COPY = {
   title: "Work that reflects",
   titleAccent: "full-stack execution.",
   support:
-    "Live products across healthcare, SaaS, enterprise, and sports tech — showing the kind of frontend, backend, AI, data, and product engineering I build in real projects.",
+    "Live products across healthcare, SaaS, enterprise, and sports. Frontend, backend, AI, and product engineering in production.",
   footerCtaPrimary: "Start a Project",
   footerCtaSecondary: "Browse all work",
 } as const;
@@ -36,7 +36,7 @@ export const HOME_FEATURED_CASES: FeaturedCase[] = [
     industry: "Healthcare",
     headline: "Telemedicine for chronic pain specialists",
     summary:
-      "Video consultations, Webpay checkout, async clinical reviews, and specialist dashboards — live in Chile.",
+      "Video consultations, Webpay checkout, async clinical reviews, and specialist dashboards. Live in Chile.",
     liveUrl: "https://mejoratudolor.cl",
     liveHost: "mejoratudolor.cl",
     previewSrc: "/images/projects/live/mejora-tu-dolor.png",

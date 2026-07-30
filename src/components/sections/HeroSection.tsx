@@ -37,11 +37,14 @@ function HeroSlides({
   underIndex,
   reduceMotion,
   objectClassName,
+  objectPosition,
 }: {
   index: number;
   underIndex: number;
   reduceMotion: boolean | null;
-  objectClassName: string;
+  objectClassName?: string;
+  /** Explicit position so mobile crop stays centered even if Tailwind utilities conflict */
+  objectPosition?: string;
 }) {
   return (
     <>
@@ -80,7 +83,12 @@ function HeroSlides({
               priority
               sizes="100vw"
               quality={90}
-              className={`object-cover ${objectClassName}`}
+              className={`object-cover ${objectClassName ?? ""}`}
+              style={
+                objectPosition
+                  ? { objectPosition }
+                  : undefined
+              }
             />
           </motion.div>
         );
@@ -192,9 +200,9 @@ export function HeroSection() {
       </div>
 
       <div
-        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-3 sm:pb-5`}
+        className={`layout-wrap relative z-10 flex w-full flex-1 flex-col ${HERO_HEADER_OFFSET} pb-4 sm:pb-5`}
       >
-        <div className="relative flex flex-1 flex-col justify-center py-3 sm:py-5 lg:py-6">
+        <div className="relative flex flex-1 flex-col justify-center py-2 sm:py-5 lg:py-6">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={`ghost-${active.id}`}
@@ -225,23 +233,23 @@ export function HeroSection() {
                   initial={reduceMotion ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
-                  className="mb-3 text-center text-[10px] font-bold uppercase tracking-[0.28em] text-[#FF6A00] sm:mb-4 sm:text-left sm:text-[11px]"
+                  className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.24em] text-[#FF6A00] sm:mb-4 sm:text-left sm:text-[11px] sm:tracking-[0.28em]"
                 >
                   {active.category}
                 </motion.p>
               </AnimatePresence>
 
-              <p className="text-center font-display text-[1.85rem] leading-[0.95] tracking-[-0.035em] text-[#FFF7ED] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
+              <p className="text-center font-display text-[1.7rem] leading-[0.98] tracking-[-0.035em] text-[#FFF7ED] xs:text-[1.85rem] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
                 {PERSONAL_INFO.name}
               </p>
 
-              <p className="mt-3 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF6A00] sm:mt-4 sm:text-left sm:text-[12px] sm:tracking-[0.18em]">
+              <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-[0.14em] text-[#FF6A00] sm:mt-4 sm:text-left sm:text-[12px] sm:tracking-[0.18em]">
                 {HERO_ROLE_LINE}
               </p>
 
               <motion.div
                 aria-hidden
-                className="mx-auto mt-3 h-px w-full max-w-[12rem] origin-center bg-gradient-to-r from-transparent via-[#FF6A00] to-transparent sm:mx-0 sm:mt-4 sm:max-w-md sm:origin-left sm:from-[#FF6A00] sm:via-[#FF6A00]/55 sm:to-transparent"
+                className="mx-auto mt-2.5 h-px w-full max-w-[10rem] origin-center bg-gradient-to-r from-transparent via-[#FF6A00] to-transparent sm:mx-0 sm:mt-4 sm:max-w-md sm:origin-left sm:from-[#FF6A00] sm:via-[#FF6A00]/55 sm:to-transparent"
                 initial={reduceMotion ? false : { scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.7, delay: 0.15, ease: cineEase }}
@@ -251,7 +259,7 @@ export function HeroSection() {
                 <motion.div
                   key={active.id}
                   custom={direction}
-                  className="mt-5 sm:mt-8"
+                  className="mt-4 sm:mt-8"
                   initial={
                     reduceMotion
                       ? false
@@ -272,14 +280,14 @@ export function HeroSection() {
                   }
                   transition={{ duration: 0.32, ease: cineEase }}
                 >
-                  <h1 className="flex flex-col text-center font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
+                  <h1 className="flex flex-col text-center font-display text-[1.45rem] leading-[1.14] tracking-[-0.03em] text-[#FFF7ED] xs:text-[1.6rem] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
                     <span className="block w-full">{active.title}</span>
-                    <span className="text-gradient mt-1 block w-full italic sm:mt-1.5">
+                    <span className="text-gradient mt-0.5 block w-full italic sm:mt-1.5">
                       {active.titleAccent}
                     </span>
                   </h1>
 
-                  <p className="mx-auto mt-3 max-w-md text-center text-[14px] leading-[1.55] text-[#FFF7ED]/75 sm:hidden">
+                  <p className="mx-auto mt-2.5 max-w-[20rem] text-center text-[13px] leading-[1.55] text-[#FFF7ED]/75 xs:max-w-md xs:text-[14px] sm:hidden">
                     {active.supportMobile}
                   </p>
                   <p className="mt-4 hidden max-w-xl text-left text-base leading-[1.55] text-[#FFF7ED]/78 sm:block sm:text-lg md:text-[1.1rem] md:leading-[1.55]">
@@ -289,7 +297,7 @@ export function HeroSection() {
               </AnimatePresence>
 
               <div
-                className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:justify-start"
+                className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:mt-8 sm:justify-start sm:gap-2"
                 role="tablist"
                 aria-label="Focus areas"
               >
@@ -304,7 +312,7 @@ export function HeroSection() {
                       onClick={() =>
                         goTo(i, i > index ? 1 : i < index ? -1 : direction)
                       }
-                      className={`relative rounded-md px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition sm:px-3 sm:text-[11px] sm:tracking-[0.16em] ${
+                      className={`relative rounded-md px-2 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] transition sm:px-3 sm:text-[11px] sm:tracking-[0.16em] ${
                         on
                           ? "bg-[#FF6A00] text-[#0A0A0A]"
                           : "border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 hover:border-white/25 hover:text-[#FFF7ED]"
@@ -320,16 +328,16 @@ export function HeroSection() {
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={`cta-${active.id}`}
-                className="mt-5 sm:mt-10"
+                className="mt-4 sm:mt-10"
                 initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: 0.3, ease: cineEase }}
               >
-                <div className="flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row sm:gap-3">
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:gap-3">
                   <Link
                     href={active.primaryCta.href}
-                    className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
+                    className="btn-action btn-action-primary group min-h-11 px-5 text-[12px] tracking-[0.08em] sm:min-h-12 sm:px-7 sm:text-[13px]"
                   >
                     {active.primaryCta.label}
                     <BrandIcon
@@ -340,55 +348,56 @@ export function HeroSection() {
                   </Link>
                   <Link
                     href={active.secondaryCta.href}
-                    className="btn-action btn-action-primary group min-h-12 px-7 text-[13px] tracking-[0.08em]"
+                    className="btn-action btn-action-secondary group min-h-11 px-5 text-[12px] tracking-[0.08em] sm:min-h-12 sm:px-7 sm:text-[13px]"
                   >
                     {active.secondaryCta.label}
                     <BrandIcon
                       base={brandIcons.work.featured}
-                      tone="black"
+                      tone="orange"
                       size={16}
                     />
                   </Link>
                 </div>
 
-                <p className="mt-4 text-center text-[12px] font-medium tracking-[0.03em] text-[#FFF7ED] sm:text-left sm:text-[13px]">
+                <p className="mt-3 text-center text-[11px] font-medium tracking-[0.03em] text-[#FFF7ED] sm:mt-4 sm:text-left sm:text-[13px]">
                   {active.proof}
                 </p>
-                <p className="mt-1.5 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[#FF6A00]/85 sm:text-left sm:text-[11px] sm:tracking-[0.2em]">
+                <p className="mt-1 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-[#FF6A00]/85 sm:mt-1.5 sm:text-left sm:text-[11px] sm:tracking-[0.2em]">
                   {HERO_MARKETS}
                 </p>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Mobile: image stacked below text (not behind) */}
+          {/* Mobile: crop focuses on subject (photos are right-composed with empty left) */}
           <div
-            className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 sm:hidden"
+            className="relative mt-5 aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 sm:hidden"
             aria-live="polite"
           >
             <HeroSlides
               index={index}
               underIndex={underIndex}
               reduceMotion={reduceMotion}
-              objectClassName="object-[88%_30%]"
+              objectClassName="object-cover"
+              objectPosition="78% 30%"
             />
             <div
               className="pointer-events-none absolute inset-0 z-[3]"
               style={{
                 background:
-                  "linear-gradient(180deg, rgba(10,10,10,0.15) 0%, transparent 35%, rgba(10,10,10,0.45) 100%)",
+                  "linear-gradient(180deg, rgba(10,10,10,0.12) 0%, transparent 32%, rgba(10,10,10,0.5) 100%)",
               }}
             />
           </div>
         </div>
 
-        <div className="mt-3 flex w-full justify-center pb-0 sm:mt-auto">
-          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-[#0A0A0A]/6 px-3.5 py-2.5 backdrop-blur-md sm:gap-4 sm:px-5">
+        <div className="mt-4 flex w-full justify-center pb-1 sm:mt-auto sm:pb-0">
+          <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-[#0A0A0A]/7 px-3 py-2 backdrop-blur-md sm:gap-4 sm:px-5 sm:py-2.5">
             <button
               type="button"
               aria-label="Previous slide"
               onClick={() => goTo(index - 1, -1)}
-              className="flex h-8 w-8 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00]"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00] sm:h-8 sm:w-8"
             >
               ‹
             </button>
@@ -410,7 +419,7 @@ export function HeroSection() {
                     onClick={() =>
                       goTo(i, i > index ? 1 : i < index ? -1 : direction)
                     }
-                    className="flex h-7 items-center justify-center"
+                    className="flex h-8 items-center justify-center sm:h-7"
                   >
                     <motion.span
                       className="block h-1.5 rounded-full"
@@ -431,7 +440,7 @@ export function HeroSection() {
               type="button"
               aria-label="Next slide"
               onClick={() => goTo(index + 1, 1)}
-              className="flex h-8 w-8 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00]"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[#FFF7ED]/7 transition hover:bg-white/10 hover:text-[#FF6A00] sm:h-8 sm:w-8"
             >
               ›
             </button>
