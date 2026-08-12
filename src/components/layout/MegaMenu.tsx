@@ -97,10 +97,20 @@ function MegaFeaturedCard({
             "radial-gradient(ellipse 80% 60% at 0% 0%, rgba(255,106,0,0.14), transparent 55%)",
         }}
       />
-      <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/20 bg-[#FF6A00]/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-transform duration-300 group-hover:scale-[1.03]">
-        <BrandIcon base={item.iconBase} tone="base" size={28} className="group-hover:hidden" />
-        <BrandIcon base={item.iconBase} tone="hover" size={28} className="hidden group-hover:block" />
-      </span>
+      {item.imageSrc ? (
+        <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-[#FF6A00]/25 shadow-md">
+          <img
+            src={item.imageSrc}
+            alt={item.label}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        </span>
+      ) : (
+        <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/20 bg-[#FF6A00]/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-transform duration-300 group-hover:scale-[1.03]">
+          <BrandIcon base={item.iconBase} tone="base" size={28} className="group-hover:hidden" />
+          <BrandIcon base={item.iconBase} tone="hover" size={28} className="hidden group-hover:block" />
+        </span>
+      )}
       <span className="relative min-w-0 flex-1">
         <span className="mb-1 flex flex-wrap items-center gap-2">
           <span className="font-display text-xl font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[#FF6A00] sm:text-2xl">
@@ -140,10 +150,20 @@ function MegaLinkRow({
       className="mega-link-row group relative flex items-start gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-all duration-200 hover:border-[#FF6A00]/15 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-sm)]"
     >
       <span className="absolute bottom-2 left-0 top-2 w-[2px] rounded-full bg-transparent transition-colors duration-200 group-hover:bg-[#FF6A00]" />
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] transition-all duration-200 group-hover:border-[#FF6A00]/30 group-hover:bg-[#FF6A00]/8">
-        <BrandIcon base={item.iconBase} tone="base" size={20} className="group-hover:hidden" />
-        <BrandIcon base={item.iconBase} tone="hover" size={20} className="hidden group-hover:block" />
-      </span>
+      {item.imageSrc ? (
+        <span className="relative flex h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] shadow-sm transition-all duration-200 group-hover:border-[#FF6A00]/40">
+          <img
+            src={item.imageSrc}
+            alt={item.label}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+          />
+        </span>
+      ) : (
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] transition-all duration-200 group-hover:border-[#FF6A00]/30 group-hover:bg-[#FF6A00]/8">
+          <BrandIcon base={item.iconBase} tone="base" size={20} className="group-hover:hidden" />
+          <BrandIcon base={item.iconBase} tone="hover" size={20} className="hidden group-hover:block" />
+        </span>
+      )}
       <span className="min-w-0 flex-1 pt-0.5">
         <span className="mb-0.5 flex flex-wrap items-center gap-1.5">
           <span className="text-[13px] font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[#FF6A00]">
