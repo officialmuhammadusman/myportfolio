@@ -1,120 +1,273 @@
 "use client";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Heart } from "lucide-react";
-import { NAV_LINKS, PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
-import { externalLinkProps } from "@/lib/utils";
-import { PageShell } from "@/components/layout/PageShell";
-import theme from "@/lib/theme";
 
-const iconMap: Record<string, React.ReactNode> = {
-  github: <Github size={18} />,
-  linkedin: <Linkedin size={18} />,
-  twitter: <Twitter size={18} />,
-  email: <Mail size={18} />,
-};
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowUpRight, Linkedin, ChevronDown } from "lucide-react";
+import { SiGithub, SiWhatsapp } from "react-icons/si";
+import { motion, AnimatePresence } from "framer-motion";
+import { PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
+import { HEADER_MEGA } from "@/data/headerMega";
+import { cn } from "@/lib/utils";
+import { MobileBottomSheet } from "@/components/ui/MobileBottomSheet";
 
 const currentYear = new Date().getFullYear();
 
+const SocialIcon = ({ icon }: { icon: string }) => {
+  if (icon === "github") return <SiGithub size={20} />;
+  if (icon === "linkedin") return <Linkedin size={20} />;
+  if (icon === "whatsapp") return <SiWhatsapp size={20} />;
+  return <ArrowUpRight size={20} />;
+};
+
 export function Footer() {
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
   return (
-    <footer
-      className="relative border-t border-[var(--border)] bg-[var(--bg-secondary)] overflow-hidden"
-    >
-      {/* Subtle decorative accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/40 to-transparent" />
-
-      <PageShell compact className="!py-0">
-        {/* ── Main Footer Grid ── */}
-        <div className="grid grid-cols-1 gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 md:py-14 lg:grid-cols-3 lg:gap-12 lg:py-16 xl:gap-14">
-
-          {/* Col 1 — Brand */}
-          <div className="flex flex-col gap-5">
-            <Link href="/" className="group flex items-center gap-3 w-fit">
-              <div className="w-10 h-10 rounded-[8px] bg-accent-primary flex items-center justify-center">
-                <span className="text-white font-display font-bold text-[15px]">MU</span>
-              </div>
-              <span className="font-display text-base font-semibold text-[var(--text-primary)] transition-colors group-hover:text-accent-primary sm:text-lg">
-                {PERSONAL_INFO.firstName}<span className="text-accent-primary">.</span>
-              </span>
+    <footer className="relative bg-[#0A0A0A] text-[#FFF7ED] pt-16 sm:pt-24 lg:pt-32 border-t border-white/[0.08] overflow-hidden">
+      <div className="layout-wrap relative z-10">
+        
+        {/* Footer Top: Brand & Mega Grid */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12 pb-16 sm:pb-24 border-b border-white/[0.08]">
+          
+          {/* Brand Info (Left Column) */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            <Link href="/" className="font-display text-3xl font-bold tracking-tight text-[#FFF7ED]">
+              {PERSONAL_INFO.name}<span className="text-[#FF6A00]">.</span>
             </Link>
-            <p className="max-w-[240px] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-              {PERSONAL_INFO.bioShort.slice(0, 100)}...
+            <p className="text-sm leading-relaxed text-[#FFF7ED]/60 max-w-[280px]">
+              {PERSONAL_INFO.bioShort}
             </p>
-            {/* Availability pill */}
-            <div className="flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border border-[var(--success)]/30 bg-[var(--success-bg)]">
-              <span className="w-2 h-2 rounded-full bg-[var(--success)] animate-pulse-dot" />
-              <span className="text-[12px] font-medium text-[var(--success)]">
+            <div className="flex items-center gap-2 mt-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#28C840] opacity-60"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#28C840]"></span>
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-[0.1em] text-[#28C840]">
                 {PERSONAL_INFO.availabilityText}
               </span>
             </div>
-          </div>
-
-          {/* Col 2 — Navigation */}
-          <div className="flex flex-col gap-5">
-            <h4
-              className="section-eyebrow"
-            >
-              Navigation
-            </h4>
-            <nav className="flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="group flex items-center gap-1.5 text-[14px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 w-fit"
+            
+            <div className="flex items-center gap-3 mt-6">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.platform}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.platform}
+                  className="text-[#FFF7ED]/30 hover:text-[#FF6A00] transition-colors touch-target bg-white/[0.03] p-3 rounded-xl border border-white/[0.05] hover:bg-white/[0.08]"
                 >
-                  <span className="w-0 group-hover:w-3 h-px bg-accent-primary transition-all duration-300 overflow-hidden" />
-                  {link.label}
-                </Link>
+                  <SocialIcon icon={social.icon} />
+                </a>
               ))}
-            </nav>
+            </div>
           </div>
 
-          {/* Col 3 — Connect */}
-          <div className="flex flex-col gap-5">
-            <h4 className="section-eyebrow">Let's Connect</h4>
-            <div className="flex flex-col gap-3">
-              {/* Email */}
-              <a
-                href={`mailto:${PERSONAL_INFO.email}`}
-                className="group flex items-center gap-2 text-[14px] text-[var(--text-secondary)] hover:text-accent-primary transition-colors duration-200 w-fit"
-              >
-                <Mail size={15} className="shrink-0" />
-                {PERSONAL_INFO.email}
-                <ArrowUpRight size={13} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
-              {/* Social icons */}
-              <div className="flex items-center gap-3 mt-1">
-                {SOCIAL_LINKS.map((social) => (
-                  <a
-                    key={social.platform}
-                    href={social.url}
-                    {...externalLinkProps}
-                    aria-label={social.platform}
-                    className="w-9 h-9 rounded-md flex items-center justify-center text-[var(--text-muted)] hover:text-accent-primary hover:bg-accent-primary/10 border border-[var(--border)] hover:border-accent-primary/30 transition-all duration-200"
-                  >
-                    {iconMap[social.icon] ?? <Mail size={18} />}
-                  </a>
+          {/* Desktop Mega Grid (Hidden on Mobile) */}
+          <div className="hidden sm:grid lg:col-span-8 grid-cols-4 gap-8">
+            
+            {/* Services */}
+            <div className="flex flex-col gap-6">
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                Services
+              </h3>
+              <ul className="flex flex-col gap-4">
+                {HEADER_MEGA.services.sections?.[0].links.slice(0, 4).map(link => (
+                  <li key={link.id}>
+                    <Link href={link.href} className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
                 ))}
+              </ul>
+            </div>
+
+            {/* Work */}
+            <div className="flex flex-col gap-6">
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                Work
+              </h3>
+              <ul className="flex flex-col gap-4">
+                {HEADER_MEGA.work.sections?.[0].links.map(link => (
+                  <li key={link.id}>
+                    <Link href={link.href} className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors flex items-center gap-2">
+                      {link.label}
+                      {link.badge && (
+                        <span className="text-[9px] uppercase tracking-wider text-[#FF6A00] bg-[#FF6A00]/10 px-1.5 py-0.5 rounded-sm">
+                          {link.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* About & Insights */}
+            <div className="flex flex-col gap-6">
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                About
+              </h3>
+              <ul className="flex flex-col gap-4 mb-4">
+                <li><Link href="/about" className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">Profile & Story</Link></li>
+                <li><Link href="/about#experience" className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">Experience</Link></li>
+              </ul>
+              
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                Insights
+              </h3>
+              <ul className="flex flex-col gap-4">
+                <li><Link href="/blog" className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">Engineering Notes</Link></li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-6">
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                Contact
+              </h3>
+              <ul className="flex flex-col gap-4">
+                <li>
+                  <a href={`mailto:${PERSONAL_INFO.email}`} className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">
+                    {PERSONAL_INFO.email}
+                  </a>
+                </li>
+                <li>
+                  <a href={`tel:${PERSONAL_INFO.phone.replace(/\s/g, "")}`} className="text-[13px] font-medium text-[#FFF7ED]/50 hover:text-[#FFF7ED] transition-colors">
+                    {PERSONAL_INFO.phone}
+                  </a>
+                </li>
+              </ul>
+              <div className="mt-2 p-4 rounded-xl border border-white/[0.08] bg-white/[0.02]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#FFF7ED]/40 mb-2">Location</p>
+                <p className="text-[12px] text-[#FFF7ED]/70 leading-relaxed">Rawalpindi / Islamabad<br />Pakistan</p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Mobile Menu List */}
+          <div className="sm:hidden flex flex-col -mx-4 border-t border-white/[0.08]">
+            <div className="border-b border-white/[0.08]">
+              <button 
+                onClick={() => setOpenSection('services')}
+                className="w-full flex items-center justify-between px-4 py-5"
+              >
+                <span className="font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]">Services</span>
+                <ArrowUpRight size={18} className="text-[#FFF7ED]/50" />
+              </button>
+            </div>
+
+            <div className="border-b border-white/[0.08]">
+              <button 
+                onClick={() => setOpenSection('work')}
+                className="w-full flex items-center justify-between px-4 py-5"
+              >
+                <span className="font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]">Work</span>
+                <ArrowUpRight size={18} className="text-[#FFF7ED]/50" />
+              </button>
+            </div>
+
+            <div className="border-b border-white/[0.08]">
+              <button 
+                onClick={() => setOpenSection('about')}
+                className="w-full flex items-center justify-between px-4 py-5"
+              >
+                <span className="font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]">About & Insights</span>
+                <ArrowUpRight size={18} className="text-[#FFF7ED]/50" />
+              </button>
+            </div>
+
+            <div className="border-b border-white/[0.08]">
+              <div className="px-4 py-5">
+                <span className="font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[#FF6A00] mb-4 block">Get in touch</span>
+                <ul className="flex flex-col gap-4">
+                  <li>
+                    <a href={`mailto:${PERSONAL_INFO.email}`} className="text-[14px] font-medium text-[#FFF7ED]/60">
+                      {PERSONAL_INFO.email}
+                    </a>
+                  </li>
+                  <li>
+                    <a href={`tel:${PERSONAL_INFO.phone.replace(/\s/g, "")}`} className="text-[14px] font-medium text-[#FFF7ED]/60">
+                      {PERSONAL_INFO.phone}
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
+
+          <MobileBottomSheet
+            open={openSection === 'services'}
+            onClose={() => setOpenSection(null)}
+            title="Services"
+          >
+            <div className="p-5">
+              <ul className="flex flex-col gap-4 pb-6">
+                {HEADER_MEGA.services.sections?.[0].links.slice(0, 4).map(link => (
+                  <li key={link.id}>
+                    <Link href={link.href} onClick={() => setOpenSection(null)} className="text-[15px] font-medium text-[#FFF7ED]/60">{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </MobileBottomSheet>
+
+          <MobileBottomSheet
+            open={openSection === 'work'}
+            onClose={() => setOpenSection(null)}
+            title="Work"
+          >
+            <div className="p-5">
+              <ul className="flex flex-col gap-4 pb-6">
+                {HEADER_MEGA.work.sections?.[0].links.map(link => (
+                  <li key={link.id}>
+                    <Link href={link.href} onClick={() => setOpenSection(null)} className="text-[15px] font-medium text-[#FFF7ED]/60 flex items-center gap-2">
+                      {link.label}
+                      {link.badge && (
+                        <span className="text-[10px] uppercase tracking-wider text-[#FF6A00] bg-[#FF6A00]/10 px-2 py-0.5 rounded-sm">
+                          {link.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </MobileBottomSheet>
+
+          <MobileBottomSheet
+            open={openSection === 'about'}
+            onClose={() => setOpenSection(null)}
+            title="About & Insights"
+          >
+            <div className="p-5">
+              <ul className="flex flex-col gap-4 pb-6">
+                <li><Link href="/about" onClick={() => setOpenSection(null)} className="text-[15px] font-medium text-[#FFF7ED]/60">Profile & Story</Link></li>
+                <li><Link href="/about#experience" onClick={() => setOpenSection(null)} className="text-[15px] font-medium text-[#FFF7ED]/60">Experience</Link></li>
+                <li><Link href="/blog" onClick={() => setOpenSection(null)} className="text-[15px] font-medium text-[#FFF7ED]/60">Engineering Notes</Link></li>
+              </ul>
+            </div>
+          </MobileBottomSheet>
+
         </div>
 
-        {/* ── Bottom Bar ── */}
-        <div className="border-t border-[var(--divider)] py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-[var(--text-muted)] flex items-center gap-1.5">
+        {/* Bottom Bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-8">
+          <p className="text-[11px] sm:text-xs font-medium text-[#FFF7ED]/30">
             © {currentYear} {PERSONAL_INFO.name}. All rights reserved.
           </p>
-          <p className="text-[12px] text-[var(--text-muted)] flex items-center gap-1.5">
-            Built with
-            <span className="text-accent-primary font-medium">Next.js 15</span>
-            &
-            <span className="text-accent-primary font-medium">TypeScript</span>
-          </p>
+          <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-medium text-[#FFF7ED]/30">
+            <span>Built with Next.js</span>
+            <span className="hidden sm:inline">•</span>
+            <span>Deployed on Vercel</span>
+          </div>
         </div>
-      </PageShell>
+      </div>
     </footer>
   );
 }

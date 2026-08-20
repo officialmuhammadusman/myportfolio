@@ -199,3 +199,47 @@ export const HERO_VIEWPORT_MIN_H = "min-h-[100dvh]";
 /** Content + image share this top line (clears fixed header) */
 export const HERO_HEADER_OFFSET = "pt-[72px] md:pt-[108px] lg:pt-[112px]";
 export const HERO_IMAGE_TOP = "top-[72px] md:top-[108px] lg:top-[112px]";
+
+export interface StudioShot {
+  id: string;
+  src: string;
+  alt: string;
+  objectPosition?: string;
+  label: string;
+  caption: string;
+}
+
+export const HERO_STUDIO: StudioShot[] = [
+  {
+    id: "studio-1",
+    src: "/muhammad_usman_hero_slider_updated/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg",
+    alt: "Muhammad Usman working on a laptop",
+    objectPosition: "center 20%",
+    label: "Engineering",
+    caption: "Deep-focus product engineering",
+  },
+  {
+    id: "studio-2",
+    src: "/muhammad_usman_hero_slider_updated/web-1080/02-hero-desk-trust-16x9-1920x1080.jpg",
+    alt: "Muhammad Usman at his desk",
+    objectPosition: "center 15%",
+    label: "Planning",
+    caption: "Architecture & planning sessions",
+  },
+  {
+    id: "studio-3",
+    src: "/muhammad_usman_hero_slider_updated/web-1080/03-hero-thinking-plan-16x9-1920x1080.jpg",
+    alt: "Muhammad Usman thinking and planning",
+    objectPosition: "center 10%",
+    label: "Thinking",
+    caption: "Systems thinking before coding",
+  },
+  {
+    id: "studio-4",
+    src: "/muhammad_usman_hero_slider_updated/web-1080/05-hero-authority-standing-16x9-1920x1080.jpg",
+    alt: "Muhammad Usman presenting",
+    objectPosition: "center 5%",
+    label: "Delivery",
+    caption: "Confident project delivery",
+  },
+];

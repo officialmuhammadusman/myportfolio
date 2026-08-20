@@ -64,7 +64,7 @@ export interface Project {
   testCoverage: string;
   screenshots: string[];
   heroImage: string;
-  liveUrl: string;
+  liveUrl: string | null;
   
   githubUrl?: string; // Fallback for single repo
   githubUrlFrontend?: string; // Frontend repo
@@ -83,7 +83,7 @@ export interface CodeSnippet {
 }
 
 // Blog
-export type BlogCategory = "architecture" | "performance" | "devops" | "frontend" | "backend" | "career";
+export type BlogCategory = "architecture" | "performance" | "devops" | "frontend" | "backend" | "career" | "fullstack" | "tutorials" | "saas" | "updates" | "ai-rag" | "mobile";
 
 export interface BlogPost {
   id: string;

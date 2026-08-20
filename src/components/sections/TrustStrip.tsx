@@ -59,11 +59,11 @@ export function TrustStrip() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2.5 lg:items-end">
+            <div className="flex flex-col items-center text-center gap-2.5 lg:items-end lg:text-right">
               <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FFF7ED]/40 sm:text-[11px]">
                 {TRUST_STRIP.regionsLabel}
               </span>
-              <ul className="flex flex-wrap items-center gap-x-1 gap-y-2 sm:gap-x-0">
+              <ul className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 sm:gap-x-0">
                 {TRUST_STRIP.regions.map((region, i) => (
                   <li key={region} className="flex items-center">
                     {i > 0 && (
@@ -88,8 +88,8 @@ export function TrustStrip() {
           />
 
           {/* Row 2 — Capabilities + proof */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-            <ul className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between sm:gap-8 mt-2 sm:mt-0">
+            <ul className="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5">
               {TRUST_STRIP.capabilities.map((item) => (
                 <li
                   key={item}
@@ -100,7 +100,7 @@ export function TrustStrip() {
               ))}
             </ul>
 
-            <ul className="flex flex-wrap items-center gap-x-1 gap-y-2">
+            <ul className="hidden sm:flex flex-wrap items-center gap-x-1 gap-y-2">
               {TRUST_STRIP.proof.map((item, i) => (
                 <li key={item} className="flex items-center">
                   {i > 0 && (

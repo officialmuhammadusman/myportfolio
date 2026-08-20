@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { HERO_STUDIO } from "@/data/hero";
+import type { StudioShot } from "@/data/hero";
 import { PageShell } from "@/components/layout/PageShell";
 
 /**
@@ -53,7 +54,7 @@ export function StudioPresence() {
         </div>
 
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 lg:grid-cols-4 lg:gap-5 xl:gap-6">
-          {HERO_STUDIO.map((shot, i) => (
+          {HERO_STUDIO.map((shot: StudioShot, i: number) => (
             <motion.figure
               key={shot.id}
               initial={reduceMotion ? false : { opacity: 0, y: 28 }}

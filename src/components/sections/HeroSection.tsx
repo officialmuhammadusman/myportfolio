@@ -239,7 +239,7 @@ export function HeroSection() {
                 </motion.p>
               </AnimatePresence>
 
-              <p className="text-center font-display text-[1.7rem] leading-[0.98] tracking-[-0.035em] text-[#FFF7ED] xs:text-[1.85rem] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
+              <p className="text-center font-display text-[1.5rem] leading-[0.98] tracking-[-0.035em] text-[#FFF7ED] xs:text-[1.85rem] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
                 {PERSONAL_INFO.name}
               </p>
 
@@ -260,34 +260,28 @@ export function HeroSection() {
                   key={active.id}
                   custom={direction}
                   className="mt-4 sm:mt-8"
-                  initial={
-                    reduceMotion
-                      ? false
-                      : (dir: Direction) => ({
-                          opacity: 0,
-                          y: dir >= 0 ? 12 : -12,
-                        })
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={
-                    reduceMotion
-                      ? undefined
-                      : (dir: Direction) => ({
-                          opacity: 0,
-                          y: dir >= 0 ? -8 : 8,
-                          transition: { duration: 0.18, ease: cineEase },
-                        })
-                  }
+                  variants={reduceMotion ? undefined : {
+                    enter: (dir: Direction) => ({ opacity: 0, y: dir >= 0 ? 12 : -12 }),
+                    center: { opacity: 1, y: 0 },
+                    exit: (dir: Direction) => ({
+                      opacity: 0,
+                      y: dir >= 0 ? -8 : 8,
+                      transition: { duration: 0.18, ease: cineEase },
+                    }),
+                  }}
+                  initial={reduceMotion ? false : "enter"}
+                  animate={reduceMotion ? { opacity: 1, y: 0 } : "center"}
+                  exit={reduceMotion ? undefined : "exit"}
                   transition={{ duration: 0.32, ease: cineEase }}
                 >
-                  <h1 className="flex flex-col text-center font-display text-[1.45rem] leading-[1.14] tracking-[-0.03em] text-[#FFF7ED] xs:text-[1.6rem] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
+                  <h1 className="flex flex-col text-center font-display text-[1.3rem] leading-[1.14] tracking-[-0.03em] text-[#FFF7ED] xs:text-[1.6rem] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
                     <span className="block w-full">{active.title}</span>
                     <span className="text-gradient mt-0.5 block w-full italic sm:mt-1.5">
                       {active.titleAccent}
                     </span>
                   </h1>
 
-                  <p className="mx-auto mt-2.5 max-w-[20rem] text-center text-[13px] leading-[1.55] text-[#FFF7ED]/75 xs:max-w-md xs:text-[14px] sm:hidden">
+                  <p className="mx-auto mt-2.5 max-w-[20rem] text-center text-[12px] leading-[1.55] text-[#FFF7ED]/75 xs:max-w-md xs:text-[14px] sm:hidden">
                     {active.supportMobile}
                   </p>
                   <p className="mt-4 hidden max-w-xl text-left text-base leading-[1.55] text-[#FFF7ED]/78 sm:block sm:text-lg md:text-[1.1rem] md:leading-[1.55]">

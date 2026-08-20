@@ -103,7 +103,7 @@ export function ProjectCard({ project, index = 0, className }: ProjectCardProps)
           <div className="flex items-center gap-2">
             {/* Live demo */}
             <a
-              href={project.liveUrl}
+              href={project.liveUrl ?? undefined}
               {...externalLinkProps}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[12px] font-semibold text-white bg-accent-primary hover:bg-accent-primary-hover transition-colors duration-200"
             >

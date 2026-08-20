@@ -172,7 +172,7 @@ export function HomeServicesSection() {
                     </div>
 
                     <Link
-                      href={`/services#${active.id}`}
+                      href={`/services/${active.id}`}
                       className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFB347] transition hover:text-[#FF6A00]"
                     >
                       Explore capability
@@ -246,7 +246,7 @@ function ServicePracticeRow({
       onFocus={onActivate}
     >
       <Link
-        href={`/services#${service.id}`}
+        href={`/services/${service.id}`}
         onClick={(e) => {
           if (
             typeof window !== "undefined" &&

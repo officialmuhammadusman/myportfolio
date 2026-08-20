@@ -380,281 +380,66 @@ export const projects: Project[] = [
   },
 
   {
-    id: "1",
-    slug: "vendorhub-multi-vendor-ecommerce",
-    title: "VendorHub — Multi-Vendor E-Commerce Platform",
-    shortDescription: "Production-ready multi-vendor marketplace with Stripe payments, Cloudinary image management, role-based access for three user types, and a fully documented REST API.",
-    longDescription: "VendorHub is a production-grade multi-vendor marketplace platform where vendors register stores, list products and sell to customers through a single platform — with full admin oversight. Features real Stripe payment processing, automatic refunds on cancellation, vendor earnings analytics, smart coupon system and a complete admin panel for platform management.",
-    category: ["full-stack", "performance"],
+    id: "desert-speed-tourism",
+    slug: "desert-speed-tourism",
+    title: "Desert Speed Tourism",
+    shortDescription: "Premium tourism and safari booking platform for Dubai visitors, featuring custom packages, live WhatsApp integration, and immersive visuals.",
+    longDescription: "Desert Speed Tourism is a comprehensive booking platform for UAE desert safaris and city tours. Built to handle high-volume tourist traffic with seamless WhatsApp booking integration, dynamic tour packages, and an immersive, image-first design that converts visitors into customers.",
+    category: ["frontend", "full-stack"],
     status: "completed",
     year: "2025",
-    isFeatured: false,
-    heroImage: "/images/projects/vendorhub-hero.jpg",
+    isFeatured: true,
+    heroImage: "https://iad.microlink.io/2bJgTlbtbC6Cwz3wjtDE1jALxzowQh-yFmsV88IiTwdZA_rxXR4PUQIACkdcrHbLtKfDsYWqFTskkkfV3sEgBg.png",
     screenshots: [
-      "/images/projects/vendorhub-1.jpg",
-      "/images/projects/vendorhub-2.jpg",
-      "/images/projects/vendorhub-3.jpg",
-      "/images/projects/vendorhub-4.jpg",
+      "https://iad.microlink.io/2bJgTlbtbC6Cwz3wjtDE1jALxzowQh-yFmsV88IiTwdZA_rxXR4PUQIACkdcrHbLtKfDsYWqFTskkkfV3sEgBg.png"
     ],
-    liveUrl: "https://vendorhub-frontend.vercel.app",
-   githubUrlFrontend: "https://github.com/officialmuhammadusman/vendorhub-frontend",
-githubUrlBackend: "https://github.com/officialmuhammadusman/vendorhub-backend",
-swaggerUrl: "https://vendorhub-backend.vercel.app/api/docs",
+    liveUrl: "https://desertspeedtourism-ffc6.vercel.app/",
     techStack: [
-      { name: "Next.js 15",      color: "#FFFFFF", bgColor: "#000000" },
-      { name: "TypeScript",      color: "#FFFFFF", bgColor: "#3178C6" },
-      { name: "Node.js",         color: "#FFFFFF", bgColor: "#539E43" },
-      { name: "MongoDB",         color: "#FFFFFF", bgColor: "#13AA52" },
-      { name: "Redux Toolkit",   color: "#FFFFFF", bgColor: "#764ABC" },
-      { name: "Stripe",          color: "#FFFFFF", bgColor: "#635BFF" },
-      { name: "Cloudinary",      color: "#FFFFFF", bgColor: "#3448C5" },
-      { name: "Tailwind CSS",    color: "#FFFFFF", bgColor: "#0F172A" },
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
+      { name: "Tailwind CSS", color: "#FFFFFF", bgColor: "#0F172A" },
+      { name: "Framer Motion", color: "#000000", bgColor: "#E5E7EB" },
     ],
     badges: [
-      { label: "50+ API Endpoints", icon: "Server"    },
-      { label: "Swagger Docs",      icon: "FileText"  },
-      { label: "Live on Vercel",    icon: "Globe"     },
-      { label: "Stripe Payments",   icon: "CreditCard"},
-      { label: "3 User Roles",      icon: "Shield"    },
+      { label: "Live in UAE", icon: "Globe" },
+      { label: "WhatsApp Booking", icon: "Smartphone" },
+      { label: "High Conversion", icon: "BarChart2" },
     ],
     features: [
       {
-        icon: "Store",
-        title: "Vendor Store Management",
-        description: "Vendors register a store with name, logo, banner and bank details. Admin approves the store before products can be listed. Suspending a vendor automatically deactivates all their products platform-wide in a single database operation.",
+        icon: "Map",
+        title: "Dynamic Tour Packages",
+        description: "Showcasing premium desert safaris, buggy rentals, and city tours with clear pricing and itineraries.",
       },
       {
-        icon: "ShoppingBag",
-        title: "Product Catalog with Multi-Image Upload",
-        description: "Vendors upload up to 5 images per product via Cloudinary. MongoDB text indexes on title, description and tags enable full-text search with category, price range and sort filters. Individual images can be deleted without removing the product.",
+        icon: "MessageSquare",
+        title: "Direct WhatsApp Booking",
+        description: "Frictionless booking flow that drops customers directly into a WhatsApp conversation with pre-filled tour details.",
       },
       {
-        icon: "CreditCard",
-        title: "Stripe Payment Integration",
-        description: "Complete Stripe Payment Intent flow — frontend confirms payment with Stripe.js, backend verifies intent status before placing order. Webhook handlers for payment_intent.succeeded, payment_intent.payment_failed and charge.refunded. Automatic refund triggered on order cancellation.",
-      },
-      {
-        icon: "Users",
-        title: "Role-Based Access Control",
-        description: "Three distinct roles — Customer, Vendor and Admin — with fine-grained permissions enforced via verifyJWT and verifyRole middleware on every protected API endpoint. Role stored in JWT payload and validated server-side on every request.",
-      },
-      {
-        icon: "BarChart2",
-        title: "Vendor Earnings Analytics",
-        description: "Real-time vendor dashboard with total earnings, order count, product count and low stock alerts. Monthly earnings chart built with Recharts from MongoDB aggregation pipeline grouping orders by month. Earnings update automatically on every successful order.",
-      },
-      {
-        icon: "Tag",
-        title: "Smart Coupon System",
-        description: "Admin creates percentage or fixed discount coupons with minimum order amounts, maximum discount caps, per-user usage limits and expiry dates. Six server-side validation checks on apply including expiry, usage limit, minimum order and per-user restriction.",
-      },
-      {
-        icon: "Shield",
-        title: "JWT Authentication with Silent Refresh",
-        description: "Access tokens expire in 15 minutes, refresh tokens stored in httpOnly cookies for 7 days. Axios interceptor catches 401 responses and queues all pending requests while a single refresh call runs — all queued requests retry automatically with the new token.",
-      },
-      {
-        icon: "Truck",
-        title: "Order Lifecycle Management",
-        description: "Orders transition through explicit states: Pending → Confirmed → Shipped → Delivered or Cancelled. Vendor marks orders shipped and delivered. Customer cancels pending or confirmed orders triggering automatic Stripe refund and stock restoration.",
+        icon: "Image",
+        title: "Immersive Visuals",
+        description: "Cinematic, full-bleed imagery that sells the experience before the customer even reads the text.",
       },
     ],
     technicalDecisions: [
       {
-        title: "MongoDB for Flexible Product Catalog",
-        content: "Products across categories have different attributes — electronics have specs, clothing has sizes and colours, food has expiry. In a relational database this requires EAV pattern or multiple join tables which destroys query performance. MongoDB's flexible document model allows each product category to store its own attributes without schema migrations. Text indexes on title, description and tags enable full-text search across all products in a single query. The trade-off is enforcing consistency at the application layer with validators and middleware rather than database constraints.",
-      },
-      {
-        title: "Stripe Payment Intents over Direct Charges",
-        content: "I used Stripe Payment Intents rather than legacy Charges because it supports 3D Secure authentication required by banks in many regions. The flow creates a Payment Intent on the backend for the cart total, returns a clientSecret to the frontend, Stripe.js confirms the payment client-side without sensitive card data touching the server. The backend then verifies the intent status via Stripe API before placing the order — preventing any tampered requests from placing unpaid orders.",
-      },
-      {
-        title: "JWT with Axios Request Queue for Silent Refresh",
-        content: "JWT is stateless — the backend verifies the signature with no session lookup, reducing latency on every request. The challenge is token expiry during active sessions. When multiple requests fail with 401 simultaneously, a naive implementation would make multiple refresh calls causing race conditions. I implemented a request queue — the first 401 sets a refreshing flag, all subsequent 401s join the queue. One refresh call runs, then all queued requests retry with the new token. This is transparent to the user.",
-      },
-      {
-        title: "Cloudinary for Image Storage over Local Disk",
-        content: "Vercel serverless functions have no persistent file system — files written to disk are lost between invocations. Storing images locally was never an option for production. Cloudinary handles upload, CDN delivery, automatic format optimisation and storage. Multer saves files temporarily to public/temp on the server, uploads to Cloudinary, then immediately deletes the temp file. Each image stores both url and publicId in MongoDB for targeted deletion without fetching all images.",
-      },
+        title: "Optimized for Mobile Conversion",
+        content: "Tourists book on the go. The site is aggressively optimized for mobile performance and one-tap WhatsApp integration, skipping complex checkout flows for higher conversion.",
+      }
     ],
     challenges: [
       {
-        problem: "Token persistence across page reloads broke for admin role — login redirected correctly but the dashboard immediately redirected back to login because Redux state was empty on the new page load.",
-        solution: "The root cause was Next.js App Router initialising the Redux store on the server where localStorage is undefined, so getInitialState returned empty values. Client-side navigation reused the already-empty store. Fixed by moving to window.location.href for post-login navigation instead of router.replace — this triggers a full page reload, the module re-executes on the client, getInitialState reads localStorage correctly and the store initialises with the correct token and role before any component renders.",
-      },
-      {
-        problem: "Cloudinary upload failed in production with 'Must supply api_key' despite credentials being set in environment variables.",
-        solution: "The fileUpload.js utility imported cloudinary directly from the package without importing the config module that called cloudinary.config(). In local development the config module was always imported first through the module chain. On Vercel, ES Module import order is not guaranteed. Fixed by moving cloudinary.config() directly into fileUpload.js so credentials are always set regardless of which module loads first. Also added automatic creation of the public/temp directory on module load since Vercel's filesystem does not persist between cold starts.",
-      },
-      {
-        problem: "Vendor orders page showed zero orders despite orders existing in the database and appearing correctly in the vendor dashboard stats.",
-        solution: "The vendor orders page was calling getMyOrders which filters by user._id — returning orders placed by that user as a customer. Vendor orders need to filter by items.vendor matching the vendor's profile _id. Added a dedicated GET /orders/vendor-orders endpoint that first finds the vendor profile for the authenticated user, then queries orders where items.vendor matches that vendor's _id using MongoDB's nested document query.",
-      },
+        problem: "Users dropping off during traditional multi-step checkout.",
+        solution: "Implemented one-click WhatsApp booking to capture leads instantly.",
+      }
     ],
     performanceMetrics: [
-      { label: "API Endpoints Documented", value: "50+",    unit: "via Swagger" },
-      { label: "Product Categories",       value: "11",     unit: "with full-text search" },
-      { label: "Database Models",          value: "7",      unit: "with indexes" },
-      { label: "Coupon Validation Checks", value: "6",      unit: "server-side" },
-      { label: "Access Token Expiry",      value: "15 min", unit: "refresh: 7 days" },
+      { label: "Platform", value: "Next.js" },
+      { label: "Status", value: "Live" },
     ],
-    testCount: "—",
-    testCoverage: "—",
-    codeSnippets: [
-      {
-        filename: "src/lib/axios.ts",
-        language: "typescript",
-        description: "Axios request queue for silent JWT refresh — prevents multiple simultaneous refresh calls",
-        code: `let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (token: string) => void;
-  reject:  (err: unknown)  => void;
-}> = [];
-
-const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach((p) =>
-    error ? p.reject(error) : p.resolve(token!)
-  );
-  failedQueue = [];
-};
-
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (error: AxiosError) => {
-    const original = error.config as InternalAxiosRequestConfig & {
-      _retry?: boolean;
-    };
-
-    if (error.response?.status === 401 && !original._retry) {
-      if (isRefreshing) {
-        // Queue this request until token is refreshed
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        }).then((token) => {
-          original.headers.Authorization = \`Bearer \${token}\`;
-          return axiosInstance(original);
-        });
-      }
-
-      original._retry = true;
-      isRefreshing    = true;
-
-      try {
-        const refreshToken = localStorage.getItem("vh_refresh_token");
-        const { data }     = await axios.post("/auth/refresh-token", {
-          refreshToken,
-        });
-
-        const newToken = data.data.accessToken;
-        localStorage.setItem("vh_access_token", newToken);
-
-        processQueue(null, newToken);
-        original.headers.Authorization = \`Bearer \${newToken}\`;
-        return axiosInstance(original);
-      } catch (refreshError) {
-        processQueue(refreshError, null);
-        store.dispatch(logout());
-        window.location.href = "/login";
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);`,
-      },
-      {
-        filename: "src/controllers/order.controller.js",
-        language: "javascript",
-        description: "Atomic order placement — deducts stock, updates vendor earnings, marks coupon used and clears cart in one request",
-        code: `export const placeOrder = asyncHandler(async (req, res) => {
-  const { paymentIntentId, shippingAddress } = req.body;
-
-  // Verify payment actually succeeded with Stripe
-  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-  if (paymentIntent.status !== "succeeded") {
-    throw new ApiError(400, "Payment has not been completed");
-  }
-
-  const cart = await Cart.findOne({ user: req.user._id })
-    .populate("items.product")
-    .populate("coupon");
-
-  if (!cart || cart.items.length === 0)
-    throw new ApiError(400, "Cart is empty");
-
-  const orderItems  = [];
-  const vendorEarnings = {};
-
-  for (const item of cart.items) {
-    if (item.product.stock < item.quantity)
-      throw new ApiError(400, \`\${item.product.title} is out of stock\`);
-
-    // Deduct stock atomically
-    await Product.findByIdAndUpdate(item.product._id, {
-      $inc: { stock: -item.quantity, sold: item.quantity },
-    });
-
-    // Accumulate vendor earnings
-    const vid = item.product.vendor.toString();
-    vendorEarnings[vid] = (vendorEarnings[vid] || 0)
-      + item.price * item.quantity;
-
-    orderItems.push({
-      product:  item.product._id,
-      vendor:   item.product.vendor,
-      title:    item.product.title,
-      image:    item.product.images[0]?.url || "",
-      price:    item.price,
-      quantity: item.quantity,
-    });
-  }
-
-  // Update each vendor's earnings and order count
-  for (const [vendorId, earnings] of Object.entries(vendorEarnings)) {
-    await Vendor.findByIdAndUpdate(vendorId, {
-      $inc: { totalEarnings: earnings, totalOrders: 1 },
-    });
-  }
-
-  const subtotal = cart.items.reduce(
-    (sum, i) => sum + i.price * i.quantity, 0
-  );
-  const discount = cart.discount || 0;
-
-  const order = await Order.create({
-    user: req.user._id,
-    items: orderItems,
-    shippingAddress,
-    subtotal,
-    discount,
-    total:          subtotal - discount,
-    coupon:         cart.coupon?._id || null,
-    status:         "confirmed",
-    paymentStatus:  "paid",
-    paymentIntentId,
-    paidAt:         new Date(),
-  });
-
-  // Mark coupon as used by this customer
-  if (cart.coupon) {
-    await Coupon.findByIdAndUpdate(cart.coupon._id, {
-      $inc:  { usedCount: 1 },
-      $push: { usedBy: req.user._id },
-    });
-  }
-
-  // Clear the cart
-  await Cart.findByIdAndDelete(cart._id);
-
-  return res.status(201).json(
-    new ApiResponse(201, order, "Order placed successfully")
-  );
-});`,
-      },
-    ],
+    testCount: "Production QA",
+    testCoverage: "Live product",
   },
 
 
@@ -870,6 +655,125 @@ axiosInstance.interceptors.response.use(
   //   testCount: "35+",
   //   testCoverage: "82%",
   // },
+  {
+    id: "rag-chatbot",
+    slug: "rag-chatbot",
+    title: "RAG Chatbot — Corrective RAG / Self-RAG",
+    shortDescription:
+      "Enterprise RAG system combining LangChain, LangGraph, and Pinecone vector databases to provide accurate, grounded responses on private datasets.",
+    longDescription:
+      "This system tackles one of the biggest challenges with LLMs in production: hallucination. Using a LangGraph multi-agent architecture, the chatbot runs a Corrective RAG (C-RAG) flow. It retrieves documents from Pinecone, scores their relevance, and if the context is insufficient, automatically rewrites the query and searches the web as a fallback mechanism. The frontend is built on Next.js 15, providing a seamless streaming experience.",
+    category: ["backend"],
+    status: "completed",
+    year: "2026",
+    isFeatured: false,
+    heroImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1600&h=900",
+    screenshots: ["https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1600&h=900"],
+    liveUrl: null,
+    techStack: [
+      { name: "LangChain", color: "#FFFFFF", bgColor: "#111111" },
+      { name: "LangGraph", color: "#FFFFFF", bgColor: "#FF6A00" },
+      { name: "Pinecone", color: "#000000", bgColor: "#E6F0FF" },
+      { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
+      { name: "Redis", color: "#FFFFFF", bgColor: "#DC382D" },
+    ],
+    badges: [
+      { label: "C-RAG", icon: "Brain" },
+      { label: "Web Fallback", icon: "Globe" },
+      { label: "LangGraph", icon: "Network" },
+    ],
+    features: [
+      {
+        icon: "Search",
+        title: "Semantic Vector Search",
+        description: "High-accuracy semantic retrieval using dense embeddings mapped in a high-dimensional Pinecone index.",
+      },
+      {
+        icon: "Filter",
+        title: "Relevance Grading",
+        description: "An evaluation node that checks if the retrieved documents actually contain the answer before generation.",
+      },
+      {
+        icon: "Globe",
+        title: "Automated Web Fallback",
+        description: "If internal documents lack the answer, the agent dynamically rewrites the query and executes a web search using Tavily.",
+      }
+    ],
+    technicalDecisions: [
+      {
+        title: "Why LangGraph over basic LangChain?",
+        content: "Basic chains are linear. In an enterprise RAG system, you need conditional logic (cycles) — 'Did I find the answer? If no, search again.' LangGraph's state machine architecture makes cyclic, reliable agent workflows possible.",
+      }
+    ],
+    challenges: [
+      {
+        problem: "Latency overhead from multiple LLM calls.",
+        solution: "Implemented Redis caching for frequent semantic queries, bypassing the LLM entirely for 40% of standard questions. Used smaller, faster models for the 'grader' nodes.",
+      }
+    ],
+    performanceMetrics: [
+      { label: "Answer Accuracy", value: "94%" },
+      { label: "Avg Latency", value: "<1.2s", unit: "TTFB Streaming" },
+    ],
+    testCount: "18+",
+    testCoverage: "78%",
+  },
+  {
+    id: "multi-agent",
+    slug: "multi-agent",
+    title: "Multi-Agent Supervisor & SQL Agent",
+    shortDescription:
+      "A multi-actor LLM architecture where a supervisor agent routes tasks to specialized sub-agents (SQL extraction, Research, Writing).",
+    longDescription:
+      "This project demonstrates complex workflow automation. Instead of relying on a single mega-prompt, the system uses a Supervisor Agent built in LangGraph. The supervisor parses the user intent and delegates execution. If a user asks for 'sales data from last Q3', it routes to the SQL Agent which introspects the database schema, writes valid Postgres SQL, runs it, and passes the JSON results to the Writer Agent for summarization.",
+    category: ["backend"],
+    status: "completed",
+    year: "2025",
+    isFeatured: false,
+    heroImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1600&h=900",
+    screenshots: ["https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1600&h=900"],
+    liveUrl: null,
+    techStack: [
+      { name: "LangGraph", color: "#FFFFFF", bgColor: "#FF6A00" },
+      { name: "PostgreSQL", color: "#FFFFFF", bgColor: "#336791" },
+      { name: "Python", color: "#FFFFFF", bgColor: "#3776AB" },
+      { name: "OpenAI API", color: "#FFFFFF", bgColor: "#10A37F" },
+    ],
+    badges: [
+      { label: "Supervisor Pattern", icon: "GitMerge" },
+      { label: "SQL Tool Calling", icon: "Database" },
+      { label: "Structured JSON outputs", icon: "Code" },
+    ],
+    features: [
+      {
+        icon: "GitMerge",
+        title: "Task Delegation",
+        description: "Supervisor agent dynamically decides which specialized tool or sub-agent to invoke.",
+      },
+      {
+        icon: "Database",
+        title: "Safe SQL Introspection",
+        description: "Agent can read schema structure and formulate precise read-only queries against complex relational databases.",
+      }
+    ],
+    technicalDecisions: [
+      {
+        title: "Separation of Concerns via Agents",
+        content: "Using smaller specialized models for sub-tasks (e.g. a strict JSON schema extractor vs a creative writer) massively reduces hallucination and improves determinism compared to one massive LLM call.",
+      }
+    ],
+    challenges: [
+      {
+        problem: "Agent generating invalid SQL syntax.",
+        solution: "Implemented a human-in-the-loop fallback mechanism and automated retry nodes. If the SQL errors out, the error trace is passed back to the SQL agent to self-correct.",
+      }
+    ],
+    performanceMetrics: [
+      { label: "SQL Accuracy", value: "92%" },
+    ],
+    testCount: "12+",
+    testCoverage: "74%",
+  }
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.isFeatured);

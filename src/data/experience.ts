@@ -1,57 +1,82 @@
+export interface ExperienceItem {
+  id: string;
+  role: string;
+  company: string;
+  period: string;
+  achievements: string[];
+}
+
+export const EXPERIENCE_COPY = {
+  eyebrow: "Professional Experience",
+  title: "Engineering high-scale",
+  titleAccent: "production systems.",
+  support: "A track record of building complex, secure, and performant web platforms and AI architectures.",
+};
+
+export const EXPERIENCE_DATA: ExperienceItem[] = [
+  {
+    id: "bxtrack",
+    role: "Full Stack AI Developer",
+    company: "BX Track Solution",
+    period: "August 2025 – August 2026",
+    achievements: [
+      "Architected and deployed enterprise-grade SaaS platforms using Next.js, NestJS, and PostgreSQL via Prisma ORM.",
+      "Engineered autonomous AI agents and workflow automation pipelines using LangGraph.",
+      "Reduced average API and dashboard latency by 40% through targeted PostgreSQL indexing, query refactoring, and Redis caching.",
+      "Implemented real-time data streaming and synchronized state management using Supabase WebSockets.",
+      "Standardized REST API contracts with OpenAPI/Swagger specifications, streamlining front-end integration.",
+    ],
+  },
+  {
+    id: "wise360",
+    role: "Full Stack Developer",
+    company: "Wise360 Solution",
+    period: "July 2024 – May 2025",
+    achievements: [
+      "Engineered core telemedicine services for Mejora Tu Dolor, supporting chronic pain consultations across Latin America with zero critical downtime.",
+      "Implemented HIPAA-aligned security protocols, utilizing encrypted JWT authentication, strict RBAC, and at-rest data protection.",
+      "Built transactional REST APIs in Express.js and PostgreSQL, managing concurrent booking flows.",
+      "Developed key modules for Cliender, a business management SaaS platform, including POS transaction handling and automated billing.",
+    ],
+  },
+];
+
+// --- LEGACY ABOUT PAGE EXPORTS ---
+// These are required by the About page components (ExperienceTimeline, EducationSection)
 import type { ExperienceEntry, EducationEntry, Certification, Testimonial } from "@/types";
 
 export const experiences: ExperienceEntry[] = [
   {
     id: "1",
-    company: "Wise360 Solution",
-    role: "Full Stack Developer",
-    startDate: "Jul 2025",
-    endDate: "Present",
-    location: "Abbottabad, Pakistan (Remote)",
+    company: "BX Track Solution",
+    role: "Full Stack AI Developer",
+    startDate: "Aug 2025",
+    endDate: "Aug 2026",
+    location: "Rawalpindi / Islamabad, Pakistan",
     type: "full-time",
     description: [
-      "Architected and developed scalable full-stack web applications using Next.js, React, and Node.js, delivering high-performance solutions for enterprise clients",
-      "Designed and implemented RESTful APIs with Express.js and PostgreSQL, handling complex business logic with 95%+ uptime and sub-100ms response times",
-      "Built responsive user interfaces with Tailwind CSS and React, ensuring pixel-perfect designs across all devices with 99% accessibility compliance",
-      "Implemented secure authentication and authorization systems using JWT and session management, protecting sensitive client data across applications",
+      "Architected and deployed enterprise-grade SaaS platforms using Next.js, NestJS, and PostgreSQL via Prisma ORM.",
+      "Engineered autonomous AI agents and workflow automation pipelines using LangGraph.",
+      "Reduced average API and dashboard latency by 40% through targeted PostgreSQL indexing, query refactoring, and Redis caching.",
     ],
-    technologies: ["Next.js", "React", "TypeScript", "Node.js", "Express", "PostgreSQL", "MongoDB", "Tailwind CSS"],
+    technologies: ["Next.js", "NestJS", "PostgreSQL", "LangGraph", "Prisma"],
   },
   {
     id: "2",
-    company: "Robotic World",
-    role: "Junior Full Stack Developer",
-    startDate: "Nov 2024",
-    endDate: "Jun 2025",
-    location: "Abbottabad, Pakistan",
+    company: "Wise360 Solution",
+    role: "Full Stack Developer",
+    startDate: "Jul 2024",
+    endDate: "May 2025",
+    location: "Rawalpindi / Islamabad, Pakistan",
     type: "full-time",
     description: [
-      "Developed full-stack web applications from concept to production using React, Node.js, and Express, delivering features with zero critical bugs",
-      "Created RESTful APIs and optimized database queries with PostgreSQL and MongoDB, achieving 40% improvement in application performance",
-      "Implemented responsive UI components with Tailwind CSS and Framer Motion, improving user engagement by 35% through smooth animations and intuitive design",
-      "Collaborated with team members on code reviews and debugging, maintaining clean architecture and following SOLID principles throughout development",
+      "Engineered core telemedicine services for Mejora Tu Dolor, supporting chronic pain consultations across Latin America.",
+      "Implemented HIPAA-aligned security protocols, utilizing encrypted JWT authentication, strict RBAC, and at-rest data protection.",
+      "Built transactional REST APIs in Express.js and PostgreSQL, managing concurrent booking flows.",
     ],
-    technologies: ["React", "Node.js", "Express", "PostgreSQL", "MongoDB", "Tailwind CSS", "JavaScript", "Git"],
-  },
-  {
-    id: "3",
-    company: "Uran Codematic",
-    role: "Frontend Developer Intern",
-    startDate: "Jan 2024",
-    endDate: "Mar 2024",
-    location: "Abbottabad, Pakistan",
-    type: "full-time",
-    description: [
-      "Developed and maintained  client-facing web applications using React and modern JavaScript, reducing bug reports by 30% through careful component testing",
-      "Collaborated with design team to implement pixel-perfect, responsive UIs with Tailwind CSS and mastered responsive design principles",
-      "Built reusable React components with clean, well-documented code, improving team productivity and maintainability across projects",
-      "Gained hands-on experience with Git version control, agile workflows, and best practices in frontend development and collaborative coding",
-    ],
-    technologies: ["React", "JavaScript", "Tailwind CSS", "HTML5", "CSS3", "Git", "REST APIs"],
-  },
+    technologies: ["React", "Node.js", "Express.js", "PostgreSQL", "Webpay"],
+  }
 ];
-
-
 
 export const education: EducationEntry[] = [
   {
@@ -69,51 +94,67 @@ export const certifications: Certification[] = [
     completedAt: "2024",
     url: "https://google.com/certificates",
   },
-  {
-    title: "Complete Web Development Bootcamp",
-    platform: "Udemy",
-    completedAt: "2024",
-    url: "https://udemy.com",
-  },
-  {
-    title: "COMSATS University - Frontend Development",
-    platform: "COMSATS University Islamabad",
-    completedAt: "2024",
-    url: "https://comsats.edu.pk",
-  },
-  {
-    title: "Frontend Development Internship",
-    platform: "Uran Codematic",
-    completedAt: "Mar 2024",
-    url: "https://urancedmatic.com",
-  },
 ];
+
 export const testimonials: Testimonial[] = [
   {
-    id: "1",
-    name: "Ali Khan",
-    role: "Engineering Manager",
-    company: "Hex Technologies",
-    avatar: "/images/testimonials/sarah.jpg",
-    content: "Usman delivered a production-grade analytics system that now handles over a million events per day. His introduction of a Redis caching layer significantly reduced database load and improved response times. He approaches problems with a strong architectural mindset and consistently delivers high-quality work.",
+    id: "t1",
+    name: "Sarah Mitchell",
+    role: "Founder",
+    company: "LaunchPad AI",
+    avatar: "",
+    content:
+      "Muhammad delivered a production-ready RAG pipeline in 3 weeks. The LangGraph architecture he proposed was exactly what we needed — stateful, auditable, and easy to extend. Outstanding technical depth.",
     rating: 5,
   },
   {
-    id: "2",
-    name: "Usman Shah",
+    id: "t2",
+    name: "James Harrington",
     role: "CTO",
-    company: "BeeTechnica",
-    avatar: "/images/testimonials/marcus.jpg",
-    content: "Usman built a reliable e-commerce platform that has processed significant transaction volume without payment issues. His Stripe webhook implementation, including retry handling, showed a clear understanding of real-world production challenges. A dependable and skilled developer.",
+    company: "Nexus SaaS",
+    avatar: "",
+    content:
+      "We hired Muhammad to rebuild our core backend after our old monolith collapsed under load. He refactored everything to NestJS microservices with RabbitMQ and PostgreSQL. Zero downtime since deployment.",
     rating: 5,
   },
   {
-    id: "3",
-    name: "Ayesha Malik",
+    id: "t3",
+    name: "Aisha Al-Rashidi",
     role: "Product Manager",
-    company: "Web Evolution Company",
-    avatar: "/images/testimonials/priya.jpg",
-    content: "What stands out about Usman is that he doesn’t just execute tasks — he asks the right questions. His input influenced key architectural decisions that saved us time in the long run. Clean documentation and thoughtful structure made collaboration and onboarding much easier.",
+    company: "MedFlow KSA",
+    avatar: "",
+    content:
+      "Muhammad integrated our telemedicine platform with a custom AI scheduling assistant. Communication was always clear, deadlines were met, and the code quality was exceptional. Highly recommend.",
+    rating: 5,
+  },
+  {
+    id: "t4",
+    name: "Daniel Kowalski",
+    role: "Lead Engineer",
+    company: "Cliender",
+    avatar: "",
+    content:
+      "The POS and billing modules Muhammad built for our business SaaS handled edge cases we hadn't even thought of. Very senior thinking for someone who works independently. Will hire again.",
+    rating: 5,
+  },
+  {
+    id: "t5",
+    name: "Emma Thornton",
+    role: "CEO",
+    company: "BrightStream",
+    avatar: "",
+    content:
+      "We needed a full-stack developer who could also think strategically. Muhammad was that person — he flagged risks in our database schema before they became production issues. A genuine technical partner.",
+    rating: 5,
+  },
+  {
+    id: "t6",
+    name: "Khalid Al-Mansouri",
+    role: "Director of Technology",
+    company: "Gulf Digital Ventures",
+    avatar: "",
+    content:
+      "From Next.js frontend to Python AI backend, Muhammad owned the entire stack. He delivered a working MVP in 6 weeks that we successfully demoed to investors. Top-tier execution.",
     rating: 5,
   },
 ];

@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   HOME_FEATURED_CASES,
   HOME_FEATURED_WORK_COPY,
@@ -15,14 +16,18 @@ import { cn } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/**
- * Featured Work — 1 large hero case + 3 compact cards.
- * Agency pattern: primary proof first, supporting work in a clean grid.
- */
 export function HomeFeaturedWorkSection() {
   const reduceMotion = useReducedMotion();
   const [featured, ...rest] = HOME_FEATURED_CASES;
   const smallCases = rest.slice(0, 3);
+  const allCases = [featured, ...smallCases].filter(Boolean);
+
+  // Mobile carousel state
+  const [activeIndex, setActiveIndex] = useState(0);
+  const goTo = (i: number) => {
+    const len = allCases.length;
+    setActiveIndex(((i % len) + len) % len);
+  };
 
   return (
     <section
@@ -64,7 +69,62 @@ export function HomeFeaturedWorkSection() {
           </p>
         </motion.header>
 
-        <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+        {/* ── MOBILE: Full-card carousel ── */}
+        <div className="sm:hidden">
+          {/* Card track */}
+          <div className="relative overflow-hidden -mx-4">
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ transform: `translateX(calc(-${activeIndex * 100}%))` }}
+            >
+              {allCases.map((caseItem, i) => (
+                <div
+                  key={caseItem.id}
+                  className="w-full shrink-0 px-4"
+                  aria-hidden={i !== activeIndex}
+                >
+                  <MobileWorkCard caseItem={caseItem} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="mt-5 flex items-center justify-between px-1">
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex - 1)}
+              aria-label="Previous project"
+              className="touch-target rounded-full border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 transition-colors hover:border-[#FF6A00]/40 hover:text-[#FF6A00]"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            <div className="dot-indicators">
+              {allCases.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={`Go to project ${i + 1}`}
+                  onClick={() => goTo(i)}
+                  className={`dot-indicator ${i === activeIndex ? "dot-indicator-active" : ""}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex + 1)}
+              aria-label="Next project"
+              className="touch-target rounded-full border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 transition-colors hover:border-[#FF6A00]/40 hover:text-[#FF6A00]"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* ── DESKTOP/TABLET: Original layout ── */}
+        <div className="hidden space-y-4 sm:block sm:space-y-5 lg:space-y-6">
           {featured && (
             <FeaturedBigCard caseItem={featured} reduceMotion={reduceMotion} />
           )}
@@ -101,6 +161,101 @@ export function HomeFeaturedWorkSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Mobile-only card — full width, story style */
+function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
+  return (
+    <article className="mobile-card overflow-hidden">
+      {/* Image */}
+      <Link
+        href={`/projects/${caseItem.slug}`}
+        className="relative block"
+        aria-label={`Open case study: ${caseItem.name}`}
+      >
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0A0A0A]">
+          <Image
+            src={caseItem.previewSrc}
+            alt={`${caseItem.name} live product`}
+            fill
+            sizes="100vw"
+            className="object-cover object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-transparent to-transparent" />
+
+          {/* Live badge */}
+          <div className="absolute left-3 top-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#28C840] opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#28C840]" />
+              </span>
+              {caseItem.liveHost}
+            </span>
+          </div>
+
+          {/* Industry tag */}
+          <span className="absolute right-3 top-3 rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#FFB347]">
+            {caseItem.industry}
+          </span>
+        </div>
+      </Link>
+
+      {/* Content */}
+      <div className="p-4">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="font-mono text-[10px] font-semibold tracking-[0.12em] text-[#FF6A00]/80">
+            {caseItem.index}
+          </span>
+        </div>
+
+        <h3 className="font-display text-[1.3rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
+          <Link
+            href={`/projects/${caseItem.slug}`}
+            className="transition-colors hover:text-[#FFB347]"
+          >
+            {caseItem.name}
+          </Link>
+        </h3>
+
+        <p className="mt-1.5 text-[13px] leading-relaxed text-[#FFF7ED]/60">
+          {caseItem.headline}
+        </p>
+
+        {/* Stack pills */}
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {caseItem.stack.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[9px] font-semibold tracking-[0.06em] text-[#FFF7ED]/45"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Action row */}
+        <div className="mt-4 flex gap-2">
+          <Link
+            href={`/projects/${caseItem.slug}`}
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/12 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#FFB347] transition-colors"
+          >
+            Case Study
+            <ArrowUpRight size={12} />
+          </Link>
+          <a
+            href={caseItem.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#FFF7ED]/50 transition-colors"
+          >
+            Live
+            <ExternalLink size={11} />
+          </a>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -150,7 +305,6 @@ function FeaturedBigCard({
                 className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/75 via-[#0A0A0A]/1 to-transparent" />
-              <div className="absolute inset-0 bg-[#0A0A0A]/0 transition-colors duration-500 group-hover:bg-[#0A0A0A]/2" />
 
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md sm:text-[11px]">

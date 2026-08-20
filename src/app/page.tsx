@@ -5,8 +5,11 @@ import { HomeFeaturedWorkSection } from "@/components/sections/HomeFeaturedWorkS
 import { HomeHowIWorkSection } from "@/components/sections/HomeHowIWorkSection";
 import { HomeTechStackStrip } from "@/components/sections/HomeTechStackStrip";
 import { StatsSection } from "@/components/sections/StatsSection";
-import { AboutTeaser } from "@/components/sections/AboutTeaser";
-import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { AgencyIndustriesSection } from "@/components/sections/AgencyIndustriesSection";
+import { AgencyImpactSection } from "@/components/sections/AgencyImpactSection";
+import { ClientLogosSection } from "@/components/sections/ClientLogosSection";
+import { WhyChooseUsSection } from "@/components/sections/WhyChooseUsSection";
+import { ProjectCTABannerSection } from "@/components/sections/ProjectCTABannerSection";
 import type { Metadata } from "next";
 import { PERSONAL_INFO } from "@/lib/constants";
 
@@ -25,8 +28,11 @@ export default function HomePage() {
       <HomeHowIWorkSection />
       <HomeTechStackStrip />
       <StatsSection />
-      <AboutTeaser />
-      <TestimonialsSection />
+      <AgencyIndustriesSection />
+      <AgencyImpactSection />
+      <ClientLogosSection />
+      <WhyChooseUsSection />
+      <ProjectCTABannerSection />
     </>
   );
 }

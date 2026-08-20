@@ -27,18 +27,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${PERSONAL_INFO.name} — Full Stack Developer`,
-    description: PERSONAL_INFO.bioShort,
-    creator: "@alexjohnson",
+    title: `Portfolio | ${PERSONAL_INFO.name}`,
+    description: PERSONAL_INFO.tagline,
+    creator: "@muhammadusman",
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
-    { media: "(prefers-color-scheme: light)", color: "#FFFBF5" },
-  ],
+  themeColor: "#0A0A0A",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

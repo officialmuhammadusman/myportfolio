@@ -12,7 +12,6 @@ import { brandIcons } from "@/lib/brandAssets";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { externalNavLinkProps, isExternalNavHref } from "@/lib/navHref";
 import { getHeaderAvatarSrc } from "@/lib/brandLogos";
-import { useThemeToggle } from "@/hooks";
 
 interface MobileHeaderNavProps {
   isOpen: boolean;
@@ -23,13 +22,16 @@ type ActiveViewType = "MAIN" | MegaKey;
 
 export function MobileHeaderNav({ isOpen, onClose }: MobileHeaderNavProps) {
   const [activeView, setActiveView] = useState<ActiveViewType>("MAIN");
-  const { isDark, toggle, mounted } = useThemeToggle();
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const avatarSrc = getHeaderAvatarSrc();
 
   // Reset view to MAIN when drawer closes
   useEffect(() => {
     if (!isOpen) {
-      const timer = setTimeout(() => setActiveView("MAIN"), 300);
+      const timer = setTimeout(() => {
+        setActiveView("MAIN");
+        setExpandedSections({});
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -52,13 +54,13 @@ export function MobileHeaderNav({ isOpen, onClose }: MobileHeaderNavProps) {
             className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 lg:hidden"
           />
 
-          {/* Off-Canvas Drawer (Nested Sliding Navigation) */}
+          {/* Side Drawer (Nested Sliding Navigation) */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 240 }}
-            className="fixed top-0 right-0 w-full max-w-md h-full bg-[#0A0A0A] text-[#FFF7ED] z-50 overflow-hidden flex flex-col lg:hidden shadow-2xl border-l border-white/10"
+            className="fixed inset-y-0 right-0 w-[90vw] max-w-md bg-[#0A0A0A] text-[#FFF7ED] z-50 overflow-hidden flex flex-col lg:hidden shadow-[-20px_0_60px_rgba(0,0,0,0.5)] border-l border-white/10"
           >
             {/* Top Bar inside Drawer */}
             <div className="flex items-center justify-between px-5 h-[68px] border-b border-white/10 shrink-0 bg-[#0A0A0A]/90 backdrop-blur-md">
@@ -181,25 +183,7 @@ export function MobileHeaderNav({ isOpen, onClose }: MobileHeaderNavProps) {
                           </span>
                         </a>
 
-                        {mounted && (
-                          <button
-                            type="button"
-                            onClick={toggle}
-                            className="w-full flex items-center justify-between p-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-colors text-left"
-                          >
-                            <span className="flex items-center gap-2.5 text-sm font-semibold text-[#FFF7ED]">
-                              {isDark ? (
-                                <Sun className="w-4 h-4 text-[#FF6A00]" />
-                              ) : (
-                                <Moon className="w-4 h-4 text-[#FF6A00]" />
-                              )}
-                              <span>Theme</span>
-                            </span>
-                            <span className="text-xs text-[#FFB347] font-semibold">
-                              {isDark ? "Dark Mode" : "Light Mode"}
-                            </span>
-                          </button>
-                        )}
+
                       </div>
                     </div>
 
@@ -243,66 +227,94 @@ export function MobileHeaderNav({ isOpen, onClose }: MobileHeaderNavProps) {
                             {section.title}
                           </h3>
                           <div className="space-y-2">
-                            {section.links.map((item) => {
-                              const cardInner = (
+                            {(() => {
+                              const displayLinks = expandedSections[section.id] ? section.links : section.links.slice(0, 4);
+                              
+                              return (
                                 <>
-                                  {item.imageSrc ? (
-                                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/15 bg-white/5 shadow-md">
-                                      <img
-                                        src={item.imageSrc}
-                                        alt={item.label}
-                                        className="h-full w-full object-cover"
-                                      />
-                                    </div>
-                                  ) : (
-                                    <div className="h-11 w-11 shrink-0 rounded-xl border border-white/15 bg-[#FF6A00]/10 flex items-center justify-center">
-                                      <BrandIcon base={item.iconBase} tone="orange" size={20} />
-                                    </div>
-                                  )}
+                                  {displayLinks.map((item) => {
+                                    const cardInner = (
+                                      <>
+                                        {item.imageSrc ? (
+                                          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/15 bg-white/5 shadow-md">
+                                            <img
+                                              src={item.imageSrc}
+                                              alt={item.label}
+                                              className="h-full w-full object-cover"
+                                            />
+                                          </div>
+                                        ) : (
+                                          <div className="h-11 w-11 shrink-0 rounded-xl border border-white/15 bg-[#FF6A00]/10 flex items-center justify-center">
+                                            <BrandIcon base={item.iconBase} tone="orange" size={20} />
+                                          </div>
+                                        )}
 
-                                  <div className="min-w-0 flex-1">
-                                    <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
-                                      <span className="text-sm font-semibold text-[#FFF7ED]">
-                                        {item.label}
-                                      </span>
-                                      {item.badge && (
-                                        <span className="rounded-full bg-[#FF6A00]/20 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#FFB347]">
-                                          {item.badge}
-                                        </span>
-                                      )}
-                                    </div>
-                                    <p className="text-[11px] text-white/50 leading-snug line-clamp-2">
-                                      {item.description}
-                                    </p>
-                                  </div>
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                                            <span className="text-sm font-semibold text-[#FFF7ED]">
+                                              {item.label}
+                                            </span>
+                                            {item.badge && (
+                                              <span className="rounded-full bg-[#FF6A00]/20 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#FFB347]">
+                                                {item.badge}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <p className="text-[11px] text-white/50 leading-snug line-clamp-2">
+                                            {item.description}
+                                          </p>
+                                        </div>
+                                      </>
+                                    );
+
+                                    if (isExternalNavHref(item.href)) {
+                                      return (
+                                        <a
+                                          key={item.id}
+                                          href={item.href}
+                                          onClick={onClose}
+                                          className="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#FF6A00]/30 transition-all"
+                                          {...externalNavLinkProps(item.href)}
+                                        >
+                                          {cardInner}
+                                        </a>
+                                      );
+                                    }
+
+                                    return (
+                                      <Link
+                                        key={item.id}
+                                        href={item.href}
+                                        onClick={onClose}
+                                        className="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#FF6A00]/30 transition-all"
+                                      >
+                                        {cardInner}
+                                      </Link>
+                                    );
+                                  })}
+                                  
+                                  {section.links.length > 4 && !expandedSections[section.id] && (
+                                    <button
+                                      type="button"
+                                      onClick={() => setExpandedSections(p => ({ ...p, [section.id]: true }))}
+                                      className="w-full mt-2 py-2.5 text-[11px] font-bold uppercase tracking-wider text-[#FF6A00] hover:text-[#FFB347] transition-colors border border-dashed border-[#FF6A00]/30 rounded-xl bg-[#FF6A00]/5"
+                                    >
+                                      See More ({section.links.length - 4})
+                                    </button>
+                                  )}
+                                  
+                                  {section.links.length > 4 && expandedSections[section.id] && (
+                                    <button
+                                      type="button"
+                                      onClick={() => setExpandedSections(p => ({ ...p, [section.id]: false }))}
+                                      className="w-full mt-2 py-2.5 text-[11px] font-bold uppercase tracking-wider text-white/50 hover:text-white transition-colors border border-dashed border-white/20 rounded-xl bg-white/[0.02]"
+                                    >
+                                      See Less
+                                    </button>
+                                  )}
                                 </>
                               );
-
-                              if (isExternalNavHref(item.href)) {
-                                return (
-                                  <a
-                                    key={item.id}
-                                    href={item.href}
-                                    onClick={onClose}
-                                    className="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#FF6A00]/30 transition-all"
-                                    {...externalNavLinkProps(item.href)}
-                                  >
-                                    {cardInner}
-                                  </a>
-                                );
-                              }
-
-                              return (
-                                <Link
-                                  key={item.id}
-                                  href={item.href}
-                                  onClick={onClose}
-                                  className="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#FF6A00]/30 transition-all"
-                                >
-                                  {cardInner}
-                                </Link>
-                              );
-                            })}
+                            })()}
                           </div>
                         </div>
                       ))}

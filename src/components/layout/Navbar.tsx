@@ -255,43 +255,6 @@ export function Navbar() {
             </ul>
 
             <div className="relative z-[2] flex items-center gap-2">
-              {mounted && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggle();
-                  }}
-                  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                  className={cn(
-                    "hidden h-10 w-10 items-center justify-center rounded-full border transition-colors lg:flex",
-                    isMobileMenuOpen
-                      ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
-                      : isHeroGlass
-                        ? "border-white/20 bg-white/5 hover:border-[#FF6A00]/50"
-                        : "border-[var(--border)] hover:border-[#FF6A00]/40"
-                  )}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={isDark ? "sun" : "moon"}
-                      initial={{ opacity: 0, rotate: -20, scale: 0.8 }}
-                      animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                      exit={{ opacity: 0, rotate: 20, scale: 0.8 }}
-                      transition={{ duration: 0.18 }}
-                      className="inline-flex"
-                    >
-                      <BrandIcon
-                        base={isDark ? brandIcons.ui.sun : brandIcons.ui.moon}
-                        tone={
-                          isMobileMenuOpen || isDark || isHeroGlass ? "orange" : "black"
-                        }
-                        size={18}
-                      />
-                    </motion.span>
-                  </AnimatePresence>
-                </button>
-              )}
 
               <a
                 href={whatsappUrl}

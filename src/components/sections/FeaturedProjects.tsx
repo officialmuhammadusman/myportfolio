@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, ExternalLink, Github, CheckCircle2 } from "lucide-react";
 import { getFeaturedProjects } from "@/data/projects";
@@ -13,7 +13,7 @@ const variants = {
   },
   item: {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } },
   },
 };
 
@@ -146,7 +146,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
 
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-3 sm:pt-4" style={{ borderTop: "1px solid var(--border)" }}>
           <a
-            href={project.liveUrl}
+            href={project.liveUrl ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-[10px] font-semibold transition-all duration-200 hover:opacity-90 sm:px-4 sm:py-2 sm:text-xs"

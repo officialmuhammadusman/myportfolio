@@ -1,18 +1,16 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { Copy, Loader2, Send, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Copy, Loader2, Send, X, Mail, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
-import { PageShell } from "@/components/layout/PageShell";
+import { format } from "date-fns";
 import { BrandIcon } from "@/components/ui/BrandIcon";
-import {
-  CONTACT_CHANNELS,
-  CONTACT_INQUIRIES,
-  isValidContactSubject,
-} from "@/data/contact";
+import { Calendar } from "@/components/ui/Calendar";
+import { TimePicker } from "@/components/ui/TimePicker";
+import Cal, { getCalApi } from "@calcom/embed-react";
+import { CONTACT_CHANNELS, CONTACT_INQUIRIES, isValidContactSubject } from "@/data/contact";
 import { brandIcons } from "@/lib/brandAssets";
 import { CONTACT_SUBJECTS, PERSONAL_INFO } from "@/lib/constants";
 import { externalNavLinkProps, isExternalNavHref } from "@/lib/navHref";
@@ -27,20 +25,9 @@ const initialForm: ContactFormData = {
 };
 
 type FormStatus = "idle" | "loading";
+type ContactFlow = "message" | "book";
 
-interface EmailDraft {
-  to: string;
-  subject: string;
-  body: string;
-}
-
-function ChannelCard({
-  label,
-  description,
-  href,
-  iconBase,
-  highlight = false,
-}: {
+function ChannelCard({ label, description, href, iconBase, highlight = false }: {
   label: string;
   description: string;
   href: string;
@@ -48,557 +35,417 @@ function ChannelCard({
   highlight?: boolean;
 }) {
   const className = cn(
-    "group flex flex-col gap-3 rounded-xl border p-4 transition-all duration-200 hover:border-[#FF6A00]/45 hover:shadow-[var(--shadow-md)]",
+    "group flex flex-col gap-4 rounded-3xl border p-6 transition-all duration-300 backdrop-blur-xl hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] relative overflow-hidden",
     highlight
-      ? "border-[#FF6A00]/30 bg-[#FF6A00]/[0.06]"
-      : "border-[var(--border)] bg-[var(--surface)]"
+      ? "border-[#FF6A00]/30 bg-gradient-to-br from-[#FF6A00]/10 to-transparent hover:border-[#FF6A00]/50"
+      : "border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]"
   );
 
   const inner = (
     <>
-      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FF6A00]/10 transition-colors group-hover:bg-[#FF6A00]/16">
-        <BrandIcon base={iconBase} tone="base" size={24} className="group-hover:hidden" />
-        <BrandIcon base={iconBase} tone="hover" size={24} className="hidden group-hover:block" />
+      <div className="absolute -right-6 -top-6 w-24 h-24 bg-[#FF6A00]/5 rounded-full blur-[20px] transition-all group-hover:bg-[#FF6A00]/20" />
+      <span className={cn(
+        "flex h-14 w-14 items-center justify-center rounded-2xl transition-colors border",
+        highlight ? "bg-[#FF6A00]/20 border-[#FF6A00]/30" : "bg-white/5 border-white/10 group-hover:border-[#FF6A00]/30 group-hover:bg-[#FF6A00]/10"
+      )}>
+        <BrandIcon base={iconBase} tone={highlight ? "orange" : "base"} size={28} className="group-hover:hidden" />
+        <BrandIcon base={iconBase} tone="hover" size={28} className="hidden group-hover:block" />
       </span>
-      <span>
-        <span className="mb-1 block text-[15px] font-semibold text-[var(--text-primary)] group-hover:text-[#FF6A00]">
+      <div className="relative z-10 mt-2">
+        <span className="mb-1 block text-[18px] font-display font-bold text-white group-hover:text-[#FF6A00] transition-colors">
           {label}
         </span>
-        <span className="block text-[12px] leading-relaxed text-[var(--text-secondary)]">
+        <span className="block text-[14px] leading-relaxed text-white/50">
           {description}
         </span>
-      </span>
+      </div>
     </>
   );
 
   if (isExternalNavHref(href)) {
-    return (
-      <a href={href} className={className} {...externalNavLinkProps(href)}>
-        {inner}
-      </a>
-    );
+    return <a href={href} className={className} {...externalNavLinkProps(href)}>{inner}</a>;
   }
-
-  return (
-    <Link href={href} className={className}>
-      {inner}
-    </Link>
-  );
+  return <Link href={href} className={className}>{inner}</Link>;
 }
+
+const inputClassName = "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-[16px] text-white transition-all duration-300 placeholder:text-white/20 focus:border-[#FF6A00]/50 focus:bg-[#FF6A00]/5 focus:outline-none focus:ring-1 focus:ring-[#FF6A00]/50";
 
 export function ContactClientPage() {
   const searchParams = useSearchParams();
   const [form, setForm] = useState<ContactFormData>(initialForm);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [charCount, setCharCount] = useState(0);
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [emailData, setEmailData] = useState<EmailDraft | null>(null);
+  const [showSendOptions, setShowSendOptions] = useState(false);
+  const [isSubjectDropdownOpen, setIsSubjectDropdownOpen] = useState(false);
+  const [flow, setFlow] = useState<ContactFlow>("message");
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState<string>();
+  const subjectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (subjectRef.current && !subjectRef.current.contains(event.target as Node)) {
+        setIsSubjectDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({});
+      cal("ui", {
+        theme: "dark",
+        styles: { branding: { brandColor: "#FF6A00" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     const subjectParam = searchParams.get("subject");
     if (isValidContactSubject(subjectParam)) {
-      setForm((prev) => ({ ...prev, subject: subjectParam }));
+      setForm((prev) => ({ ...prev, subject: subjectParam as any }));
     }
   }, [searchParams]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     if (name === "message") setCharCount(value.length);
   };
 
-  const selectInquiry = (subject: (typeof CONTACT_SUBJECTS)[number]) => {
-    setForm((prev) => ({ ...prev, subject }));
+  const selectInquiry = (subject: string) => {
+    setForm((prev) => ({ ...prev, subject: subject as any }));
     document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in all required fields.");
-      return;
+  const handleSend = (method: "email" | "whatsapp") => {
+    if (flow === "message") {
+      if (!form.name || !form.email || !form.message) {
+        toast.error("Please fill in all required fields.");
+        return;
+      }
+    } else {
+      if (!form.name || !form.email || !date || !time) {
+        toast.error("Please select a date, time, and fill your details.");
+        return;
+      }
     }
 
-    setStatus("loading");
-
-    const emailBody = `Name: ${form.name}
-Email: ${form.email}
-
-${form.message}`;
-
-    setEmailData({
-      to: PERSONAL_INFO.email,
-      subject: form.subject,
-      body: emailBody,
-    });
-    setShowEmailModal(true);
-    setStatus("idle");
-    toast.success("Email is ready — choose how to send.");
-  };
-
-  const copyToClipboard = async () => {
-    if (!emailData) return;
-
-    const fullEmail = `To: ${emailData.to}
-Subject: ${emailData.subject}
-
-${emailData.body}`;
-
-    try {
-      await navigator.clipboard.writeText(fullEmail);
-      toast.success("Email copied to clipboard!");
-    } catch {
-      toast.error("Failed to copy");
+    const isBooking = flow === "book";
+    
+    let textBody = "";
+    if (isBooking) {
+      textBody = `Name: ${form.name}\nEmail: ${form.email}\nBooking Date: ${format(date!, "PPP")}\nTime: ${time}\n\nNotes:\n${form.message || "None"}`;
+    } else {
+      textBody = `Name: ${form.name}\nEmail: ${form.email}\nProject Type: ${form.subject}\n\nMessage:\n${form.message}`;
     }
-  };
+    
+    if (method === "whatsapp") {
+      const waNumber = "923135263300";
+      const encodedText = encodeURIComponent(textBody);
+      window.open(`https://wa.me/${waNumber}?text=${encodedText}`, "_blank");
+    } else {
+      const email = "official.muhammadusman01@gmail.com";
+      const subjectText = isBooking ? `New Booking: ${form.name}` : `New Inquiry: ${form.subject} - ${form.name}`;
+      const subject = encodeURIComponent(subjectText);
+      const body = encodeURIComponent(textBody);
+      window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
+    }
 
-  const sendViaEmailClient = () => {
-    if (!emailData) return;
-
-    const mailtoLink = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
-    const link = document.createElement("a");
-    link.href = mailtoLink;
-    link.click();
-    setShowEmailModal(false);
-    toast.success("Email client opened!");
-  };
-
-  const openGmailDirect = () => {
-    if (!emailData) return;
-
-    window.open(
-      `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(emailData.to)}&subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`,
-      "_blank"
-    );
-    setShowEmailModal(false);
-    toast.success("Opening Gmail...");
-  };
-
-  const openOutlookDirect = () => {
-    if (!emailData) return;
-
-    window.open(
-      `https://outlook.live.com/mail/0/compose?to=${encodeURIComponent(emailData.to)}&subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`,
-      "_blank"
-    );
-    setShowEmailModal(false);
-    toast.success("Opening Outlook...");
+    if (isBooking) {
+      // Generate Google Calendar Link
+      // Ensure date is valid. Google Cal format: YYYYMMDDTHHmmSSZ
+      // A simple template link will allow the user to easily save it.
+      const dateStr = format(date!, "yyyyMMdd");
+      const title = encodeURIComponent(`Discovery Call with ${form.name}`);
+      const details = encodeURIComponent(`Booking request from ${form.name} (${form.email}).`);
+      
+      const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${dateStr}T100000Z/${dateStr}T110000Z&crm=AVAILABLE&add=official.muhammadusman01@gmail.com`;
+      setTimeout(() => {
+        window.open(gCalUrl, "_blank");
+      }, 500);
+    }
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
-      <PageShell className="pb-12 sm:pb-16 md:pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-          className="mb-10 text-center sm:mb-12 md:mb-14"
+    <div className="min-h-screen bg-[#050505] text-[#FFF7ED] pb-16 sm:pb-24">
+      {/* ── HERO BANNER ── */}
+      <section className="relative isolate min-h-[60vh] flex flex-col justify-end overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24 bg-[#050505]">
+        <motion.div 
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 z-0"
         >
-          <span className="section-eyebrow">Contact</span>
-          <div className="fancy-divider mx-auto" />
-          <h1 className="font-display mt-2 mb-3 text-3xl font-bold text-[var(--text-primary)] sm:mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
-            Start Your Next Build
-          </h1>
-          <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
-            SaaS platforms, AI/RAG systems, React Native apps & backend APIs — delivered for founders
-            and teams in {PERSONAL_INFO.locationRemote}. Share a brief or reach out directly.
-          </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1600&h=900"
+            alt="Contact Hero"
+            className="w-full h-full object-cover object-[center_30%] opacity-40 grayscale-[20%]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.4)_0%,rgba(5,5,5,0.9)_70%,rgba(5,5,5,1)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(255,106,0,0.15),transparent_60%)]" />
         </motion.div>
+        
+        <div className="layout-wrap relative z-10 w-full">
+          <div className="max-w-4xl relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="mb-4 inline-flex items-center justify-center rounded-full border border-white/20 bg-black/20 backdrop-blur-md px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#FF6A00]">
+                <Mail size={14} className="mr-2" />
+                Contact
+              </span>
+              <h1 className="mt-4 font-display text-[3.5rem] leading-[1.05] tracking-tight text-white sm:text-[4.5rem] md:text-[5.5rem]">
+                Start Your <span className="italic text-[#FF6A00]">Build.</span>
+              </h1>
+            </motion.div>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 text-[16px] leading-relaxed text-white/70 sm:mt-8 sm:text-[20px] max-w-2xl font-medium"
+            >
+              SaaS platforms, AI/RAG systems, React Native apps & backend APIs — delivered for founders globally.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-10 sm:mb-12"
-          aria-label="Contact channels"
-        >
-          <div className="mb-4 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]/80">
-                Direct channels
-              </p>
-              <h2 className="font-display mt-1 text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
-                Reach us your way
-              </h2>
-            </div>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {CONTACT_CHANNELS.map((channel) => (
-              <ChannelCard key={channel.id} {...channel} />
-            ))}
-          </div>
-        </motion.section>
+      <div className="layout-wrap pt-16 relative z-10">
 
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-10 sm:mb-12"
-          aria-label="Project inquiry types"
+          className="mb-20"
         >
-          <div className="mb-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]/80">
-              Project types
-            </p>
-            <h2 className="font-display mt-1 text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
-              What are you building?
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
-              Pick a category to pre-fill the form — same options as the Contact menu in the header.
-            </p>
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 no-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none">
+            {CONTACT_CHANNELS.map((channel) => (
+              <div key={channel.id} className="snap-center shrink-0 w-[85vw] sm:w-auto h-full">
+                <ChannelCard {...channel} />
+              </div>
+            ))}
           </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {CONTACT_INQUIRIES.map((inquiry) => {
-              const active = form.subject === inquiry.subject;
-              return (
-                <button
-                  key={inquiry.subject}
-                  type="button"
-                  onClick={() => selectInquiry(inquiry.subject)}
-                  className={cn(
-                    "group flex gap-3 rounded-xl border p-4 text-left transition-all duration-200",
-                    active
-                      ? "border-[#FF6A00]/50 bg-[#FF6A00]/[0.08] shadow-[var(--shadow-md)]"
-                      : "border-[var(--border)] bg-[var(--surface)] hover:border-[#FF6A00]/35"
-                  )}
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FF6A00]/10">
-                    <BrandIcon base={inquiry.iconBase} tone={active ? "orange" : "base"} size={22} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="mb-0.5 block text-[14px] font-semibold text-[var(--text-primary)] group-hover:text-[#FF6A00]">
-                      {inquiry.subject}
-                    </span>
-                    <span className="block text-[12px] leading-relaxed text-[var(--text-secondary)]">
-                      {inquiry.description}
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+
+          {/* Mobile Carousel Indicators (Visual) */}
+          {CONTACT_CHANNELS.length > 1 && (
+            <div className="flex justify-center gap-2 mt-2 mb-8 sm:hidden">
+              {CONTACT_CHANNELS.map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />
+              ))}
+            </div>
+          )}
         </motion.section>
 
-        <div className="grid gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[1fr_380px]">
+        <div className="grid gap-8 lg:grid-cols-[1fr_400px]">
           <motion.div
             id="form"
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.55, delay: 0.12 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
             className="scroll-mt-28"
           >
-            <div
-              className="rounded-[12px] border p-5 sm:p-6 md:p-8"
-              style={{
-                background: "var(--surface)",
-                borderColor: "var(--border)",
-                boxShadow: "var(--shadow-card)",
-              }}
-            >
-              <div className="mb-5 flex items-start gap-3 sm:mb-6">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#FF6A00]/10">
-                  <BrandIcon base={brandIcons.cta.startProject} tone="orange" size={24} />
+            <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.02] backdrop-blur-xl p-8 sm:p-12">
+              <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#FF6A00]/30 to-transparent" />
+              
+              <div className="mb-10 flex items-start gap-5">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 shadow-[0_0_30px_rgba(255,106,0,0.2)]">
+                  <BrandIcon base={brandIcons.cta.startProject} tone="orange" size={28} />
                 </span>
                 <div>
-                  <h2 className="font-display text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
-                    Send a project brief
+                  <h2 className="font-display text-3xl font-bold text-white mb-2">
+                    {flow === "message" ? "Send a brief" : "Book a Call"}
                   </h2>
-                  <p className="mt-1 text-sm text-[var(--text-secondary)]">
-                    Scope, timeline, stack preferences — we reply within 24 hours.
+                  <p className="text-[15px] text-white/50">
+                    {flow === "message" ? "Scope, timeline, and stack preferences. Direct replies within 24 hours." : "Select a time for a Google Meet discovery call."}
                   </p>
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                      Your name <span className="text-[#FF6A00]">*</span>
-                    </label>
-                    <input
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      placeholder="John Smith"
-                      required
-                      className="input-base"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                      Work email <span className="text-[#FF6A00]">*</span>
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      placeholder="john@company.com"
-                      required
-                      className="input-base"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                    Project type
-                  </label>
-                  <select
-                    name="subject"
-                    value={form.subject}
-                    onChange={handleChange}
-                    className="input-base cursor-pointer"
-                  >
-                    {CONTACT_SUBJECTS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                    Message <span className="text-[#FF6A00]">*</span>
-                  </label>
-                  <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about the product, users, timeline, and any links to references..."
-                    required
-                    rows={6}
-                    maxLength={5000}
-                    className="input-base resize-none"
-                  />
-                  <div className="mt-1 flex justify-end">
-                    <span
-                      className="font-mono text-xs text-[var(--text-muted)]"
-                    >
-                      {charCount} / 5000
-                    </span>
-                  </div>
-                </div>
-
+              <div className="flex items-center gap-1 mb-10 p-1.5 rounded-2xl bg-[#0A0A0A] w-full border border-white/5 relative shadow-inner">
                 <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="flex w-full items-center justify-center gap-2 rounded-[8px] py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                  style={{ background: "var(--accent-primary)", fontFamily: "var(--font-body)" }}
-                >
-                  {status === "loading" ? (
-                    <>
-                      <Loader2 size={15} className="animate-spin" />
-                      Preparing...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={15} />
-                      Send message
-                    </>
+                  type="button"
+                  onClick={() => setFlow("message")}
+                  className={cn(
+                    "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300",
+                    flow === "message" ? "text-white" : "text-white/40 hover:text-white/80"
                   )}
+                >
+                  {flow === "message" && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-gradient-to-r from-[#FF6A00] to-[#ff8c3a] rounded-xl shadow-[0_0_20px_rgba(255,106,0,0.3)]"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  <span className="relative z-20">Send Message</span>
                 </button>
-              </form>
+                <button
+                  type="button"
+                  onClick={() => setFlow("book")}
+                  className={cn(
+                    "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300",
+                    flow === "book" ? "text-white" : "text-white/40 hover:text-white/80"
+                  )}
+                >
+                  {flow === "book" && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-gradient-to-r from-[#FF6A00] to-[#ff8c3a] rounded-xl shadow-[0_0_20px_rgba(255,106,0,0.3)]"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  <span className="relative z-20">Book Call</span>
+                </button>
+              </div>
+
+              {flow === "message" ? (
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
+                  <div className="grid gap-8 sm:grid-cols-2">
+                    <div className="relative">
+                      <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-white/50">
+                        Your name <span className="text-[#FF6A00]">*</span>
+                      </label>
+                      <input name="name" value={form.name} onChange={handleChange} placeholder="John Doe" required className={inputClassName} />
+                    </div>
+                    <div className="relative">
+                      <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-white/50">
+                        Work email <span className="text-[#FF6A00]">*</span>
+                      </label>
+                      <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="john@company.com" required className={inputClassName} />
+                    </div>
+                  </div>
+
+                  <div className="relative" ref={subjectRef}>
+                    <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-white/50">
+                      Project type <span className="text-[#FF6A00]">*</span>
+                    </label>
+                    <div className="relative">
+                      <input 
+                        name="subject" 
+                        value={form.subject} 
+                        onChange={handleChange} 
+                        onFocus={() => setIsSubjectDropdownOpen(true)}
+                        placeholder="Type or select project type" 
+                        className={`${inputClassName} pr-10`} 
+                      />
+                      <ChevronDown 
+                        className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 transition-transform duration-200 ${isSubjectDropdownOpen ? 'rotate-180' : ''} pointer-events-none`} 
+                      />
+                    </div>
+                    
+                    <AnimatePresence>
+                      {isSubjectDropdownOpen && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: -10 }} 
+                          animate={{ opacity: 1, y: 0 }} 
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute z-20 w-full mt-2 bg-[#111] border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden py-2"
+                        >
+                          {CONTACT_SUBJECTS.map((s) => (
+                            <button 
+                              key={s} 
+                              type="button" 
+                              onClick={() => {
+                                setForm(prev => ({ ...prev, subject: s as any }));
+                                setIsSubjectDropdownOpen(false);
+                              }}
+                              className="w-full text-left px-5 py-3 text-[14px] font-medium text-white/70 hover:bg-[#FF6A00]/10 hover:text-[#FF6A00] transition-colors"
+                            >
+                              {s}
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <div>
+                    <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-white/50">
+                      Message <span className="text-[#FF6A00]">*</span>
+                    </label>
+                    <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about the product, users, and timeline..." required rows={5} maxLength={5000} className={`${inputClassName} resize-none`} />
+                    <div className="mt-3 flex justify-end">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">{charCount} / 5000</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                    <button type="button" onClick={() => handleSend("email")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-white/5 border border-white/10 py-4 text-[15px] font-bold text-white overflow-hidden transition-all duration-300 hover:border-white/20">
+                      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Mail size={18} className="relative z-10 text-white/70 group-hover:text-white transition-colors" />
+                      <span className="relative z-10">Send via Email</span>
+                    </button>
+                    <button type="button" onClick={() => handleSend("whatsapp")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#25D366] to-[#128C7E] py-4 text-[15px] font-bold text-white shadow-[0_0_20px_rgba(37,211,102,0.3)] overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] hover:scale-[1.02]">
+                      <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="relative z-10 flex items-center justify-center">
+                        <BrandIcon base={brandIcons.cta.whatsapp} tone="white" size={20} />
+                      </div>
+                      <span className="relative z-10">Send via WhatsApp</span>
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="w-full bg-[#111] rounded-2xl overflow-hidden border border-white/10 p-2 min-h-[500px]">
+                  <Cal
+                    namespace="30min"
+                    calLink="muhammad-usman-padtsh/30min"
+                    style={{ width: "100%", height: "100%", overflow: "scroll" }}
+                    config={{ layout: "month_view", theme: "dark" }}
+                  />
+                </div>
+              )}
             </div>
           </motion.div>
 
+          {/* Right sidebar */}
           <motion.aside
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.55, delay: 0.16 }}
-            className="space-y-5"
+            transition={{ duration: 0.55, delay: 0.3 }}
+            className="space-y-6"
           >
-            <div
-              className="rounded-[12px] border p-6"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <div className="mb-3 flex items-center gap-2">
-                <span
-                  className="h-2.5 w-2.5 animate-pulse-dot rounded-full"
-                  style={{ background: "var(--success)" }}
-                />
-                <span className="text-sm font-semibold text-[var(--success)]">
-                  {PERSONAL_INFO.availabilityText}
-                </span>
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.02] backdrop-blur-xl p-8">
+              <div className="mb-6 flex items-center gap-4">
+                <div className="relative flex h-4 w-4 items-center justify-center">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22c55e] opacity-40"></span>
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#22c55e]"></span>
+                </div>
+                <span className="text-[12px] font-bold uppercase tracking-widest text-[#22c55e]">Available</span>
               </div>
-              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-                Taking on SaaS builds, AI/RAG engagements, mobile apps & backend/API work. Based in{" "}
-                {PERSONAL_INFO.location}, delivering globally.
+              <p className="text-[15px] leading-relaxed text-white/60 font-medium">
+                Taking on SaaS builds, AI/RAG engagements, and backend architecture. Delivering globally.
               </p>
             </div>
 
-            <div
-              className="rounded-[12px] border p-6"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#FF6A00]/80">
-                Delivery regions
-              </p>
-              <p className="font-display text-lg font-bold text-[var(--text-primary)]">
-                {PERSONAL_INFO.locationRemote}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                Async-friendly across time zones. WhatsApp is fastest for Gulf & MENA clients.
-              </p>
-            </div>
-
-            <div
-              className="rounded-[12px] border p-6"
-              style={{ background: "var(--surface)", borderColor: "var(--border)" }}
-            >
-              <p className="mb-3 text-sm font-semibold text-[var(--text-primary)]">What happens next</p>
-              <ol className="space-y-3 text-sm text-[var(--text-secondary)]">
-                <li className="flex gap-3">
-                  <span className="font-mono text-xs text-[#FF6A00]">01</span>
-                  <span>We review your brief and reply within 24 hours.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-mono text-xs text-[#FF6A00]">02</span>
-                  <span>Short discovery call to align scope, stack & timeline.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-mono text-xs text-[#FF6A00]">03</span>
-                  <span>Proposal with milestones — then we start building.</span>
-                </li>
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.02] backdrop-blur-xl p-8">
+              <p className="mb-6 text-[12px] font-bold uppercase tracking-widest text-[#FF6A00]">What happens next</p>
+              <ol className="space-y-6">
+                {[
+                  "Review brief & reply in 24h",
+                  "Discovery call & architecture alignment",
+                  "Milestone proposal & build kickoff"
+                ].map((step, i) => (
+                  <li key={i} className="flex gap-5 items-start">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[10px] font-bold text-white/50">
+                      {i + 1}
+                    </span>
+                    <span className="text-[14px] text-white/70 mt-0.5">{step}</span>
+                  </li>
+                ))}
               </ol>
             </div>
-
-            <a
-              href={PERSONAL_INFO.cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-[12px] border p-4 transition-colors hover:border-[#FF6A00]/40"
-              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF6A00]/10">
-                <BrandIcon base={brandIcons.about.experience} tone="base" size={22} />
-              </span>
-              <span>
-                <span className="block text-sm font-semibold text-[var(--text-primary)] group-hover:text-[#FF6A00]">
-                  Download CV
-                </span>
-                <span className="text-xs text-[var(--text-secondary)]">PDF · full-stack & AI profile</span>
-              </span>
-            </a>
           </motion.aside>
         </div>
-      </PageShell>
-
-      {showEmailModal && emailData && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0, 0, 0, 0.5)" }}
-          onClick={() => setShowEmailModal(false)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-2xl overflow-hidden rounded-[16px]"
-            style={{ background: "var(--surface)", boxShadow: "var(--shadow-card)" }}
-          >
-            <div
-              className="flex items-center justify-between border-b p-6"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <h2 className="font-display text-xl font-bold text-[var(--text-primary)]">
-                Compose email
-              </h2>
-              <button
-                type="button"
-                onClick={() => setShowEmailModal(false)}
-                className="rounded-[8px] p-2 transition-all hover:opacity-70"
-                style={{ background: "var(--bg-secondary)" }}
-                aria-label="Close"
-              >
-                <X size={20} style={{ color: "var(--text-primary)" }} />
-              </button>
-            </div>
-
-            <div className="max-h-96 space-y-4 overflow-y-auto p-6">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">To</label>
-                <div
-                  className="rounded-[8px] p-3 font-mono text-sm"
-                  style={{ background: "var(--bg-secondary)", color: "var(--text-primary)" }}
-                >
-                  {emailData.to}
-                </div>
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                  Subject
-                </label>
-                <div
-                  className="rounded-[8px] p-3 font-mono text-sm"
-                  style={{ background: "var(--bg-secondary)", color: "var(--text-primary)" }}
-                >
-                  {emailData.subject}
-                </div>
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-                  Message
-                </label>
-                <div
-                  className="max-h-64 overflow-y-auto whitespace-pre-wrap rounded-[8px] p-4 font-mono text-sm"
-                  style={{ background: "var(--bg-secondary)", color: "var(--text-primary)" }}
-                >
-                  {emailData.body}
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="flex flex-col gap-3 border-t p-6"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <button
-                type="button"
-                onClick={sendViaEmailClient}
-                className="flex w-full items-center justify-center gap-2 rounded-[8px] py-3 text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: "var(--accent-primary)" }}
-              >
-                <Send size={16} />
-                Send via email client
-              </button>
-              <button
-                type="button"
-                onClick={copyToClipboard}
-                className="flex w-full items-center justify-center gap-2 rounded-[8px] border py-3 text-sm font-semibold transition-all"
-                style={{
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                  borderColor: "var(--border)",
-                }}
-              >
-                <Copy size={16} />
-                Copy email content
-              </button>
-              <button
-                type="button"
-                onClick={openGmailDirect}
-                className="flex w-full items-center justify-center gap-2 rounded-[8px] py-3 text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: "#EA4335" }}
-              >
-                Open in Gmail
-              </button>
-              <button
-                type="button"
-                onClick={openOutlookDirect}
-                className="flex w-full items-center justify-center gap-2 rounded-[8px] py-3 text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: "#0078D4" }}
-              >
-                Open in Outlook
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

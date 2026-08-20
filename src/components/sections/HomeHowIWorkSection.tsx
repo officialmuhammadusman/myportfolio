@@ -17,21 +17,22 @@ import {
   type TrustPillar,
 } from "@/data/howIWork";
 import { BrandIcon } from "@/components/ui/BrandIcon";
+import { MobileBottomSheet } from "@/components/ui/MobileBottomSheet";
 import { brandIcons } from "@/lib/brandAssets";
 import { cn } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/**
- * How I Work — sticky cinematic stage + editorial step list.
- * Pattern: Inventiple / Shadcn Process2 / Obys — image transitions on active step.
- */
 export function HomeHowIWorkSection() {
   const reduceMotion = useReducedMotion();
   const [activeId, setActiveId] = useState(PROCESS_STEPS[0]?.id ?? "discover");
   const active =
     PROCESS_STEPS.find((s) => s.id === activeId) ?? PROCESS_STEPS[0];
   const activeIndex = PROCESS_STEPS.findIndex((s) => s.id === active.id);
+
+  // Mobile bottom sheet
+  const [sheetStepId, setSheetStepId] = useState<string | null>(null);
+  const sheetStep = PROCESS_STEPS.find((s) => s.id === sheetStepId) ?? null;
 
   return (
     <section
@@ -76,13 +77,87 @@ export function HomeHowIWorkSection() {
           </p>
         </motion.header>
 
-        {/* Desktop / tablet: sticky stage + steps */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 xl:gap-10">
+        {/* ── MOBILE: App step cards ── */}
+        <div className="sm:hidden">
+          <div className="space-y-3">
+            {PROCESS_STEPS.map((step, index) => (
+              <motion.button
+                key={step.id}
+                type="button"
+                onClick={() => setSheetStepId(step.id)}
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.4,
+                  delay: reduceMotion ? 0 : index * 0.06,
+                  ease: easeOut,
+                }}
+                className="mobile-card group flex w-full items-center gap-4 p-4 text-left transition-all duration-300 active:scale-[0.98]"
+              >
+                {/* Big number */}
+                <span className="font-mono text-[2rem] font-bold tracking-[-0.04em] text-[#FF6A00]/25 transition-colors duration-300 group-active:text-[#FF6A00]/55">
+                  {step.number}
+                </span>
+
+                {/* Icon */}
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10">
+                  <BrandIcon base={step.iconBase} tone="orange" size={22} />
+                </div>
+
+                {/* Content */}
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-[1.05rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-0.5 line-clamp-1 text-[12px] leading-snug text-[#FFF7ED]/50">
+                    {step.description}
+                  </p>
+                </div>
+
+                {/* Chevron */}
+                <ArrowUpRight
+                  size={15}
+                  className="shrink-0 text-[#FF6A00]/40 transition-transform duration-300 group-active:translate-x-0.5 group-active:-translate-y-0.5"
+                />
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Trust pillars — horizontal scroll cards on mobile */}
+          <div className="mt-6">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#FFF7ED]/35">
+              My commitments
+            </p>
+            <div className="snap-scroll-x -mx-4 pb-3">
+              {TRUST_PILLARS.map((pillar) => (
+                <div
+                  key={pillar.id}
+                  className="snap-card-peek mobile-card flex flex-col gap-3 p-4"
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#FF6A00]/25 bg-[#FF6A00]/10">
+                    <BrandIcon base={pillar.iconBase} tone="orange" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-display text-base tracking-tight text-[#FFF7ED]">
+                      {pillar.title}
+                    </h4>
+                    <p className="mt-1 text-[12px] leading-relaxed text-[#FFF7ED]/50">
+                      {pillar.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── DESKTOP/TABLET: Original layout ── */}
+        <div className="hidden sm:grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 xl:gap-10">
           {/* Cinematic image stage — sticky on lg+ */}
           <aside className="relative hidden md:block">
             <div className="sticky top-28 overflow-hidden rounded-2xl border border-white/10 bg-[#0F0F0F] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
               <div className="relative aspect-[16/11] w-full overflow-hidden lg:aspect-[4/5] xl:aspect-[16/14]">
-                {/* Keep previous frame under for crossfade depth */}
                 <Image
                   src={active.imageSrc}
                   alt=""
@@ -135,7 +210,6 @@ export function HomeHowIWorkSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/25 to-transparent" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,106,0,0.14),transparent_55%)]" />
 
-                {/* Stage meta */}
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-7">
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <span className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6A00]">
@@ -249,8 +323,8 @@ export function HomeHowIWorkSection() {
           </div>
         </div>
 
-        {/* Trust pillars — slim signal row, not heavy cards */}
-        <ul className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-12 sm:grid-cols-3 lg:mt-14">
+        {/* Trust pillars (desktop) */}
+        <ul className="mt-10 hidden grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-12 sm:grid sm:grid-cols-3 lg:mt-14">
           {TRUST_PILLARS.map((pillar, index) => (
             <TrustPillarCell
               key={pillar.id}
@@ -287,6 +361,87 @@ export function HomeHowIWorkSection() {
           {HOW_I_WORK_COPY.footerLine}
         </p>
       </div>
+
+      {/* ── Mobile Bottom Sheet for step detail ── */}
+      <MobileBottomSheet
+        open={!!sheetStepId}
+        onClose={() => setSheetStepId(null)}
+        title={sheetStep ? `Step ${sheetStep.number}` : "Process Step"}
+      >
+        {sheetStep && (
+          <div className="p-5 pb-8">
+            {/* Image */}
+            <div className="mb-5 overflow-hidden rounded-2xl border border-white/10">
+              <div className="relative aspect-[16/9] w-full">
+                <Image
+                  src={sheetStep.imageSrc}
+                  alt={`${sheetStep.title} visual`}
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
+              </div>
+            </div>
+
+            {/* Icon + title */}
+            <div className="mb-4 flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#FF6A00]/35 bg-[#FF6A00]/12">
+                <BrandIcon base={sheetStep.iconBase} tone="orange" size={24} />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FF6A00]">
+                  Step {sheetStep.number} of {PROCESS_STEPS.length}
+                </p>
+                <h3 className="font-display text-[1.4rem] leading-[1.08] tracking-[-0.025em] text-[#FFF7ED]">
+                  {sheetStep.title}
+                </h3>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-sm leading-relaxed text-[#FFF7ED]/68">
+              {sheetStep.description}
+            </p>
+
+            {/* Deliverables */}
+            <div className="mt-5">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]/35">
+                What you get
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {sheetStep.deliverables.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.06em] text-[#FFB347]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Nav to next */}
+            <div className="mt-6 flex gap-2">
+              {PROCESS_STEPS.map((step, i) => (
+                <button
+                  key={step.id}
+                  type="button"
+                  onClick={() => setSheetStepId(step.id)}
+                  className={cn(
+                    "flex-1 rounded-xl border py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] transition-all duration-200",
+                    step.id === sheetStepId
+                      ? "border-[#FF6A00] bg-[#FF6A00]/15 text-[#FF6A00]"
+                      : "border-white/[0.08] bg-white/[0.02] text-[#FFF7ED]/45"
+                  )}
+                >
+                  {step.number}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </MobileBottomSheet>
     </section>
   );
 }

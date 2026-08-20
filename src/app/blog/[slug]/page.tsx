@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 import { getPostBySlug, getRelatedPosts, blogPosts } from "@/data/blog";
 import { BlogDetailClient } from "@/components/sections/blog/BlogDetailClient";
 
-export async function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
-}
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
