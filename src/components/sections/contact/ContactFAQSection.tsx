@@ -24,7 +24,7 @@ export function ContactFAQSection({ category }: { category: ContactCategory }) {
           className="mb-16 text-center"
         >
           <span className="section-eyebrow">Common Questions</span>
-          <h2 className="mt-4 font-display text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3rem]">
+          <h2 className="mt-4 text-[2rem] font-medium leading-[1.1] tracking-tight text-white sm:text-[2.75rem]">
             FAQ for <span className="italic text-[#FF6A00]">{category.title.replace("Start an ", "").replace("Submit a ", "")}</span>
           </h2>
         </motion.div>
@@ -46,7 +46,7 @@ export function ContactFAQSection({ category }: { category: ContactCategory }) {
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-4 p-6 text-left sm:p-8"
                 >
-                  <span className="text-[1.1rem] font-bold text-white sm:text-[1.25rem]">
+                  <span className="text-[1.1rem] font-medium text-white sm:text-[1.25rem]">
                     {faq.question}
                   </span>
                   <div

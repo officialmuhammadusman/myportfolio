@@ -32,7 +32,7 @@ export function FeaturedProjects() {
         <div>
           <span className="section-eyebrow">Featured Work</span>
           <div className="fancy-divider" />
-          <h2 className="font-display mt-2 text-3xl font-bold leading-[1.1] text-[var(--text-primary)] sm:text-4xl md:text-5xl lg:text-6xl">
+          <h2 className="mt-2 text-3xl font-medium leading-[1.1] text-[var(--text-primary)] sm:text-2xl md:text-3xl lg:text-2xl">
             Production systems
             <br />
             <span className="text-gradient">that scale.</span>
@@ -90,7 +90,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <span
-            className="font-display text-4xl font-bold opacity-50 sm:text-5xl md:text-[56px]"
+            className="text-2xl font-medium opacity-50 sm:text-3xl md:text-[56px]"
             style={{ color: "var(--border)" }}
           >
             {project.title[0]}
@@ -112,7 +112,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
       </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5 md:p-6">
-        <h3 className="font-display mb-2 line-clamp-1 text-base font-bold text-[var(--text-primary)] sm:text-lg md:text-xl">
+        <h3 className="mb-2 line-clamp-1 text-base font-medium text-[var(--text-primary)] sm:text-lg md:text-xl">
           {project.title}
         </h3>
         <p className="mb-3 line-clamp-2 text-xs leading-relaxed sm:mb-4 sm:text-sm" style={{ color: "var(--text-secondary)" }}>
@@ -149,7 +149,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
             href={project.liveUrl ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-[10px] font-semibold transition-all duration-200 hover:opacity-90 sm:px-4 sm:py-2 sm:text-xs"
+            className="inline-flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-[10px] font-medium transition-all duration-200 hover:opacity-90 sm:px-4 sm:py-2 sm:text-xs"
             style={{ background: "var(--accent-primary)", color: "white" }}
           >
             <ExternalLink size={12} />
@@ -161,7 +161,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
               href={project.githubUrlFrontend}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-[6px] border px-2 py-1.5 text-[10px] font-semibold transition-all duration-200 hover:bg-[var(--surface-hover)] sm:px-2 sm:py-2 sm:text-xs"
+              className="inline-flex items-center gap-1.5 rounded-[6px] border px-2 py-1.5 text-[10px] font-medium transition-all duration-200 hover:bg-[var(--surface-hover)] sm:px-2 sm:py-2 sm:text-xs"
               style={{ borderColor: "var(--border-hover)", color: "var(--text-secondary)" }}
               title="Frontend Repository"
             >
@@ -176,7 +176,7 @@ function ProjectCard({ project }: { project: ReturnType<typeof getFeaturedProjec
               href={project.githubUrlBackend}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-[6px] border px-2 py-1.5 text-[10px] font-semibold transition-all duration-200 hover:bg-[var(--surface-hover)] sm:px-2 sm:py-2 sm:text-xs"
+              className="inline-flex items-center gap-1.5 rounded-[6px] border px-2 py-1.5 text-[10px] font-medium transition-all duration-200 hover:bg-[var(--surface-hover)] sm:px-2 sm:py-2 sm:text-xs"
               style={{ borderColor: "var(--border-hover)", color: "var(--text-secondary)" }}
               title="Backend Repository"
             >

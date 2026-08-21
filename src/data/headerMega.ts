@@ -344,7 +344,7 @@ export const HEADER_MEGA: Record<string, MegaPanel> = {
             description: "Remote-first software agency — direct, accountable delivery.",
             href: "/about",
             iconBase: A.story,
-            imageSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200",
+            imageSrc: "/muhammad_usman_hero_slider_updated/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg",
           },
           {
             id: "experience",
@@ -640,7 +640,7 @@ export const HEADER_MEGA: Record<string, MegaPanel> = {
             label: "Explore services",
             description: "Full-stack, AI, mobile & SaaS capabilities.",
             href: "/services",
-            iconBase: S.fullstackTile,
+            iconBase: S.fullstack,
             imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=200&h=200",
           },
           {

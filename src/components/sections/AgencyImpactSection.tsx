@@ -87,7 +87,7 @@ export function AgencyImpactSection() {
             Proven Impact
           </span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             Metrics that drive <br className="hidden sm:block" />
             <span className="text-gradient italic">business outcomes.</span>
           </h2>
@@ -127,12 +127,12 @@ export function AgencyImpactSection() {
                   <Icon size={20} className="text-[#FFF7ED]/50 group-hover:text-[#FF6A00] transition-colors duration-500" />
                 </div>
                 
-                <h3 className="font-display text-[2.5rem] lg:text-[3rem] leading-none tracking-tight text-[#FFF7ED] mb-3 group-hover:text-[#FFB347] transition-colors duration-500">
+                <h3 className="text-[2.5rem] lg:text-[3rem] leading-none tracking-tight text-[#FFF7ED] mb-3 group-hover:text-[#FFB347] transition-colors duration-500">
                   {metric.value}
                 </h3>
                 
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6A00]">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#FF6A00]">
                     {metric.label}
                   </span>
                 </div>
@@ -145,43 +145,44 @@ export function AgencyImpactSection() {
           })}
         </div>
 
-        {/* ── MOBILE: Native Horizontal Scroll Carousel ── */}
+        {/* ── MOBILE: Javascript-driven Carousel ── */}
         <div className="sm:hidden mt-6 relative">
-          <div 
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 scrollbar-none" 
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {IMPACT_METRICS.map((metric, i) => {
-              const Icon = metric.icon;
-              return (
-                <div
-                  key={metric.id}
-                  className="w-[85vw] shrink-0 snap-center"
-                >
-                  <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08] p-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 mb-8">
-                      <Icon size={20} className="text-[#FF6A00]" />
-                    </div>
-                    
-                    <h3 className="font-display text-[2.75rem] leading-none tracking-tight text-[#FFF7ED] mb-3">
-                      {metric.value}
-                    </h3>
-                    
-                    <div className="mb-3 flex items-center gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6A00]">
-                        {metric.label}
-                      </span>
-                    </div>
-                    
-                    <p className="mt-auto text-[13px] leading-relaxed text-[#FFF7ED]/60 border-t border-white/[0.08] pt-4">
-                      {metric.description}
-                    </p>
-                  </article>
-                </div>
-              );
-            })}
+          <div className="relative overflow-hidden -mx-4">
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ transform: `translateX(calc(-${activeIndex * 100}%))` }}
+            >
+              {IMPACT_METRICS.map((metric, i) => {
+                const Icon = metric.icon;
+                return (
+                  <div
+                    key={metric.id}
+                    className="w-full shrink-0 px-4"
+                    aria-hidden={i !== activeIndex}
+                  >
+                    <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08] p-6">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 mb-8">
+                        <Icon size={20} className="text-[#FF6A00]" />
+                      </div>
+                      
+                      <h3 className="text-[2.75rem] leading-none tracking-tight text-[#FFF7ED] mb-3">
+                        {metric.value}
+                      </h3>
+                      
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#FF6A00]">
+                          {metric.label}
+                        </span>
+                      </div>
+                      
+                      <p className="mt-auto text-[13px] leading-relaxed text-[#FFF7ED]/60 border-t border-white/[0.08] pt-4">
+                        {metric.description}
+                      </p>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Navigation */}

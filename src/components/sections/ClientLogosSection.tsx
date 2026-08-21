@@ -20,7 +20,7 @@ export function ClientLogosSection() {
   return (
     <section className="relative isolate overflow-hidden bg-[#0A0A0A] py-10 sm:py-12 border-y border-white/[0.08]">
       <div className="layout-wrap flex flex-col md:flex-row items-center gap-6 md:gap-12">
-        <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]/40 md:border-r md:border-white/[0.1] md:pr-12">
+        <p className="shrink-0 text-[10px] font-medium uppercase tracking-[0.2em] text-[#FFF7ED]/40 md:border-r md:border-white/[0.1] md:pr-12">
           Engineering Focus
         </p>
 
@@ -44,7 +44,7 @@ export function ClientLogosSection() {
                   className="flex items-center gap-3 opacity-50 transition-opacity hover:opacity-100"
                 >
                   <Icon size={24} className="text-[#FF6A00]" />
-                  <span className="font-display text-lg sm:text-xl font-semibold tracking-tight text-[#FFF7ED]">
+                  <span className="text-lg sm:text-xl font-medium tracking-tight text-[#FFF7ED]">
                     {item.name}
                   </span>
                 </div>

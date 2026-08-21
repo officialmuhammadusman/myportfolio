@@ -52,7 +52,7 @@ export function StatsSection() {
         >
           <span className="section-eyebrow">{HOME_STATS_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             {HOME_STATS_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOME_STATS_COPY.titleAccent}
@@ -89,10 +89,10 @@ export function StatsSection() {
 
             <div className="relative z-10 grid gap-0 p-5 sm:gap-10 sm:p-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end lg:gap-10 lg:p-10 xl:p-12">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FF6A00]">
+                <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FF6A00]">
                   Highlight metric
                 </p>
-                <div className="mt-3 flex items-end gap-1 font-display text-[4.25rem] leading-none tracking-[-0.05em] text-[#FFF7ED] sm:mt-4 sm:text-[6.25rem] md:text-[7.25rem] lg:text-[7.75rem]">
+                <div className="mt-3 flex items-end gap-1 text-[3.5rem] font-medium leading-none tracking-[-0.05em] text-[#FFF7ED] sm:mt-4 sm:text-[5rem] md:text-[6rem] lg:text-[6.5rem]">
                   <span>
                     {inView && !reduceMotion ? (
                       <CountUp end={featured.value} duration={1.9} />
@@ -102,13 +102,13 @@ export function StatsSection() {
                   </span>
                   <span className="text-[#FF6A00]">{featured.suffix}</span>
                 </div>
-                <h3 className="mt-3 max-w-[18ch] font-display text-xl tracking-tight text-[#FFF7ED] sm:mt-4 sm:text-2xl sm:text-[1.85rem]">
+                <h3 className="mt-3 max-w-[18ch] text-lg font-medium tracking-tight text-[#FFF7ED] sm:mt-4 sm:text-xl sm:text-[1.5rem]">
                   {featured.label}
                 </h3>
                 <p className="mt-2.5 max-w-[30rem] text-sm leading-relaxed text-[#FFF7ED]/68 sm:mt-3 sm:text-[0.975rem]">
                   {featured.detail ?? HOME_STATS_COPY.featuredNote}
                 </p>
-                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFF7ED]/4 sm:mt-6">
+                <p className="mt-5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#FFF7ED]/4 sm:mt-6">
                   {HOME_STATS_COPY.footer} · {HOME_STATS_COPY.markets.join(" · ")}
                 </p>
               </div>
@@ -125,7 +125,7 @@ export function StatsSection() {
                         : "",
                     ].join(" ")}
                   >
-                    <div className="font-display text-[2rem] leading-none tracking-[-0.04em] text-[#FFF7ED] sm:text-[2.25rem]">
+                    <div className="text-[1.6rem] font-medium leading-none tracking-[-0.04em] text-[#FFF7ED] sm:text-[1.85rem]">
                       {inView && !reduceMotion ? (
                         <CountUp
                           end={stat.value}
@@ -137,7 +137,7 @@ export function StatsSection() {
                       )}
                       <span className="text-[#FF6A00]">{stat.suffix}</span>
                     </div>
-                    <p className="text-[12px] font-semibold leading-snug text-[#FFF7ED]/85 sm:text-[13px]">
+                    <p className="text-[12px] font-medium leading-snug text-[#FFF7ED]/85 sm:text-[13px]">
                       {stat.label}
                     </p>
                     {stat.detail ? (
@@ -167,7 +167,7 @@ export function StatsSection() {
                 style={{ opacity: 1 }}
                 className="rounded-2xl border border-white/10 bg-[#141414] px-4 py-4"
               >
-                <div className="font-display text-[2.25rem] leading-none tracking-[-0.04em] text-[#FFF7ED]">
+                <div className="text-[1.85rem] font-medium leading-none tracking-[-0.04em] text-[#FFF7ED]">
                   {inView && !reduceMotion ? (
                     <CountUp
                       end={stat.value}
@@ -179,7 +179,7 @@ export function StatsSection() {
                   )}
                   <span className="text-[#FF6A00]">{stat.suffix}</span>
                 </div>
-                <p className="mt-2 text-[13px] font-semibold leading-snug text-[#FFF7ED]/9">
+                <p className="mt-2 text-[13px] font-medium leading-snug text-[#FFF7ED]/9">
                   {stat.label}
                 </p>
                 {stat.detail ? (

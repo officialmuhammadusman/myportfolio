@@ -42,7 +42,7 @@ export function ContactSocialsSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: easeOut }}
         >
-          <h2 className="font-display text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[3rem]">
+          <h2 className="text-[2rem] font-medium leading-[1.1] tracking-tight text-white sm:text-[2.75rem]">
             Other ways to <span className="italic text-[#FF6A00]">connect.</span>
           </h2>
           
@@ -66,7 +66,7 @@ export function ContactSocialsSection() {
                   </div>
                   
                   <div>
-                    <h3 className="text-[1.1rem] font-bold text-white group-hover:text-[#FF6A00] transition-colors">{social.label}</h3>
+                    <h3 className="text-[1.1rem] font-medium text-white group-hover:text-[#FF6A00] transition-colors">{social.label}</h3>
                     <p className="mt-1 text-[13px] text-white/50">{social.value}</p>
                   </div>
                 </Link>

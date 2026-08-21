@@ -54,7 +54,7 @@ export function WhyChooseUsSection() {
             {WHY_CHOOSE_US_COPY.eyebrow}
           </span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             {WHY_CHOOSE_US_COPY.title}{" "}
             <span className="text-gradient italic">{WHY_CHOOSE_US_COPY.titleAccent}</span>
           </h2>
@@ -67,7 +67,7 @@ export function WhyChooseUsSection() {
         <div className="hidden sm:grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-8 xl:gap-10">
           <div className="min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0F0F0F]">
             <div className="border-b border-white/[0.08] px-4 py-4 sm:px-5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FF6A00]">
+              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FF6A00]">
                 Differentiators
               </p>
             </div>
@@ -104,7 +104,7 @@ export function WhyChooseUsSection() {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <span
                         className={cn(
-                          "mt-1 font-mono text-[11px] font-semibold tracking-[0.14em] sm:text-xs",
+                          "mt-1 font-mono text-[11px] font-medium tracking-[0.14em] sm:text-xs",
                           isActive ? "text-[#FF6A00]" : "text-[#FFF7ED]/30"
                         )}
                       >
@@ -116,7 +116,7 @@ export function WhyChooseUsSection() {
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                             <h3
                               className={cn(
-                                "font-display text-[1.2rem] leading-[1.08] tracking-[-0.025em] transition-all duration-300 sm:text-[1.45rem]",
+                                "text-[1.1rem] font-medium leading-[1.08] tracking-[-0.025em] transition-all duration-300 sm:text-[1.3rem]",
                                 isActive ? "text-[#FFF7ED] lg:translate-x-0.5" : "text-[#FFF7ED]/88"
                               )}
                             >
@@ -151,15 +151,15 @@ export function WhyChooseUsSection() {
                     className="absolute inset-0 p-5 sm:p-6 xl:p-8 flex flex-col"
                   >
                     <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-[#FF6A00]/35 bg-[#0A0A0A]/70 backdrop-blur-md">
-                      <span className="font-mono text-2xl font-bold text-[#FF6A00]">
+                      <span className="font-mono text-2xl font-medium text-[#FF6A00]">
                         {activeItem.number}
                       </span>
                     </div>
 
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#FFF7ED]/55 mb-2">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFF7ED]/55 mb-2">
                       {activeItem.title}
                     </p>
-                    <h3 className="font-display text-[1.75rem] leading-[1.06] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem]">
+                    <h3 className="text-[1.5rem] font-medium leading-[1.06] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.8rem]">
                       {activeItem.headline}
                     </h3>
                     
@@ -168,10 +168,10 @@ export function WhyChooseUsSection() {
                     </p>
 
                     <div className="mt-6 flex flex-wrap gap-2">
-                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347]">
+                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFB347]">
                         Direct Communication
                       </span>
-                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347]">
+                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFB347]">
                         No Bureaucracy
                       </span>
                     </div>
@@ -182,42 +182,43 @@ export function WhyChooseUsSection() {
           </aside>
         </div>
 
-        {/* ── MOBILE: Native Horizontal Scroll Carousel ── */}
+        {/* ── MOBILE: Javascript-driven Carousel ── */}
         <div className="sm:hidden mt-6 relative">
-          <div 
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 scrollbar-none" 
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {DIFFERENTIATORS.map((item, i) => (
-              <div
-                key={item.id}
-                className="w-[85vw] shrink-0 snap-center"
-              >
-                <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08] p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 mb-8">
-                    <span className="font-mono text-lg font-bold text-[#FF6A00]">
-                      {item.number}
-                    </span>
-                  </div>
-                  
-                  <h3 className="font-display text-[1.5rem] leading-none tracking-tight text-[#FFF7ED] mb-3">
-                    {item.title}
-                  </h3>
-                  
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6A00]">
-                      {item.headline}
-                    </span>
-                  </div>
-                  
-                  <p className="mt-auto text-[13px] leading-relaxed text-[#FFF7ED]/60 border-t border-white/[0.08] pt-4">
-                    {item.description}
-                  </p>
-                </article>
-              </div>
-            ))}
+          <div className="relative overflow-hidden -mx-4">
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ transform: `translateX(calc(-${activeIndex * 100}%))` }}
+            >
+              {DIFFERENTIATORS.map((item, i) => (
+                <div
+                  key={item.id}
+                  className="w-full shrink-0 px-4"
+                  aria-hidden={i !== activeIndex}
+                >
+                  <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08] p-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 mb-8">
+                      <span className="font-mono text-lg font-medium text-[#FF6A00]">
+                        {item.number}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-[1.3rem] font-medium leading-none tracking-tight text-[#FFF7ED] mb-3">
+                      {item.title}
+                    </h3>
+                    
+                    <div className="mb-3 flex items-center gap-2">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#FF6A00]">
+                        {item.headline}
+                      </span>
+                    </div>
+                    
+                    <p className="mt-auto text-[13px] leading-relaxed text-[#FFF7ED]/60 border-t border-white/[0.08] pt-4">
+                      {item.description}
+                    </p>
+                  </article>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Navigation */}

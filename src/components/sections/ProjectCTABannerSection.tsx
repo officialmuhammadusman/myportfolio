@@ -38,12 +38,12 @@ export function ProjectCTABannerSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6A00] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF6A00]"></span>
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#FF6A00]">
                   {PROJECT_CTA_COPY.eyebrow}
                 </span>
               </div>
               
-              <h2 className="font-display text-[2.25rem] leading-[1.05] tracking-[-0.03em] text-[#FFF7ED] sm:text-[3.5rem] mb-6">
+              <h2 className="text-[2rem] font-medium leading-[1.05] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.75rem] mb-6">
                 {PROJECT_CTA_COPY.title} <br />
                 <span className="italic text-[#FF6A00]">{PROJECT_CTA_COPY.titleAccent}</span>
               </h2>
@@ -57,14 +57,14 @@ export function ProjectCTABannerSection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/contact"
-                  className="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-xl bg-[#FFF7ED] text-[#0A0A0A] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] transition-transform hover:scale-105 active:scale-95"
+                  className="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-xl bg-[#FFF7ED] text-[#0A0A0A] px-6 py-3.5 text-xs font-medium uppercase tracking-[0.1em] transition-transform hover:scale-105 active:scale-95"
                 >
                   {PROJECT_CTA_COPY.primaryButton}
                   <ArrowUpRight size={14} />
                 </Link>
                 <Link
                   href="/services"
-                  className="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] text-[#FFF7ED] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] transition-colors hover:bg-white/[0.08]"
+                  className="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] text-[#FFF7ED] px-6 py-3.5 text-xs font-medium uppercase tracking-[0.1em] transition-colors hover:bg-white/[0.08]"
                 >
                   {PROJECT_CTA_COPY.secondaryButton}
                 </Link>

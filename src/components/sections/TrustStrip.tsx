@@ -45,7 +45,7 @@ export function TrustStrip() {
           {/* Row 1 — Availability + regions */}
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div className="flex flex-col items-center gap-3 text-center lg:items-start lg:text-left">
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#FF6A00] sm:text-[11px]">
+              <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#FF6A00] sm:text-[11px]">
                 {TRUST_STRIP.eyebrow}
               </span>
               <div className="inline-flex items-center justify-center gap-2.5 lg:justify-start">
@@ -53,14 +53,14 @@ export function TrustStrip() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6A00] opacity-50" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#FF6A00] shadow-[0_0_12px_rgba(255,106,0,0.85)]" />
                 </span>
-                <p className="text-sm font-semibold tracking-wide text-[#FFF7ED] sm:text-[15px]">
+                <p className="text-sm font-medium tracking-wide text-[#FFF7ED] sm:text-[15px]">
                   {TRUST_STRIP.availability}
                 </p>
               </div>
             </div>
 
             <div className="flex flex-col items-center text-center gap-2.5 lg:items-end lg:text-right">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FFF7ED]/40 sm:text-[11px]">
+              <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FFF7ED]/40 sm:text-[11px]">
                 {TRUST_STRIP.regionsLabel}
               </span>
               <ul className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 sm:gap-x-0">
@@ -72,7 +72,7 @@ export function TrustStrip() {
                         className="mx-2.5 hidden h-1 w-1 rounded-full bg-[#FF6A00]/55 sm:mx-3 sm:inline-block md:mx-3.5"
                       />
                     )}
-                    <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFF7ED]/85 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-xs sm:tracking-[0.2em] md:text-[13px]">
+                    <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFF7ED]/85 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-xs sm:tracking-[0.2em] md:text-[13px]">
                       {region}
                     </span>
                   </li>
@@ -93,7 +93,7 @@ export function TrustStrip() {
               {TRUST_STRIP.capabilities.map((item) => (
                 <li
                   key={item}
-                  className="rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#FFB347] sm:px-3.5 sm:text-[11px]"
+                  className="rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFB347] sm:px-3.5 sm:text-[11px]"
                 >
                   {item}
                 </li>

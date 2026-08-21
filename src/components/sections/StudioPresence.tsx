@@ -35,7 +35,7 @@ export function StudioPresence() {
               <span className="h-px w-6 bg-[#FF6A00] sm:w-8" />
               <span className="section-eyebrow text-[#FF6A00]">The practice</span>
             </div>
-            <h2 className="font-display text-3xl leading-[1.1] tracking-[-0.02em] text-[#FFF7ED] sm:text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="text-3xl leading-[1.1] tracking-[-0.02em] text-[#FFF7ED] sm:text-2xl md:text-3xl lg:text-2xl">
               How the work gets done —
               <span className="italic text-[#FFB347]"> from plan to delivery.</span>
             </h2>
@@ -43,7 +43,7 @@ export function StudioPresence() {
 
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 text-xs font-semibold text-[#FFF7ED]/70 transition-colors hover:text-[#FF6A00] sm:text-sm"
+            className="group inline-flex items-center gap-2 text-xs font-medium text-[#FFF7ED]/70 transition-colors hover:text-[#FF6A00] sm:text-sm"
           >
             About the agency
             <ArrowUpRight
@@ -84,7 +84,7 @@ export function StudioPresence() {
                   }}
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3 md:p-4">
-                  <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#FF6A00] sm:text-[10px] md:text-[11px]">
+                  <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#FF6A00] sm:text-[10px] md:text-[11px]">
                     {String(i + 1).padStart(2, "0")} · {shot.label}
                   </p>
                   <p className="mt-0.5 text-xs font-medium text-[#FFF7ED] sm:mt-1 sm:text-sm md:text-[15px]">

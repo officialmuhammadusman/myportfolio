@@ -24,7 +24,7 @@ export function InsightsNewsletterCTA({ category }: { category: InsightCategory 
             <Mail className="h-8 w-8 text-[#FF6A00]" />
           </div>
           
-          <h2 className="font-display text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3.5rem]">
+          <h2 className="text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3.5rem]">
             Get insights on <span className="italic text-[#FF6A00]">engineering.</span>
           </h2>
           
@@ -41,7 +41,7 @@ export function InsightsNewsletterCTA({ category }: { category: InsightCategory 
             />
             <button 
               type="submit" 
-              className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-[#FF6A00] px-8 text-[13px] font-bold uppercase tracking-[0.1em] text-black transition-transform hover:scale-105 active:scale-95"
+              className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-[#FF6A00] px-8 text-[13px] font-medium uppercase tracking-[0.1em] text-black transition-transform hover:scale-105 active:scale-95"
             >
               Subscribe <ArrowRight size={16} />
             </button>

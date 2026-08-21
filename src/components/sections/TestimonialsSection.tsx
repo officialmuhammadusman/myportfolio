@@ -51,7 +51,7 @@ export function TestimonialsSection() {
         >
           <span className="section-eyebrow">Testimonials</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             What clients{" "}
             <span className="text-gradient italic">are saying</span>
           </h2>
@@ -92,13 +92,13 @@ export function TestimonialsSection() {
                       style={{ borderColor: "rgba(255,255,255,0.07)" }}
                     >
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-medium"
                         style={{ background: "rgba(255,106,0,0.15)", color: "#FF6A00" }}
                       >
                         {t.name[0]}
                       </div>
                       <div>
-                        <p className="text-[13px] font-semibold text-[#FFF7ED]">{t.name}</p>
+                        <p className="text-[13px] font-medium text-[#FFF7ED]">{t.name}</p>
                         <p className="text-[11px] text-[#FFF7ED]/45">{t.role}, {t.company}</p>
                       </div>
                     </div>
@@ -194,13 +194,13 @@ export function TestimonialsSection() {
                 style={{ borderColor: "rgba(255,255,255,0.07)" }}
               >
                 <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-display text-xs font-bold sm:h-10 sm:w-10 sm:text-sm"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-medium sm:h-10 sm:w-10 sm:text-sm"
                   style={{ background: "rgba(255,106,0,0.12)", color: "#FF6A00" }}
                 >
                   {t.name[0]}
                 </div>
                 <div>
-                  <p className="text-[13px] font-semibold text-[#FFF7ED]">{t.name}</p>
+                  <p className="text-[13px] font-medium text-[#FFF7ED]">{t.name}</p>
                   <p className="text-[11px] text-[#FFF7ED]/45">{t.role}, {t.company}</p>
                 </div>
               </div>

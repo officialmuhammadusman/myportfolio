@@ -31,7 +31,7 @@ export function ServiceCapabilitiesSection({ service }: { service: ServiceItem }
           className="mb-12 sm:mb-16 md:mb-20 max-w-2xl"
         >
           <span className="section-eyebrow">Capabilities</span>
-          <h2 className="mt-4 font-display text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem] md:text-[3rem]">
+          <h2 className="mt-4 text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem] md:text-[3rem]">
             Specialized execution in <span className="italic text-[#FF6A00]">{service.shortTitle.toLowerCase()}</span>
           </h2>
         </motion.div>
@@ -53,7 +53,7 @@ export function ServiceCapabilitiesSection({ service }: { service: ServiceItem }
                   <Hexagon className="h-5 w-5 text-[#FF6A00] opacity-80" />
                 </div>
                 
-                <h3 className="mb-3 text-[1.15rem] font-bold text-white group-hover:text-[#FF6A00] transition-colors">{cap.title}</h3>
+                <h3 className="mb-3 text-[1.15rem] font-medium text-white group-hover:text-[#FF6A00] transition-colors">{cap.title}</h3>
                 <p className="text-[14px] leading-relaxed text-white/60 group-hover:text-white/80 transition-colors">
                   {cap.description}
                 </p>

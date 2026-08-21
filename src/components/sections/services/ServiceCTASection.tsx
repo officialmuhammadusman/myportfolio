@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { motion } from "framer-motion";
@@ -25,7 +26,7 @@ export function ServiceCTASection({ service }: { service: ServiceItem }) {
             <BrandIcon base={brandIcons.cta.startProject} tone="orange" size={40} />
           </div>
           
-          <h2 className="font-display text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3.5rem] md:text-[4rem]">
+          <h2 className="text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3.5rem] md:text-[4rem]">
             Ready to build your <span className="italic font-light text-[#FF6A00]">{service.title.toLowerCase()}?</span>
           </h2>
           
@@ -36,13 +37,13 @@ export function ServiceCTASection({ service }: { service: ServiceItem }) {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               href="/contact" 
-              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#FF6A00] px-8 text-[13px] font-bold uppercase tracking-[0.1em] text-black transition-transform hover:scale-105 active:scale-95 w-full sm:w-auto"
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#FF6A00] px-8 text-[13px] font-medium uppercase tracking-[0.1em] text-black transition-transform hover:scale-105 active:scale-95 w-full sm:w-auto"
             >
               Start a project brief <ArrowRight size={16} />
             </Link>
             <Link 
               href="/projects" 
-              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-white/5 px-8 text-[13px] font-bold uppercase tracking-[0.1em] text-white border border-white/10 transition-colors hover:bg-white/10 w-full sm:w-auto"
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-white/5 px-8 text-[13px] font-medium uppercase tracking-[0.1em] text-white border border-white/10 transition-colors hover:bg-white/10 w-full sm:w-auto"
             >
               View Case Studies
             </Link>

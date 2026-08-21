@@ -19,7 +19,7 @@ export function PhilosophySection() {
           <span className="section-eyebrow">Work Philosophy</span>
           <div className="fancy-divider" />
           <h2
-            className="font-display font-bold mt-2"
+            className="font-medium mt-2"
             style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "var(--text-primary)" }}
           >
             How I think about software

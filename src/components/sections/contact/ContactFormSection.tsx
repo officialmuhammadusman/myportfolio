@@ -137,7 +137,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                 type="button"
                 onClick={() => setFlow("message")}
                 className={cn(
-                  "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300",
+                  "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300",
                   flow === "message" ? "text-white" : "text-white/40 hover:text-white/80"
                 )}
               >
@@ -154,7 +154,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                 type="button"
                 onClick={() => setFlow("book")}
                 className={cn(
-                  "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300",
+                  "flex-1 relative z-10 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300",
                   flow === "book" ? "text-white" : "text-white/40 hover:text-white/80"
                 )}
               >
@@ -173,7 +173,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
               <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
                 <div className="grid gap-8 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="text-[13px] font-bold uppercase tracking-widest text-white/70">
+                    <label className="text-[13px] font-medium uppercase tracking-widest text-white/70">
                       Full Name <span className="text-[#FF6A00]">*</span>
                     </label>
                     <input
@@ -187,7 +187,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[13px] font-bold uppercase tracking-widest text-white/70">
+                    <label className="text-[13px] font-medium uppercase tracking-widest text-white/70">
                       Email Address <span className="text-[#FF6A00]">*</span>
                     </label>
                     <input
@@ -203,7 +203,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                 </div>
 
                 <div className="space-y-2 relative" ref={subjectRef}>
-                  <label className="text-[13px] font-bold uppercase tracking-widest text-white/70">
+                  <label className="text-[13px] font-medium uppercase tracking-widest text-white/70">
                     Subject <span className="text-[#FF6A00]">*</span>
                   </label>
                   <div className="relative">
@@ -248,7 +248,7 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[13px] font-bold uppercase tracking-widest text-white/70">
+                  <label className="text-[13px] font-medium uppercase tracking-widest text-white/70">
                     Project Details <span className="text-[#FF6A00]">*</span>
                   </label>
                   <textarea
@@ -263,12 +263,12 @@ export function ContactFormSection({ category }: { category: ContactCategory }) 
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                  <button type="button" onClick={() => handleSend("email")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-white/5 border border-white/10 py-4 text-[15px] font-bold text-white overflow-hidden transition-all duration-300 hover:border-white/20">
+                  <button type="button" onClick={() => handleSend("email")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-white/5 border border-white/10 py-4 text-[15px] font-medium text-white overflow-hidden transition-all duration-300 hover:border-white/20">
                     <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <Mail size={18} className="relative z-10 text-white/70 group-hover:text-white transition-colors" />
                     <span className="relative z-10">Send via Email</span>
                   </button>
-                  <button type="button" onClick={() => handleSend("whatsapp")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#25D366] to-[#128C7E] py-4 text-[15px] font-bold text-white shadow-[0_0_20px_rgba(37,211,102,0.3)] overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] hover:scale-[1.02]">
+                  <button type="button" onClick={() => handleSend("whatsapp")} className="group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#25D366] to-[#128C7E] py-4 text-[15px] font-medium text-white shadow-[0_0_20px_rgba(37,211,102,0.3)] overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] hover:scale-[1.02]">
                     <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative z-10 flex items-center justify-center">
                       <BrandIcon base={brandIcons.cta.whatsapp} tone="white" size={20} />

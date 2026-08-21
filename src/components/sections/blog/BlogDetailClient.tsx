@@ -21,7 +21,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
         <div className="layout-wrap relative z-10 max-w-4xl">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white/50 transition-colors hover:text-[#FF6A00] mb-8 sm:mb-12"
+            className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-widest text-white/50 transition-colors hover:text-[#FF6A00] mb-8 sm:mb-12"
           >
             <ArrowLeft size={14} /> Back to Insights
           </Link>
@@ -31,12 +31,12 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="mb-6 inline-flex rounded-md border border-[#FF6A00]/30 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF6A00]">
+            <span className="mb-6 inline-flex rounded-md border border-[#FF6A00]/30 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-[#FF6A00]">
               {post.category}
             </span>
 
-            <h1 className="font-display text-[2.5rem] leading-[1.1] tracking-tight text-white sm:text-[3.5rem] md:text-[4rem] mb-8">
-              {post.title}
+            <h1 className="text-[1.1rem] font-normal leading-snug tracking-tight text-white sm:text-[1.4rem] md:text-[1.6rem] mb-6">
+              {post.title.replace(/\s*—\s*/g, ", ")}
             </h1>
 
             <div className="flex flex-wrap items-center gap-6 border-t border-white/10 pt-8">
@@ -50,7 +50,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{post.author.name}</p>
+                  <p className="text-sm font-medium text-white">{post.author.name}</p>
                   <p className="text-[12px] text-white/50">{post.author.role}</p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
               <div className="w-full h-72 sm:h-96 rounded-[24px] mb-12 overflow-hidden border border-white/10 relative">
                 <Image 
                   src={post.thumbnail}
-                  alt={post.title}
+                  alt={post.title.replace(/\s*—\s*/g, ", ")}
                   fill
                   className="object-cover opacity-60 grayscale-[20%]"
                 />
@@ -108,7 +108,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/50"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.1em] text-white/50"
                   >
                     #{tag}
                   </span>
@@ -117,7 +117,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
 
               {/* Share */}
               <div className="flex items-center gap-4 mt-12 bg-white/[0.02] border border-white/10 p-6 rounded-2xl">
-                <span className="text-[13px] font-bold uppercase tracking-widest text-white/60">Share this article:</span>
+                <span className="text-[13px] font-medium uppercase tracking-widest text-white/60">Share this article:</span>
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://muhammadusman.dev/blog/${post.slug}`)}`}
                   target="_blank"
@@ -158,7 +158,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
                     className="object-cover"
                   />
                 </div>
-                <h4 className="font-bold text-center text-lg mb-1 text-white">
+                <h4 className="font-medium text-center text-lg mb-1 text-white">
                   {post.author.name}
                 </h4>
                 <p className="text-[12px] text-center mb-4 text-[#FF6A00] font-medium uppercase tracking-wider">{post.author.role}</p>
@@ -168,7 +168,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
               {/* Related posts */}
               {related.length > 0 && (
                 <div className="rounded-[24px] border border-white/10 bg-[#0A0A0A] p-6">
-                  <h4 className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6">
+                  <h4 className="text-[11px] font-medium uppercase tracking-widest text-white/40 mb-6">
                     Related Reading
                   </h4>
                   <div className="space-y-6">
@@ -187,7 +187,7 @@ export function BlogDetailClient({ post, related }: { post: BlogPost; related: B
                           />
                         </div>
                         <div className="flex flex-col justify-center">
-                          <p className="text-[13px] font-semibold leading-snug group-hover:text-[#FF6A00] transition-colors line-clamp-2 text-white">
+                          <p className="text-[13px] font-medium leading-snug group-hover:text-[#FF6A00] transition-colors line-clamp-2 text-white">
                             {p.title}
                           </p>
                           <p className="text-[10px] mt-1.5 text-white/40 uppercase tracking-wider font-mono">

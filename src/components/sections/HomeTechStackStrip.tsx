@@ -123,11 +123,11 @@ export function HomeTechStackStrip() {
           className="mx-auto mb-16 max-w-3xl text-center"
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 mb-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]/50">
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#FFF7ED]/50">
               {HOME_TECH_STACK_COPY.eyebrow}
             </span>
           </div>
-          <h2 className="font-display text-[2rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.75rem] lg:text-[3.25rem]">
+          <h2 className="text-[1.6rem] font-medium leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] lg:text-[2.5rem]">
             {HOME_TECH_STACK_COPY.title}{" "}
             <br className="hidden sm:block" />
             <span className="text-gradient italic">
@@ -161,7 +161,7 @@ export function HomeTechStackStrip() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#FF6A00]/25 bg-[#FF6A00]/10">
                   <Icon size={20} className="text-[#FF6A00]" aria-hidden />
                 </div>
-                <span className="font-display text-sm font-semibold tracking-tight text-[#FFF7ED]">
+                <span className="text-sm font-medium tracking-tight text-[#FFF7ED]">
                   {item.name}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export function HomeTechStackStrip() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#FF6A00]/25 bg-[#FF6A00]/10">
                   <Icon size={20} className="text-[#FF6A00]" aria-hidden />
                 </div>
-                <span className="font-display text-sm font-semibold tracking-tight text-[#FFF7ED]">
+                <span className="text-sm font-medium tracking-tight text-[#FFF7ED]">
                   {item.name}
                 </span>
               </div>

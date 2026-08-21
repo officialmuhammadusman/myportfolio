@@ -37,7 +37,7 @@ export function ExperienceSection() {
         >
           <span className="section-eyebrow">{EXPERIENCE_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.75rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.25rem] lg:text-[2.75rem]">
+          <h2 className="text-[1.75rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.25rem] lg:text-[2.75rem]">
             {EXPERIENCE_COPY.title}{" "}
             <span className="text-gradient italic">{EXPERIENCE_COPY.titleAccent}</span>
           </h2>
@@ -60,7 +60,7 @@ export function ExperienceSection() {
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                 <div>
-                  <h3 className="font-display text-2xl tracking-tight text-[#FFF7ED] mb-2">{job.role}</h3>
+                  <h3 className="text-2xl tracking-tight text-[#FFF7ED] mb-2">{job.role}</h3>
                   <div className="flex items-center gap-3 text-sm text-[#FFF7ED]/60 font-medium">
                     <span className="flex items-center gap-1.5 text-[#FF6A00]">
                       <Briefcase size={15} />
@@ -101,8 +101,8 @@ export function ExperienceSection() {
             >
               <div className="flex justify-between items-start gap-4">
                 <div>
-                  <h3 className="font-display text-lg tracking-tight text-[#FFF7ED]">{job.role}</h3>
-                  <p className="text-[#FF6A00] text-xs font-semibold mt-1">{job.company}</p>
+                  <h3 className="text-lg tracking-tight text-[#FFF7ED]">{job.role}</h3>
+                  <p className="text-[#FF6A00] text-xs font-medium mt-1">{job.company}</p>
                 </div>
                 <div className="h-8 w-8 rounded-full bg-white/[0.05] flex items-center justify-center shrink-0 border border-white/[0.05]">
                   <ChevronRight size={16} className="text-[#FFF7ED]/50 group-active:text-[#FF6A00]" />
@@ -126,7 +126,7 @@ export function ExperienceSection() {
         {activeJob && (
           <div className="p-5 pb-8 space-y-6">
             <div>
-              <h3 className="font-display text-2xl tracking-tight text-[#FFF7ED] mb-2">{activeJob.role}</h3>
+              <h3 className="text-2xl tracking-tight text-[#FFF7ED] mb-2">{activeJob.role}</h3>
               <p className="text-[13px] font-mono tracking-wide text-[#FF6A00] flex items-center gap-2">
                 <Calendar size={14} />
                 {activeJob.period}
@@ -134,7 +134,7 @@ export function ExperienceSection() {
             </div>
             
             <div className="space-y-4">
-              <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-[#FFF7ED]/40">Key Achievements</h4>
+              <h4 className="text-xs font-medium uppercase tracking-[0.15em] text-[#FFF7ED]/40">Key Achievements</h4>
               <ul className="space-y-4">
                 {activeJob.achievements.map((achievement, i) => (
                   <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-[#FFF7ED]/80">

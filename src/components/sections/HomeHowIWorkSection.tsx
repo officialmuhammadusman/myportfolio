@@ -66,7 +66,7 @@ export function HomeHowIWorkSection() {
         >
           <span className="section-eyebrow">{HOW_I_WORK_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             {HOW_I_WORK_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOW_I_WORK_COPY.titleAccent}
@@ -96,7 +96,7 @@ export function HomeHowIWorkSection() {
                 className="mobile-card group flex w-full items-center gap-4 p-4 text-left transition-all duration-300 active:scale-[0.98]"
               >
                 {/* Big number */}
-                <span className="font-mono text-[2rem] font-bold tracking-[-0.04em] text-[#FF6A00]/25 transition-colors duration-300 group-active:text-[#FF6A00]/55">
+                <span className="font-mono text-[2rem] font-medium tracking-[-0.04em] text-[#FF6A00]/25 transition-colors duration-300 group-active:text-[#FF6A00]/55">
                   {step.number}
                 </span>
 
@@ -107,7 +107,7 @@ export function HomeHowIWorkSection() {
 
                 {/* Content */}
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-[1.05rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
+                  <h3 className="text-[1.05rem] font-medium leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
                     {step.title}
                   </h3>
                   <p className="mt-0.5 line-clamp-1 text-[12px] leading-snug text-[#FFF7ED]/50">
@@ -126,7 +126,7 @@ export function HomeHowIWorkSection() {
 
           {/* Trust pillars — horizontal scroll cards on mobile */}
           <div className="mt-6">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#FFF7ED]/35">
+            <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-[#FFF7ED]/35">
               My commitments
             </p>
             <div className="snap-scroll-x -mx-4 pb-3">
@@ -139,7 +139,7 @@ export function HomeHowIWorkSection() {
                     <BrandIcon base={pillar.iconBase} tone="orange" size={20} />
                   </div>
                   <div>
-                    <h4 className="font-display text-base tracking-tight text-[#FFF7ED]">
+                    <h4 className="text-base font-medium tracking-tight text-[#FFF7ED]">
                       {pillar.title}
                     </h4>
                     <p className="mt-1 text-[12px] leading-relaxed text-[#FFF7ED]/50">
@@ -212,7 +212,7 @@ export function HomeHowIWorkSection() {
 
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-7">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6A00]">
+                    <span className="font-mono text-[11px] font-medium tracking-[0.2em] text-[#FF6A00]">
                       {active.number} / 04
                     </span>
                     <div className="flex items-center gap-1.5">
@@ -253,7 +253,7 @@ export function HomeHowIWorkSection() {
                             size={20}
                           />
                         </div>
-                        <h3 className="font-display text-2xl tracking-tight text-[#FFF7ED] lg:text-[1.75rem]">
+                        <h3 className="text-xl font-medium tracking-tight text-[#FFF7ED] lg:text-[1.5rem]">
                           {active.title}
                         </h3>
                       </div>
@@ -261,7 +261,7 @@ export function HomeHowIWorkSection() {
                         {active.deliverables.map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-white/15 bg-[#0A0A0A]/55 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-[#FFB347] backdrop-blur-md"
+                            className="rounded-full border border-white/15 bg-[#0A0A0A]/55 px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] text-[#FFB347] backdrop-blur-md"
                           >
                             {item}
                           </span>
@@ -315,7 +315,7 @@ export function HomeHowIWorkSection() {
                   </motion.div>
                 </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent" />
-                <span className="absolute bottom-3 left-3 font-mono text-[11px] font-semibold tracking-[0.18em] text-[#FF6A00]">
+                <span className="absolute bottom-3 left-3 font-mono text-[11px] font-medium tracking-[0.18em] text-[#FF6A00]">
                   {active.number} · {active.title}
                 </span>
               </div>
@@ -357,7 +357,7 @@ export function HomeHowIWorkSection() {
           </Link>
         </div>
 
-        <p className="mt-6 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFF7ED]/40 sm:mt-7 sm:text-xs">
+        <p className="mt-6 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-[#FFF7ED]/40 sm:mt-7 sm:text-xs">
           {HOW_I_WORK_COPY.footerLine}
         </p>
       </div>
@@ -390,10 +390,10 @@ export function HomeHowIWorkSection() {
                 <BrandIcon base={sheetStep.iconBase} tone="orange" size={24} />
               </div>
               <div>
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FF6A00]">
+                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#FF6A00]">
                   Step {sheetStep.number} of {PROCESS_STEPS.length}
                 </p>
-                <h3 className="font-display text-[1.4rem] leading-[1.08] tracking-[-0.025em] text-[#FFF7ED]">
+                <h3 className="text-[1.3rem] font-medium leading-[1.08] tracking-[-0.025em] text-[#FFF7ED]">
                   {sheetStep.title}
                 </h3>
               </div>
@@ -406,14 +406,14 @@ export function HomeHowIWorkSection() {
 
             {/* Deliverables */}
             <div className="mt-5">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]/35">
+              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.2em] text-[#FFF7ED]/35">
                 What you get
               </p>
               <div className="flex flex-wrap gap-2">
                 {sheetStep.deliverables.map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.06em] text-[#FFB347]"
+                    className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/10 px-3 py-1 text-[11px] font-medium tracking-[0.06em] text-[#FFB347]"
                   >
                     {item}
                   </span>
@@ -429,7 +429,7 @@ export function HomeHowIWorkSection() {
                   type="button"
                   onClick={() => setSheetStepId(step.id)}
                   className={cn(
-                    "flex-1 rounded-xl border py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] transition-all duration-200",
+                    "flex-1 rounded-xl border py-2.5 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-200",
                     step.id === sheetStepId
                       ? "border-[#FF6A00] bg-[#FF6A00]/15 text-[#FF6A00]"
                       : "border-white/[0.08] bg-white/[0.02] text-[#FFF7ED]/45"
@@ -493,7 +493,7 @@ function ProcessStepRow({
       >
         <span
           className={cn(
-            "font-mono text-2xl font-semibold tracking-[-0.04em] transition-colors duration-300 sm:text-3xl md:w-14 md:shrink-0 md:text-[2rem]",
+            "font-mono text-2xl font-medium tracking-[-0.04em] transition-colors duration-300 sm:text-3xl md:w-14 md:shrink-0 md:text-[2rem]",
             active ? "text-[#FF6A00]" : "text-[#FFF7ED]/22 group-hover:text-[#FF6A00]/70"
           )}
         >
@@ -531,7 +531,7 @@ function ProcessStepRow({
             </div>
             <h3
               className={cn(
-                "font-display text-xl tracking-tight text-[#FFF7ED] transition-transform duration-300 sm:text-[1.35rem]",
+                "text-lg font-medium tracking-tight text-[#FFF7ED] transition-transform duration-300 sm:text-[1.2rem]",
                 active && "md:translate-x-0.5"
               )}
             >
@@ -548,7 +548,7 @@ function ProcessStepRow({
               <span
                 key={item}
                 className={cn(
-                  "rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] transition-colors duration-300",
+                  "rounded-full border px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] transition-colors duration-300",
                   active
                     ? "border-[#FF6A00]/35 bg-[#FF6A00]/10 text-[#FFB347]"
                     : "border-white/10 text-[#FFF7ED]/45 group-hover:border-[#FF6A00]/25 group-hover:text-[#FFB347]/80"
@@ -562,7 +562,7 @@ function ProcessStepRow({
 
         <span
           className={cn(
-            "ml-auto hidden items-center gap-1.5 pt-1 text-[10px] font-bold uppercase tracking-[0.16em] transition-all duration-300 md:inline-flex",
+            "ml-auto hidden items-center gap-1.5 pt-1 text-[10px] font-medium uppercase tracking-[0.16em] transition-all duration-300 md:inline-flex",
             active
               ? "translate-x-0 text-[#FF6A00] opacity-100"
               : "translate-x-1 text-[#FFF7ED]/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
@@ -619,7 +619,7 @@ function TrustPillarCell({
         />
       </div>
       <div className="min-w-0">
-        <h4 className="font-display text-base tracking-tight text-[#FFF7ED] sm:text-lg">
+        <h4 className="text-sm font-medium tracking-tight text-[#FFF7ED] sm:text-base">
           {pillar.title}
         </h4>
         <p className="mt-1 text-[13px] leading-relaxed text-[#FFF7ED]/55 sm:text-sm">

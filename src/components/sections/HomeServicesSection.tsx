@@ -13,6 +13,7 @@ import {
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { brandIcons } from "@/lib/brandAssets";
 import { cn } from "@/lib/utils";
+import { MobileBottomSheet } from "@/components/ui/MobileBottomSheet";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -50,7 +51,7 @@ export function HomeServicesSection() {
           <span className="section-eyebrow">{HOME_SERVICES_COPY.eyebrow}</span>
           <div className="fancy-divider mx-auto" />
 
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             {HOME_SERVICES_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOME_SERVICES_COPY.titleAccent}
@@ -65,7 +66,7 @@ export function HomeServicesSection() {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-8 xl:gap-10">
           <div className="min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0F0F0F]">
             <div className="border-b border-white/[0.08] px-4 py-4 sm:px-5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FF6A00]">
+              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FF6A00]">
                 Capability areas
               </p>
             </div>
@@ -124,7 +125,7 @@ export function HomeServicesSection() {
                           />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FF6A00]">
+                          <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FF6A00]">
                             {String(
                               HOME_SERVICES.findIndex(
                                 (service) => service.id === active.id
@@ -132,14 +133,14 @@ export function HomeServicesSection() {
                             ).padStart(2, "0")}{" "}
                             / 05
                           </p>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#FFF7ED]/55">
+                          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFF7ED]/55">
                             {active.eyebrow}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    <h3 className="font-display text-[1.75rem] leading-[1.06] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem]">
+                    <h3 className="text-[1.5rem] font-medium leading-[1.06] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.8rem]">
                       {active.title}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-[#FFF7ED]/76 sm:text-[15px]">
@@ -153,7 +154,7 @@ export function HomeServicesSection() {
                       {active.homeTags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347]"
+                          className="rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFB347]"
                         >
                           {tag}
                         </span>
@@ -173,7 +174,7 @@ export function HomeServicesSection() {
 
                     <Link
                       href={`/services/${active.id}`}
-                      className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFB347] transition hover:text-[#FF6A00]"
+                      className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFB347] transition hover:text-[#FF6A00]"
                     >
                       Explore capability
                       <ArrowUpRight size={14} />
@@ -185,7 +186,7 @@ export function HomeServicesSection() {
           </aside>
         </div>
 
-        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFF7ED]/40 sm:text-xs">
+        <p className="mt-6 text-[11px] font-medium uppercase tracking-[0.18em] text-[#FFF7ED]/40 sm:text-xs">
           {HOME_SERVICES_COPY.footerLine}
         </p>
 
@@ -208,6 +209,63 @@ export function HomeServicesSection() {
           </Link>
         </div>
       </div>
+
+      {/* MOBILE BOTTOM SHEET FOR SERVICE DETAILS */}
+      <MobileBottomSheet 
+        open={expandedId !== null} 
+        onClose={() => setExpandedId(null)}
+        title={expandedId ? HOME_SERVICES.find(s => s.id === expandedId)?.shortTitle : undefined}
+      >
+        {expandedId && (() => {
+          const service = HOME_SERVICES.find(s => s.id === expandedId);
+          if (!service) return null;
+          return (
+            <div className="flex flex-col h-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/35 bg-[#FF6A00]/10">
+                  <BrandIcon base={service.iconBase} tone="orange" size={24} />
+                </div>
+                <div>
+                  <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-[#FFB347]/70">
+                    {service.eyebrow}
+                  </span>
+                  <h3 className="text-[1.3rem] font-medium text-[#FFF7ED]">
+                    {service.shortTitle}
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-[15px] leading-relaxed text-[#FFF7ED]/80 mb-6">
+                {service.description}
+              </p>
+
+              <div className="mb-8">
+                <h4 className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#FFF7ED]/40 mb-3">
+                  Key Capabilities
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {service.homeTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/8 px-3 py-1.5 text-[11px] font-medium text-[#FFB347]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <Link
+                href={`/services/${service.id}`}
+                className="mt-auto flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF6A00] py-4 text-[13px] font-medium text-black transition-transform active:scale-[0.98]"
+              >
+                View full capability page
+                <ArrowUpRight size={16} />
+              </Link>
+            </div>
+          );
+        })()}
+      </MobileBottomSheet>
     </section>
   );
 }
@@ -279,7 +337,7 @@ function ServicePracticeRow({
         <div className="flex items-start gap-3 sm:gap-4">
           <span
             className={cn(
-              "mt-1 font-mono text-[11px] font-semibold tracking-[0.14em] sm:text-xs",
+              "mt-1 font-mono text-[11px] font-medium tracking-[0.14em] sm:text-xs",
               active || expanded ? "text-[#FF6A00]" : "text-[#FFF7ED]/30"
             )}
           >
@@ -325,7 +383,7 @@ function ServicePracticeRow({
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <h3
                   className={cn(
-                    "font-display text-[1.2rem] leading-[1.08] tracking-[-0.025em] transition-all duration-300 sm:text-[1.45rem]",
+                    "text-[1.2rem] leading-[1.08] tracking-[-0.025em] transition-all duration-300 sm:text-[1.45rem]",
                     active || expanded
                       ? "text-[#FFF7ED] lg:translate-x-0.5"
                       : "text-[#FFF7ED]/88"
@@ -333,7 +391,7 @@ function ServicePracticeRow({
                 >
                   {service.shortTitle}
                 </h3>
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#FFB347]/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#FFB347]/70">
                   {service.eyebrow}
                 </span>
               </div>
@@ -342,39 +400,6 @@ function ServicePracticeRow({
               <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-[#FFF7ED]/58 sm:text-[15px]">
                 {service.outcome}
               </p>
-
-              {/* Mobile: expand detail on tap (small → big) */}
-              <AnimatePresence initial={false}>
-                {expanded && (
-                  <motion.div
-                    initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={
-                      reduceMotion ? undefined : { height: 0, opacity: 0 }
-                    }
-                    transition={{ duration: 0.3, ease: easeOut }}
-                    className="overflow-hidden lg:hidden"
-                  >
-                    <p className="mt-3 text-sm leading-relaxed text-[#FFF7ED]/68">
-                      {service.description}
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {service.homeTags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF6A00]">
-                      Open full page
-                      <ArrowUpRight size={13} />
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
               {/* Desktop: full detail always */}
               <div className="mt-3 hidden lg:block">
@@ -386,7 +411,7 @@ function ServicePracticeRow({
                     <span
                       key={tag}
                       className={cn(
-                        "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors",
+                        "rounded-full border px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] transition-colors",
                         active
                           ? "border-[#FF6A00]/24 bg-[#FF6A00]/8 text-[#FFB347]"
                           : "border-white/10 text-[#FFF7ED]/45"
@@ -400,7 +425,7 @@ function ServicePracticeRow({
 
               {/* Mobile collapsed hint */}
               {!expanded && (
-                <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#FFF7ED]/35 lg:hidden">
+                <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#FFF7ED]/35 lg:hidden">
                   Tap for details
                   <ArrowUpRight size={12} className="opacity-70" />
                 </span>

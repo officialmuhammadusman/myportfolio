@@ -40,7 +40,7 @@ export function ContactHeroSection({ category, imageSrc }: { category: ContactCa
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: cineEase }}
-          className="mb-8 flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/50 sm:mb-10 sm:text-xs"
+          className="mb-8 flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-white/50 sm:mb-10 sm:text-xs"
         >
           <Link href="/" className="hover:text-[#FF6A00] transition-colors">Home</Link>
           <ChevronRight size={12} className="opacity-50" />
@@ -56,7 +56,7 @@ export function ContactHeroSection({ category, imageSrc }: { category: ContactCa
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: cineEase }}
           >
-            <h1 className="font-display text-[3rem] leading-[1.05] tracking-tight text-white sm:text-[4rem] md:text-[5rem]">
+            <h1 className="text-[2.75rem] font-medium leading-[1.05] tracking-tight text-white sm:text-[3.75rem] md:text-[4.5rem]">
               {category.title}
             </h1>
           </motion.div>

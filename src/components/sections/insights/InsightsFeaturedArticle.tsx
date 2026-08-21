@@ -62,14 +62,14 @@ export function InsightsFeaturedArticle({ category }: { category: InsightCategor
             
             {/* Content Side */}
             <div className="relative flex flex-col justify-center p-8 sm:p-12 lg:w-2/5 z-10 bg-[#0F0F0F] lg:bg-transparent">
-              <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/50 mb-6">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-medium uppercase tracking-widest text-white/50 mb-6">
                 <span className="text-[#FF6A00] bg-[#FF6A00]/10 px-3 py-1 rounded-full border border-[#FF6A00]/20">
                   {featuredPost.category}
                 </span>
                 <span className="flex items-center gap-1"><Clock size={12} /> {featuredPost.readTime}</span>
               </div>
               
-              <h3 className="mb-4 font-display text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem] group-hover:text-[#FF6A00] transition-colors">
+              <h3 className="mb-4 text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem] group-hover:text-[#FF6A00] transition-colors">
                 {featuredPost.title}
               </h3>
               
@@ -85,7 +85,7 @@ export function InsightsFeaturedArticle({ category }: { category: InsightCategor
                   <span className="text-sm font-medium text-white/80">{featuredPost.author.name}</span>
                 </div>
                 
-                <span className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
+                <span className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.2em] text-[#FF6A00]">
                   Read <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </span>
               </div>

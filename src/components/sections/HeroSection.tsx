@@ -215,7 +215,7 @@ export function HeroSection() {
                   : { opacity: 0, transition: { duration: 0.2 } }
               }
               transition={{ duration: 0.55, ease: cineEase }}
-              className="pointer-events-none absolute -left-2 top-1/2 hidden -translate-y-[58%] select-none font-display text-[14rem] leading-none tracking-[-0.08em] text-[#FFF7ED] lg:block xl:text-[16rem]"
+              className="pointer-events-none absolute -left-2 top-1/2 hidden -translate-y-[58%] select-none text-[14rem] leading-none tracking-[-0.08em] text-[#FFF7ED] lg:block xl:text-[16rem]"
             >
               {String(index + 1).padStart(2, "0")}
             </motion.span>
@@ -233,17 +233,17 @@ export function HeroSection() {
                   initial={reduceMotion ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
-                  className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.24em] text-[#FF6A00] sm:mb-4 sm:text-left sm:text-[11px] sm:tracking-[0.28em]"
+                  className="mb-2 text-center text-[10px] font-medium uppercase tracking-[0.24em] text-[#FF6A00] sm:mb-4 sm:text-left sm:text-[11px] sm:tracking-[0.28em]"
                 >
                   {active.category}
                 </motion.p>
               </AnimatePresence>
 
-              <p className="text-center font-display text-[1.5rem] leading-[0.98] tracking-[-0.035em] text-[#FFF7ED] xs:text-[1.85rem] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
+              <p className="text-center text-[1.5rem] leading-[0.98] tracking-[-0.035em] text-[#FFF7ED] xs:text-[1.85rem] sm:text-left sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.65rem]">
                 {PERSONAL_INFO.name}
               </p>
 
-              <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-[0.14em] text-[#FF6A00] sm:mt-4 sm:text-left sm:text-[12px] sm:tracking-[0.18em]">
+              <p className="mt-2 text-center text-[9px] font-medium uppercase tracking-[0.14em] text-[#FF6A00] sm:mt-4 sm:text-left sm:text-[12px] sm:tracking-[0.18em]">
                 {HERO_ROLE_LINE}
               </p>
 
@@ -274,7 +274,7 @@ export function HeroSection() {
                   exit={reduceMotion ? undefined : "exit"}
                   transition={{ duration: 0.32, ease: cineEase }}
                 >
-                  <h1 className="flex flex-col text-center font-display text-[1.3rem] leading-[1.14] tracking-[-0.03em] text-[#FFF7ED] xs:text-[1.6rem] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
+                  <h1 className="flex flex-col text-center text-[1.3rem] leading-[1.14] tracking-[-0.03em] text-[#FFF7ED] xs:text-[1.6rem] sm:text-left sm:text-[2.45rem] md:text-[2.95rem] lg:text-[3.35rem]">
                     <span className="block w-full">{active.title}</span>
                     <span className="text-gradient mt-0.5 block w-full italic sm:mt-1.5">
                       {active.titleAccent}
@@ -306,7 +306,7 @@ export function HeroSection() {
                       onClick={() =>
                         goTo(i, i > index ? 1 : i < index ? -1 : direction)
                       }
-                      className={`relative rounded-md px-2 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] transition sm:px-3 sm:text-[11px] sm:tracking-[0.16em] ${
+                      className={`relative rounded-md px-2 py-1.5 text-[9px] font-medium uppercase tracking-[0.12em] transition sm:px-3 sm:text-[11px] sm:tracking-[0.16em] ${
                         on
                           ? "bg-[#FF6A00] text-[#0A0A0A]"
                           : "border border-white/10 bg-white/[0.03] text-[#FFF7ED]/55 hover:border-white/25 hover:text-[#FFF7ED]"

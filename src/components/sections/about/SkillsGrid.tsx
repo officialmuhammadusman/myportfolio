@@ -32,7 +32,7 @@ export function SkillsGrid() {
           <span className="section-eyebrow">Skills</span>
           <div className="fancy-divider" />
           <h2
-            className="font-display font-bold mt-2"
+            className="font-medium mt-2"
             style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "var(--text-primary)" }}
           >
             Technical expertise
@@ -62,7 +62,7 @@ export function SkillsGrid() {
                 <div style={{ color: "var(--accent-primary)" }}>
                   <Icon name={group.icon} size={16} />
                 </div>
-                <h3 className="text-xs font-semibold tracking-wide uppercase" style={{ color: "var(--text-secondary)" }}>
+                <h3 className="text-xs font-medium tracking-wide uppercase" style={{ color: "var(--text-secondary)" }}>
                   {group.title}
                 </h3>
               </div>

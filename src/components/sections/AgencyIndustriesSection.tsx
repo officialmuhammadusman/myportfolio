@@ -93,7 +93,7 @@ export function AgencyIndustriesSection() {
             Domain Expertise
           </span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             Engineering tailored to <br className="hidden sm:block" /><span className="text-gradient italic">industry standards.</span>
           </h2>
           <p className="mx-auto mt-3 max-w-[32rem] text-sm leading-[1.65] text-[#FFF7ED]/72 sm:mt-4 sm:text-[0.95rem]">
@@ -137,12 +137,12 @@ export function AgencyIndustriesSection() {
 
                 <div className="flex flex-1 flex-col px-5 py-5 sm:px-6 sm:py-6 relative z-10 -mt-4">
                   <div className="mb-2 flex items-center gap-2">
-                    <span className="font-mono text-[10px] font-semibold tracking-[0.12em] text-[#FF6A00]/85">
+                    <span className="font-mono text-[10px] font-medium tracking-[0.12em] text-[#FF6A00]/85">
                       0{index + 1}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-[1.3rem] leading-[1.15] tracking-[-0.02em] text-[#FFF7ED] sm:text-[1.45rem]">
+                  <h3 className="text-[1.3rem] leading-[1.15] tracking-[-0.02em] text-[#FFF7ED] sm:text-[1.45rem]">
                     {industry.title}
                   </h3>
 
@@ -152,15 +152,15 @@ export function AgencyIndustriesSection() {
 
                   <div className="mt-auto flex items-center justify-between pt-6">
                     <div className="flex items-center gap-2">
-                      <span className="text-[9px] uppercase tracking-[0.14em] text-[#FFF7ED]/45 font-bold">Featured Case</span>
-                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/8 px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.06em] text-[#FFB347]">
+                      <span className="text-[9px] uppercase tracking-[0.14em] text-[#FFF7ED]/45 font-medium">Featured Case</span>
+                      <span className="rounded-full border border-[#FF6A00]/24 bg-[#FF6A00]/8 px-2.5 py-0.5 text-[10px] font-medium tracking-[0.06em] text-[#FFB347]">
                         {industry.cases}
                       </span>
                     </div>
                     
                     <Link
                       href={industry.link}
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6A00] transition-colors hover:text-[#FFB347]"
+                      className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FF6A00] transition-colors hover:text-[#FFB347]"
                     >
                       View Work
                       <ArrowUpRight size={12} />
@@ -172,70 +172,71 @@ export function AgencyIndustriesSection() {
           })}
         </div>
 
-        {/* ── MOBILE: Native Horizontal Scroll Carousel ── */}
+        {/* ── MOBILE: Javascript-driven Carousel ── */}
         <div className="sm:hidden mt-6 relative">
-          <div 
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 scrollbar-none" 
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {INDUSTRIES.map((industry, i) => {
-              const Icon = industry.icon;
-              return (
-                <div
-                  key={industry.id}
-                  className="w-[85vw] shrink-0 snap-center"
-                >
-                  <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08]">
-                    {/* Visual Top Half */}
-                    <div className="relative aspect-[21/9] w-full overflow-hidden bg-[#0A0A0A]">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.15),transparent_70%)]" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-[#0F0F0F]/40 to-transparent" />
-                      
-                      <div className="absolute inset-0 flex items-center justify-center translate-y-2">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 shadow-[0_0_20px_rgba(255,106,0,0.2)]">
-                          <Icon size={20} className="text-[#FF6A00]" />
+          <div className="relative overflow-hidden -mx-4">
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ transform: `translateX(calc(-${activeIndex * 100}%))` }}
+            >
+              {INDUSTRIES.map((industry, i) => {
+                const Icon = industry.icon;
+                return (
+                  <div
+                    key={industry.id}
+                    className="w-full shrink-0 px-4"
+                    aria-hidden={i !== activeIndex}
+                  >
+                    <article className="mobile-card h-full flex flex-col overflow-hidden bg-[#0F0F0F] rounded-2xl border border-white/[0.08]">
+                      {/* Visual Top Half */}
+                      <div className="relative aspect-[21/9] w-full overflow-hidden bg-[#0A0A0A]">
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.15),transparent_70%)]" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-[#0F0F0F]/40 to-transparent" />
+                        
+                        <div className="absolute inset-0 flex items-center justify-center translate-y-2">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 shadow-[0_0_20px_rgba(255,106,0,0.2)]">
+                            <Icon size={20} className="text-[#FF6A00]" />
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Content */}
-                    <div className="p-5 relative z-10 -mt-2 flex-grow flex flex-col">
-                      <div className="mb-2 flex items-center gap-2">
-                        <span className="font-mono text-[10px] font-semibold tracking-[0.12em] text-[#FF6A00]/80">
-                          0{i + 1}
-                        </span>
-                      </div>
-
-                      <h3 className="font-display text-[1.3rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
-                        {industry.title}
-                      </h3>
-
-                      <p className="mt-1.5 text-[13px] leading-relaxed text-[#FFF7ED]/60 mb-4">
-                        {industry.description}
-                      </p>
-
-                      <div className="mt-auto flex items-center justify-between border-t border-white/[0.08] pt-4">
-                        <div className="flex flex-col gap-1">
-                          <span className="text-[9px] uppercase tracking-[0.14em] text-[#FFF7ED]/45 font-bold">Featured Case</span>
-                          <span className="text-[11px] font-semibold text-[#FFB347]">
-                            {industry.cases}
+                      {/* Content */}
+                      <div className="p-5 relative z-10 -mt-2 flex-grow flex flex-col">
+                        <div className="mb-2 flex items-center gap-2">
+                          <span className="font-mono text-[10px] font-medium tracking-[0.12em] text-[#FF6A00]/80">
+                            0{i + 1}
                           </span>
                         </div>
-                        
-                        <Link
-                          href={industry.link}
-                          className="flex items-center justify-center h-8 w-8 rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/12 text-[#FFB347]"
-                        >
-                          <ArrowUpRight size={14} />
-                        </Link>
+
+                        <h3 className="text-[1.3rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
+                          {industry.title}
+                        </h3>
+
+                        <p className="mt-1.5 text-[13px] leading-relaxed text-[#FFF7ED]/60 mb-4">
+                          {industry.description}
+                        </p>
+
+                        <div className="mt-auto flex items-center justify-between border-t border-white/[0.08] pt-4">
+                          <div className="flex flex-col gap-1">
+                            <span className="text-[9px] uppercase tracking-[0.14em] text-[#FFF7ED]/45 font-medium">Featured Case</span>
+                            <span className="text-[11px] font-medium text-[#FFB347]">
+                              {industry.cases}
+                            </span>
+                          </div>
+                          
+                          <Link
+                            href={industry.link}
+                            className="flex items-center justify-center h-8 w-8 rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/12 text-[#FFB347]"
+                          >
+                            <ArrowUpRight size={14} />
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                </div>
-              );
-            })}
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Navigation */}

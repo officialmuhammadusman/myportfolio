@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { BottomSheet } from "@/components/ui/BottomSheet";
-import { Calendar, Clock, ArrowRight, BookOpen, Filter, Check } from "lucide-react";
+import { Calendar, Clock, ArrowRight, BookOpen, Filter, ChevronDown } from "lucide-react";
 import { blogPosts, getFeaturedPost } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
 
@@ -19,11 +18,18 @@ const filters: { label: string; value: string }[] = [
 
 export function BlogClientPage() {
   const [active, setActive] = useState("all");
-  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(4);
   const featured = getFeaturedPost();
   const rest = blogPosts.filter((p) => !p.isFeatured);
 
-  const filtered = (active === "all" ? rest : rest.filter((p) => p.category === active));
+  const filtered =
+    active === "all" ? rest : rest.filter((p) => p.category.toLowerCase() === active);
+  
+  const visiblePosts = filtered.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 2, filtered.length));
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#FFF7ED] pb-16 sm:pb-24">
@@ -52,11 +58,11 @@ export function BlogClientPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="mb-4 inline-flex items-center justify-center rounded-full border border-white/20 bg-black/20 backdrop-blur-md px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#FF6A00]">
+              <span className="mb-4 inline-flex items-center justify-center rounded-full border border-white/20 bg-black/20 backdrop-blur-md px-4 py-1.5 text-[11px] font-medium uppercase tracking-widest text-[#FF6A00]">
                 <BookOpen size={14} className="mr-2" />
                 Engineering Notes
               </span>
-              <h1 className="mt-4 font-display text-[3.5rem] leading-[1.05] tracking-tight text-white sm:text-[4.5rem] md:text-[5.5rem]">
+              <h1 className="mt-4 text-[3.5rem] leading-[1.05] tracking-tight text-white sm:text-[4.5rem] md:text-[5.5rem]">
                 Insights & <span className="italic text-[#FF6A00]">Architecture.</span>
               </h1>
             </motion.div>
@@ -92,12 +98,12 @@ export function BlogClientPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800&h=800"
-                  alt={featured.title}
+                  alt={featured.title.replace(/\s*—\s*/g, ", ")}
                   className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FF6A00]/20 to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="absolute top-8 left-8">
-                  <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-md">
+                  <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-medium uppercase tracking-widest text-white backdrop-blur-md">
                     Featured
                   </span>
                 </div>
@@ -106,21 +112,21 @@ export function BlogClientPage() {
               {/* Content */}
               <div className="flex-1 p-8 sm:p-12 flex flex-col justify-center relative">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="rounded-md border border-[#FF6A00]/30 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF6A00]">
+                  <span className="rounded-md border border-[#FF6A00]/30 bg-[#FF6A00]/10 px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-[#FF6A00]">
                     {featured.category}
                   </span>
                 </div>
 
-                <h2 className="font-display mb-6 text-[2rem] font-bold leading-[1.1] tracking-tight text-white transition-colors group-hover:text-[#FF6A00] sm:text-[2.5rem]">
-                  {featured.title}
+                <h2 className="mb-4 text-[1.25rem] font-medium leading-snug tracking-tight text-white transition-colors group-hover:text-[#FF6A00] sm:text-[1.5rem]">
+                  {featured.title.replace(/\s*—\s*/g, ", ")}
                 </h2>
                 
-                <p className="text-[16px] leading-relaxed text-white/60 mb-10 max-w-xl">
+                <p className="text-[15px] leading-relaxed text-white/60 mb-8 max-w-xl line-clamp-3 sm:line-clamp-none">
                   {featured.excerpt}
                 </p>
 
-                <div className="flex flex-wrap items-center justify-between border-t border-white/10 pt-8 gap-4">
-                  <div className="flex items-center gap-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/10 pt-5 sm:pt-8 gap-5 sm:gap-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                     <span className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-white/40 font-mono">
                       <Calendar size={14} className="text-[#FF6A00]" />
                       {formatDate(featured.publishedAt)}
@@ -130,7 +136,7 @@ export function BlogClientPage() {
                       {featured.readTime}
                     </span>
                   </div>
-                  <span className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-white group-hover:text-[#FF6A00] transition-colors">
+                  <span className="flex items-center gap-2 text-[13px] font-medium uppercase tracking-wider text-white group-hover:text-[#FF6A00] transition-colors self-start sm:self-auto mt-1 sm:mt-0">
                     Read Article <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                 </div>
@@ -139,58 +145,35 @@ export function BlogClientPage() {
           </motion.div>
         )}
 
-        {/* Mobile Filter Trigger */}
-        <div className="flex justify-center mb-8 lg:hidden">
-          <button 
-            onClick={() => setIsFilterSheetOpen(true)}
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
-          >
-            <Filter size={16} />
-            Filter Insights
-          </button>
-        </div>
-
-        {/* Desktop Inline Filters */}
+        {/* Unified Filter Pills */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="hidden lg:flex flex-wrap items-center justify-center gap-3 mb-12"
+          className="mb-10 flex items-center gap-2"
         >
-          {filters.map((f) => (
-            <button
-              key={f.value}
-              onClick={() => setActive(f.value)}
-              className={`px-5 py-2.5 text-[12px] font-bold uppercase tracking-wider rounded-full border transition-all duration-300 ${
-                active === f.value
-                  ? "bg-[#FF6A00] border-[#FF6A00] text-white shadow-[0_0_20px_rgba(255,106,0,0.4)] scale-105"
-                  : "bg-white/[0.02] border-white/10 text-white/50 hover:bg-white/[0.08] hover:text-white"
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </motion.div>
+          {/* Filter icon */}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03]">
+            <Filter size={13} className="text-[#FF6A00]" />
+          </div>
 
-        {/* Mobile Filters Bottom Sheet */}
-        <BottomSheet isOpen={isFilterSheetOpen} onClose={() => setIsFilterSheetOpen(false)} title="Filter Insights">
-          <div className="flex flex-col gap-2">
+          {/* Scrollable pills - Scrollbar hidden completely */}
+          <div className="flex gap-2 overflow-x-auto flex-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {filters.map((f) => (
               <button
                 key={f.value}
-                onClick={() => { setActive(f.value); setIsFilterSheetOpen(false); }}
-                className={`flex items-center justify-between p-4 rounded-xl border transition-all text-left font-semibold ${
+                onClick={() => { setActive(f.value); setVisibleCount(4); }}
+                className={`shrink-0 px-4 py-2 text-[11px] font-medium uppercase tracking-wider rounded-full border transition-all duration-300 ${
                   active === f.value
-                    ? "border-[#FF6A00]/50 bg-[#FF6A00]/10 text-[#FF6A00]"
-                    : "border-white/5 bg-white/[0.02] text-white/70 hover:bg-white/[0.05]"
+                    ? "bg-[#FF6A00] border-[#FF6A00] text-white shadow-[0_0_16px_rgba(255,106,0,0.35)]"
+                    : "bg-white/[0.02] border-white/10 text-white/50 hover:bg-white/[0.08] hover:text-white"
                 }`}
               >
                 {f.label}
-                {active === f.value && <Check size={16} />}
               </button>
             ))}
           </div>
-        </BottomSheet>
+        </motion.div>
 
         {/* Posts grid */}
         <AnimatePresence mode="wait">
@@ -200,15 +183,15 @@ export function BlogClientPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-8 no-scrollbar lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:snap-none"
+            className="grid gap-5 lg:grid-cols-3 lg:gap-8 mb-10"
           >
-            {filtered.map((post, i) => (
+            {visiblePosts.map((post, i) => (
               <motion.div
                 key={post.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="snap-center shrink-0 w-[85vw] sm:w-[60vw] lg:w-auto h-full"
+                className="h-full w-full"
               >
                 <Link
                   href={`/blog/${post.slug}`}
@@ -219,18 +202,18 @@ export function BlogClientPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`https://images.unsplash.com/photo-${i % 2 === 0 ? "1517694712202-14dd9538aa97" : "1460925895917-afdab827c52f"}?auto=format&fit=crop&q=80&w=600&h=400`}
-                      alt={post.title}
+                      alt={post.title.replace(/\s*—\s*/g, ", ")}
                       className="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105 grayscale-[20%]"
                     />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.1),transparent_70%)] transition-opacity duration-500 group-hover:opacity-100 opacity-50" />
                   </div>
 
                   <div className="flex flex-col flex-1 p-8">
-                    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-white/60 self-start mb-5 group-hover:border-[#FF6A00]/30 group-hover:text-[#FF6A00] transition-colors">
+                    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[9px] font-medium uppercase tracking-widest text-white/60 self-start mb-5 group-hover:border-[#FF6A00]/30 group-hover:text-[#FF6A00] transition-colors">
                       {post.category}
                     </span>
-                    <h3 className="font-display font-bold text-2xl mb-4 line-clamp-2 text-white group-hover:text-[#FF6A00] transition-colors leading-[1.2]">
-                      {post.title}
+                    <h3 className="font-medium text-[16px] mb-3 line-clamp-2 text-white/90 group-hover:text-[#FF6A00] transition-colors leading-snug">
+                      {post.title.replace(/\s*—\s*/g, ", ")}
                     </h3>
                     <p className="text-[15px] leading-relaxed line-clamp-3 mb-8 flex-1 text-white/50">
                       {post.excerpt}
@@ -241,7 +224,7 @@ export function BlogClientPage() {
                         <Clock size={12} className="text-[#FF6A00]" />
                         {post.readTime}
                       </span>
-                      <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-white group-hover:text-[#FF6A00] transition-colors">
+                      <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-wider text-white group-hover:text-[#FF6A00] transition-colors">
                         Read <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                       </span>
                     </div>
@@ -252,13 +235,23 @@ export function BlogClientPage() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Mobile Carousel Indicators (Visual) */}
-        {filtered.length > 1 && (
-          <div className="flex justify-center gap-2 mt-2 mb-12 lg:hidden">
-            {filtered.map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />
-            ))}
-          </div>
+        {visibleCount < filtered.length && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center mt-8"
+          >
+            <button
+              onClick={handleLoadMore}
+              className="group relative flex items-center justify-center gap-3 rounded-full bg-[#FF6A00] px-8 py-4 text-[12px] font-medium uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_24px_rgba(255,106,0,0.25)] hover:shadow-[0_0_40px_rgba(255,106,0,0.45)] overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+              <span className="relative z-10 flex items-center gap-2">
+                Load More Insights
+                <ChevronDown size={16} className="transition-transform duration-300 group-hover:translate-y-0.5" />
+              </span>
+            </button>
+          </motion.div>
         )}
       </div>
     </div>

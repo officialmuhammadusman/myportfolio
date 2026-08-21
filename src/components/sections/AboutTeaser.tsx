@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -47,7 +48,7 @@ export function AboutTeaser() {
             }}
           >
             <Code2 size={14} style={{ color: "var(--accent-primary)" }} />
-            <span className="text-[10px] font-semibold sm:text-xs" style={{ color: "var(--text-primary)", fontFamily: "var(--font-body)" }}>
+            <span className="text-[10px] font-medium sm:text-xs" style={{ color: "var(--text-primary)", fontFamily: "var(--font-body)" }}>
               1+ yrs experience
             </span>
           </motion.div>
@@ -62,7 +63,7 @@ export function AboutTeaser() {
           <span className="section-eyebrow">About Me</span>
           <div className="fancy-divider" />
 
-          <h2 className="font-display mt-2 mb-3 text-[1.65rem] font-bold leading-[1.12] tracking-[-0.03em] text-[var(--text-primary)] sm:mb-4 sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="mt-2 mb-3 text-[1.65rem] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--text-primary)] sm:mb-4 sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
             Building systems that
             <br />
             <span className="text-gradient">actually scale.</span>
@@ -99,7 +100,7 @@ export function AboutTeaser() {
 
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 text-xs font-semibold sm:text-sm"
+            className="group inline-flex items-center gap-2 text-xs font-medium sm:text-sm"
             style={{ color: "var(--accent-primary)", fontFamily: "var(--font-body)" }}
           >
             Learn More About Me

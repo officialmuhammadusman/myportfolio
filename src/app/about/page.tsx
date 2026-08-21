@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { AboutHero } from "@/components/sections/about/AboutHero";
+import { MobileTextDrawer } from "@/components/ui/MobileTextDrawer";
+import { MobileListDrawer } from "@/components/ui/MobileListDrawer";
 import { 
   Code2, Database, Network, Server, Shield, Cloud, 
   GraduationCap, Briefcase, ExternalLink, Calendar, ChevronRight
@@ -83,29 +85,34 @@ export default function AboutPage() {
       title: "BXTrack HRMS",
       tech: "Next.js, NestJS, PostgreSQL, Prisma, LangGraph, Supabase",
       url: "hrms-portal-beta.vercel.app",
+      image: "/images/projects/live/hrms-portal.png",
       description: "Architected a dynamic, admin-configurable RBAC engine handling granular runtime permission assignments across multi-department enterprise hierarchies. Built a suite of LangGraph-powered AI agents to automate leave validation, payroll anomaly detection, and applicant screening."
     },
     {
       title: "RAG-Based Agentic AI Assistant",
       tech: "Python, LangChain, LangGraph, OpenAI, Gemini Pro, Pinecone",
+      image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=900&h=600",
       description: "Engineered an end-to-end RAG system featuring hybrid vector search, Corrective RAG (C-RAG) using LangGraph evaluation nodes, and a Self-RAG verification layer. Designed a supervisor-worker multi-agent architecture with a specialized SQL agent."
     },
     {
       title: "Mejora Tu Dolor",
       tech: "React, Node.js, Express.js, PostgreSQL, Webpay",
       url: "mejoratudolor.cl",
+      image: "/images/projects/live/mejora-tu-dolor.png",
       description: "Built an asynchronous medical triage system supporting multi-file clinical uploads with automated routing to specialists under a 7-day SLA. Integrated Webpay payment gateway with automated verification webhooks."
     },
     {
       title: "Cliender",
       tech: "Next.js, TypeScript, Node.js, PostgreSQL",
       url: "cliender.com",
+      image: "/images/projects/live/cliender.png",
       description: "Built an operational engine integrating real-time POS workflows, automated subscription billing, and customer lead tracking. Designed a real-time analytics dashboard tracking employee productivity and revenue growth."
     },
     {
       title: "Padel Connect",
       tech: "Next.js, React Native, Node.js, PostgreSQL",
       url: "padel-fe.vercel.app",
+      image: "/images/projects/live/padel-connect.png",
       description: "Developed an administrative platform for club operators to schedule matches and track court occupancy. Built a dynamic matchmaking engine that pairs players using skill-tier algorithms and historical match outcomes."
     }
   ];
@@ -142,19 +149,19 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 hover:bg-white/[0.04] hover:border-white/20 transition-all"
+                className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0F0F0F] p-8 transition-all duration-300 hover:border-[#FF6A00]/30 hover:bg-[#111111] hover:shadow-[0_0_40px_rgba(255,106,0,0.05)]"
               >
-                <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 transition-opacity" style={{ color: skill.color }}>
+                <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-[0.08] transition-opacity duration-500 group-hover:scale-110 text-[#FF6A00]">
                   <skill.icon size={160} />
                 </div>
                 <div className="relative z-10">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-colors group-hover:bg-white/10" style={{ borderColor: `${skill.color}30` }}>
-                    <skill.icon size={24} style={{ color: skill.color }} />
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.08] bg-[#1A1A1A] transition-all duration-300 group-hover:border-[#FF6A00]/40 group-hover:bg-[#FF6A00]/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                    <skill.icon size={22} className="text-white/70 group-hover:text-[#FF6A00] transition-colors duration-300" />
                   </div>
-                  <h3 className="mb-4 font-display text-2xl font-bold text-white">{skill.title}</h3>
+                  <h3 className="mb-4 font-display text-2xl font-bold text-white group-hover:text-[#FFF7ED]">{skill.title}</h3>
                   <div className="flex flex-wrap gap-2">
                     {skill.items.map((item) => (
-                      <span key={item} className="rounded-md border border-white/10 bg-black/40 px-3 py-1.5 text-xs font-medium text-white/70">
+                      <span key={item} className="rounded-md border border-white/[0.06] bg-black/40 px-3 py-1.5 text-[11.5px] font-medium text-white/60 group-hover:text-white/80 transition-colors">
                         {item}
                       </span>
                     ))}
@@ -185,7 +192,7 @@ export default function AboutPage() {
               </motion.h2>
             </div>
 
-            <div className="relative border-l border-white/10 ml-4 md:ml-0 md:border-l-0 md:before:absolute md:before:top-0 md:before:bottom-0 md:before:left-1/2 md:before:w-px md:before:bg-white/10">
+            <div className="relative md:before:absolute md:before:top-0 md:before:bottom-0 md:before:left-1/2 md:before:w-px md:before:bg-white/10">
               {experience.map((exp, i) => (
                 <motion.div 
                   key={i}
@@ -193,28 +200,22 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className={`relative pl-8 md:pl-0 mb-16 last:mb-0 md:flex md:justify-between md:items-center ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                  className={`relative mb-16 last:mb-0 md:flex md:justify-between md:items-center ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                 >
-                  <div className="absolute left-[-6px] md:left-1/2 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#050505] border-[3px] border-[#FF6A00] top-2 md:top-auto shadow-[0_0_15px_rgba(255,106,0,0.5)] z-10" />
+                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#050505] border-[3px] border-[#FF6A00] shadow-[0_0_15px_rgba(255,106,0,0.5)] z-10" />
                   
                   <div className="hidden md:block md:w-[45%]" />
                   
                   <div className={`md:w-[45%] bg-white/[0.02] border border-white/10 rounded-2xl p-6 md:p-8 hover:bg-white/[0.04] hover:border-white/20 transition-all ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                    <div className={`flex items-center gap-2 mb-3 text-[#FF6A00] text-sm font-mono font-semibold ${i % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
+                    <div className={`flex items-center gap-2 mb-3 text-[#FF6A00] text-[13px] font-mono font-bold uppercase tracking-wider ${i % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
                       <Calendar size={14} /> {exp.year}
                     </div>
                     <h3 className="text-2xl font-display text-white font-bold mb-1">{exp.role}</h3>
-                    <div className="text-white/50 text-base font-medium mb-6 flex items-center gap-2 justify-start md:justify-end">
+                    <div className="text-[#FF6A00]/80 text-sm font-semibold mb-6 flex items-center gap-2 justify-start md:justify-end uppercase tracking-widest">
                       <span className={i % 2 === 0 ? '' : 'md:mr-0 mr-auto'}>{exp.company}</span>
                     </div>
-                    <ul className="space-y-3">
-                      {exp.bullets.map((bullet, idx) => (
-                        <li key={idx} className={`text-white/70 text-sm leading-relaxed flex items-start gap-3 ${i % 2 === 0 ? 'text-left' : 'md:text-right md:flex-row-reverse text-left'}`}>
-                          <ChevronRight size={16} className="text-[#FF6A00] shrink-0 mt-0.5 opacity-50" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    
+                    <MobileListDrawer items={exp.bullets} />
                   </div>
                 </motion.div>
               ))}
@@ -249,26 +250,41 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="group rounded-3xl border border-white/10 bg-white/[0.02] p-8 hover:bg-white/[0.04] transition-colors flex flex-col h-full"
+                className="group rounded-3xl border border-white/10 bg-white/[0.02] overflow-hidden hover:bg-white/[0.04] transition-colors flex flex-col h-full"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-display text-2xl font-bold text-white group-hover:text-[#FF6A00] transition-colors">{project.title}</h3>
-                  {project.url && (
-                    <a href={`https://${project.url}`} target="_blank" rel="noreferrer" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-[#FF6A00] hover:text-black transition-colors">
-                      <ExternalLink size={16} />
-                    </a>
-                  )}
+                {project.image && (
+                  <div className="h-48 w-full overflow-hidden border-b border-white/10">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                    />
+                  </div>
+                )}
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-display text-2xl font-bold text-white group-hover:text-[#FF6A00] transition-colors">{project.title}</h3>
+                    {project.url && (
+                      <a href={`https://${project.url}`} target="_blank" rel="noreferrer" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-[#FF6A00] hover:text-black transition-colors">
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
+                  </div>
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    {project.tech.split(", ").map(t => (
+                      <span key={t} className="rounded-md border border-white/10 bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white/60">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-auto">
+                    <MobileTextDrawer
+                      text={project.description}
+                      className="text-white/60 text-sm leading-relaxed"
+                      lines={3}
+                    />
+                  </div>
                 </div>
-                <div className="mb-6 flex flex-wrap gap-2">
-                  {project.tech.split(", ").map(t => (
-                    <span key={t} className="rounded-md border border-white/10 bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white/60">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-white/60 text-sm leading-relaxed mt-auto">
-                  {project.description}
-                </p>
               </motion.div>
             ))}
           </div>

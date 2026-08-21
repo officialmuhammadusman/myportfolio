@@ -19,7 +19,7 @@ export function EducationSection() {
             <span className="section-eyebrow">Education</span>
             <div className="fancy-divider" />
             <h2
-              className="font-display font-bold mt-2 mb-8"
+              className="font-medium mt-2 mb-8"
               style={{ fontSize: "clamp(24px, 3vw, 36px)", color: "var(--text-primary)" }}
             >
               Academic background
@@ -38,7 +38,7 @@ export function EducationSection() {
                   <GraduationCap size={22} style={{ color: "var(--accent-primary)" }} />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1" style={{ color: "var(--text-primary)", fontFamily: "var(--font-body)" }}>
+                  <h3 className="font-medium mb-1" style={{ color: "var(--text-primary)", fontFamily: "var(--font-body)" }}>
                     {edu.degree}
                   </h3>
                   <p className="text-sm font-medium mb-1" style={{ color: "var(--accent-primary)" }}>
@@ -62,7 +62,7 @@ export function EducationSection() {
             <span className="section-eyebrow">Certifications</span>
             <div className="fancy-divider" />
             <h2
-              className="font-display font-bold mt-2 mb-8"
+              className="font-medium mt-2 mb-8"
               style={{ fontSize: "clamp(24px, 3vw, 36px)", color: "var(--text-primary)" }}
             >
               Continuous learning
@@ -89,7 +89,7 @@ export function EducationSection() {
                     <Award size={16} style={{ color: "var(--accent-secondary)" }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold line-clamp-2 mb-0.5 group-hover:text-[var(--accent-primary)] transition-colors" style={{ color: "var(--text-primary)" }}>
+                    <p className="text-sm font-medium line-clamp-2 mb-0.5 group-hover:text-[var(--accent-primary)] transition-colors" style={{ color: "var(--text-primary)" }}>
                       {cert.title}
                     </p>
                     <p className="text-xs" style={{ color: "var(--text-muted)" }}>

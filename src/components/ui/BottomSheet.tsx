@@ -38,10 +38,10 @@ export function BottomSheet({ isOpen, onClose, children, title, snapPoints = ["7
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 lg:hidden"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
           />
 
-          {/* Sheet */}
+          {/* Mobile: slide up from bottom */}
           <motion.div
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -57,11 +57,11 @@ export function BottomSheet({ isOpen, onClose, children, title, snapPoints = ["7
                 onClose();
               }
             }}
-            style={{ height: snapPoints[0] }}
-            className="fixed bottom-0 inset-x-0 w-full bg-[#0A0A0A] rounded-t-[32px] border-t border-white/10 z-50 flex flex-col shadow-[0_-20px_60px_rgba(0,0,0,0.5)] lg:hidden"
+            style={{ height: snapPoints[0], maxHeight: "80vh" }}
+            className="fixed bottom-0 inset-x-0 w-full bg-[#0A0A0A] rounded-t-[32px] border-t border-white/10 z-[60] flex flex-col shadow-[0_-20px_60px_rgba(0,0,0,0.5)] lg:hidden"
           >
             {/* Drag Handle Area */}
-            <div 
+            <div
               className="flex justify-center pt-4 pb-2 w-full cursor-grab active:cursor-grabbing shrink-0"
               onPointerDown={(e) => dragControls.start(e)}
             >
@@ -71,11 +71,11 @@ export function BottomSheet({ isOpen, onClose, children, title, snapPoints = ["7
             {/* Header */}
             <div className="flex items-center justify-between px-6 pb-4 border-b border-white/5 shrink-0">
               {title ? (
-                <h2 className="text-lg font-display font-bold text-[#FFF7ED]">{title}</h2>
+                <h2 className="text-base font-medium text-[#FFF7ED]">{title}</h2>
               ) : (
                 <div />
               )}
-              <button 
+              <button
                 onClick={onClose}
                 className="p-2 -mr-2 text-white/50 hover:text-white transition-colors rounded-full bg-white/5 hover:bg-white/10"
               >
@@ -86,6 +86,39 @@ export function BottomSheet({ isOpen, onClose, children, title, snapPoints = ["7
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto px-6 py-4 no-scrollbar">
               {children}
+            </div>
+          </motion.div>
+
+          {/* Desktop: centered modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:flex fixed inset-0 z-[60] items-center justify-center pointer-events-none"
+          >
+            <div
+              className="pointer-events-auto w-full max-w-xl max-h-[75vh] bg-[#0A0A0A] rounded-[24px] border border-white/10 flex flex-col shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 shrink-0">
+                {title ? (
+                  <h2 className="text-base font-medium text-[#FFF7ED]">{title}</h2>
+                ) : (
+                  <div />
+                )}
+                <button
+                  onClick={onClose}
+                  className="p-2 -mr-2 text-white/50 hover:text-white transition-colors rounded-full bg-white/5 hover:bg-white/10"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Content Area */}
+              <div className="flex-1 overflow-y-auto px-6 py-5 no-scrollbar">
+                {children}
+              </div>
             </div>
           </motion.div>
         </>

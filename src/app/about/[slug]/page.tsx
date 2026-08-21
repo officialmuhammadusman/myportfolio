@@ -24,7 +24,7 @@ export default async function AboutSubPage({ params }: { params: Promise<{ slug:
     <main className="flex min-h-screen flex-col bg-[#050505]">
       <AboutHeroSection about={aboutItem} imageSrc={imageSrc} />
       <AboutPhilosophySection about={aboutItem} />
-      <AboutExperienceTimeline about={aboutItem} />
+      <AboutExperienceTimeline />
       <AboutExpertiseGrid about={aboutItem} />
       <AboutValuesSection about={aboutItem} />
       <AboutCTASection about={aboutItem} />

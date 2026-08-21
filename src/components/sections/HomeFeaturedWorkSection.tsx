@@ -58,7 +58,7 @@ export function HomeFeaturedWorkSection() {
             {HOME_FEATURED_WORK_COPY.eyebrow}
           </span>
           <div className="fancy-divider mx-auto" />
-          <h2 className="font-display text-[1.65rem] leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem]">
+          <h2 className="text-[1.5rem] font-medium leading-[1.12] tracking-[-0.03em] text-[#FFF7ED] sm:text-[1.85rem] md:text-[2.2rem] lg:text-[2.5rem]">
             {HOME_FEATURED_WORK_COPY.title}{" "}
             <span className="text-gradient italic">
               {HOME_FEATURED_WORK_COPY.titleAccent}
@@ -186,7 +186,7 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
 
           {/* Live badge */}
           <div className="absolute left-3 top-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#28C840] opacity-60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#28C840]" />
@@ -196,7 +196,7 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
           </div>
 
           {/* Industry tag */}
-          <span className="absolute right-3 top-3 rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#FFB347]">
+          <span className="absolute right-3 top-3 rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.12em] text-[#FFB347]">
             {caseItem.industry}
           </span>
         </div>
@@ -205,12 +205,12 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
       {/* Content */}
       <div className="p-4">
         <div className="mb-2 flex items-center gap-2">
-          <span className="font-mono text-[10px] font-semibold tracking-[0.12em] text-[#FF6A00]/80">
+          <span className="font-mono text-[10px] font-medium tracking-[0.12em] text-[#FF6A00]/80">
             {caseItem.index}
           </span>
         </div>
 
-        <h3 className="font-display text-[1.3rem] leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
+        <h3 className="text-[1.2rem] font-medium leading-[1.1] tracking-[-0.02em] text-[#FFF7ED]">
           <Link
             href={`/projects/${caseItem.slug}`}
             className="transition-colors hover:text-[#FFB347]"
@@ -228,7 +228,7 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
           {caseItem.stack.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[9px] font-semibold tracking-[0.06em] text-[#FFF7ED]/45"
+              className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[9px] font-medium tracking-[0.06em] text-[#FFF7ED]/45"
             >
               {tech}
             </span>
@@ -239,7 +239,7 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
         <div className="mt-4 flex gap-2">
           <Link
             href={`/projects/${caseItem.slug}`}
-            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/12 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#FFB347] transition-colors"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/12 py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[#FFB347] transition-colors"
           >
             Case Study
             <ArrowUpRight size={12} />
@@ -248,7 +248,7 @@ function MobileWorkCard({ caseItem }: { caseItem: FeaturedCase }) {
             href={caseItem.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#FFF7ED]/50 transition-colors"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[#FFF7ED]/50 transition-colors"
           >
             Live
             <ExternalLink size={11} />
@@ -307,7 +307,7 @@ function FeaturedBigCard({
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/75 via-[#0A0A0A]/1 to-transparent" />
 
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md sm:text-[11px]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/70 px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] text-[#FFF7ED]/80 backdrop-blur-md sm:text-[11px]">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#28C840] opacity-60" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#28C840]" />
@@ -317,7 +317,7 @@ function FeaturedBigCard({
               </div>
 
               <div className="absolute inset-x-0 bottom-0 flex translate-y-2 items-end p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:p-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#0A0A0A]/75 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#FFF7ED] backdrop-blur-md sm:text-[11px]">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#0A0A0A]/75 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFF7ED] backdrop-blur-md sm:text-[11px]">
                   View case study
                   <ArrowUpRight size={13} />
                 </span>
@@ -334,7 +334,7 @@ function FeaturedBigCard({
           className="relative flex flex-col justify-center px-4 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8 xl:px-10"
         >
           <div className="mb-3 flex items-center gap-3 sm:mb-4">
-            <span className="font-display text-sm font-semibold tracking-[0.08em] text-[#FF6A00]/90 sm:text-base">
+            <span className="text-sm font-medium tracking-[0.08em] text-[#FF6A00]/90 sm:text-base">
               {caseItem.index}
             </span>
             <motion.span
@@ -345,15 +345,15 @@ function FeaturedBigCard({
               transition={{ duration: 0.45, delay: 0.25, ease: easeOut }}
               className="h-px w-8 origin-left bg-[#FF6A00]/55 sm:w-10"
             />
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#FFF7ED]/45 sm:text-[11px]">
+            <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#FFF7ED]/45 sm:text-[11px]">
               {caseItem.industry}
             </span>
-            <span className="ml-auto rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#FFB347]">
+            <span className="ml-auto rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.14em] text-[#FFB347]">
               Featured
             </span>
           </div>
 
-          <h3 className="font-display text-[1.55rem] leading-[1.1] tracking-[-0.025em] text-[#FFF7ED] sm:text-[2rem] lg:text-[2.15rem]">
+          <h3 className="text-[1.4rem] font-medium leading-[1.1] tracking-[-0.025em] text-[#FFF7ED] sm:text-[1.75rem] lg:text-[2rem]">
             <Link
               href={`/projects/${caseItem.slug}`}
               className="transition-colors duration-300 hover:text-[#FFB347]"
@@ -382,7 +382,7 @@ function FeaturedBigCard({
                   delay: reduceMotion ? 0 : 0.28 + i * 0.05,
                   ease: easeOut,
                 }}
-                className="rounded-full border border-white/[0.09] bg-white/[0.03] px-2.5 py-1 text-[10px] font-semibold tracking-[0.06em] text-[#FFF7ED]/55"
+                className="rounded-full border border-white/[0.09] bg-white/[0.03] px-2.5 py-1 text-[10px] font-medium tracking-[0.06em] text-[#FFF7ED]/55"
               >
                 {tech}
               </motion.span>
@@ -460,14 +460,14 @@ function FeaturedSmallCard({
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/85 via-[#0A0A0A]/2 to-transparent" />
 
           <div className="absolute left-3 top-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/7 px-2 py-0.5 text-[9px] font-semibold tracking-[0.04em] text-[#FFF7ED]/75 backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0A0A0A]/7 px-2 py-0.5 text-[9px] font-medium tracking-[0.04em] text-[#FFF7ED]/75 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#28C840]" />
               {caseItem.liveHost}
             </span>
           </div>
 
           <div className="absolute bottom-3 left-3 right-3 flex translate-y-1 items-center justify-between opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-[#0A0A0A]/75 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#FFF7ED] backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-[#0A0A0A]/75 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.12em] text-[#FFF7ED] backdrop-blur-md">
               Case study
               <ArrowUpRight size={11} />
             </span>
@@ -477,15 +477,15 @@ function FeaturedSmallCard({
 
       <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5">
         <div className="mb-2 flex items-center gap-2">
-          <span className="font-mono text-[10px] font-semibold tracking-[0.12em] text-[#FF6A00]/85">
+          <span className="font-mono text-[10px] font-medium tracking-[0.12em] text-[#FF6A00]/85">
             {caseItem.index}
           </span>
-          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#FFF7ED]/4">
+          <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#FFF7ED]/4">
             {caseItem.industry}
           </span>
         </div>
 
-        <h3 className="font-display text-[1.2rem] leading-[1.15] tracking-[-0.02em] text-[#FFF7ED] sm:text-[1.3rem]">
+        <h3 className="text-[1.15rem] font-medium leading-[1.15] tracking-[-0.02em] text-[#FFF7ED] sm:text-[1.2rem]">
           <Link
             href={`/projects/${caseItem.slug}`}
             className="transition-colors duration-300 hover:text-[#FFB347]"
@@ -502,7 +502,7 @@ function FeaturedSmallCard({
           {caseItem.stack.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[9px] font-semibold tracking-[0.06em] text-[#FFF7ED]/45"
+              className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[9px] font-medium tracking-[0.06em] text-[#FFF7ED]/45"
             >
               {tech}
             </span>
@@ -512,7 +512,7 @@ function FeaturedSmallCard({
         <div className="mt-auto flex items-center gap-3 pt-4">
           <Link
             href={`/projects/${caseItem.slug}`}
-            className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6A00] transition-colors hover:text-[#FFB347]"
+            className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FF6A00] transition-colors hover:text-[#FFB347]"
           >
             Case study
             <ArrowUpRight size={12} />
@@ -521,7 +521,7 @@ function FeaturedSmallCard({
             href={caseItem.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#FFF7ED]/45 transition-colors hover:text-[#FFF7ED]"
+            className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFF7ED]/45 transition-colors hover:text-[#FFF7ED]"
           >
             Live
             <ExternalLink size={11} />

@@ -18,7 +18,7 @@ export function ServiceMethodologySection() {
           className="text-center mb-16 sm:mb-24"
         >
           <span className="section-eyebrow">Methodology</span>
-          <h2 className="mt-4 font-display text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
+          <h2 className="mt-4 text-[1.85rem] font-medium leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
             How we <span className="italic text-[#FF6A00]">execute</span>
           </h2>
         </motion.div>
@@ -37,10 +37,10 @@ export function ServiceMethodologySection() {
               className="relative text-center sm:text-left lg:text-center group"
             >
               <div className="mx-auto sm:mx-0 lg:mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0F0F0F] border-2 border-white/10 group-hover:border-[#FF6A00]/50 transition-colors relative z-10 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                 <span className="font-mono text-[14px] font-bold text-[#FF6A00]">{step.step}</span>
+                 <span className="font-mono text-[14px] font-medium text-[#FF6A00]">{step.step}</span>
               </div>
               
-              <h3 className="mb-3 text-[1.25rem] font-bold text-white">{step.title}</h3>
+              <h3 className="mb-3 text-[1.25rem] font-medium text-white">{step.title}</h3>
               <p className="text-[14px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors px-2">
                 {step.text}
               </p>

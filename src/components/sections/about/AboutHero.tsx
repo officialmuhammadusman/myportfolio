@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Download, MapPin, ArrowRight, Mail, Phone, Github, Linkedin } from "lucide-react";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/constants";
 import { PageShell } from "@/components/layout/PageShell";
+import { MobileTextDrawer } from "@/components/ui/MobileTextDrawer";
 
 export function AboutHero() {
   return (
@@ -13,9 +14,8 @@ export function AboutHero() {
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 z-0"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600&h=900"
+          src="/muhammad_usman_hero_slider_updated/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg"
           alt="About Me"
           className="w-full h-full object-cover object-[center_30%] opacity-40 grayscale-[20%]"
         />
@@ -30,22 +30,26 @@ export function AboutHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="mb-4 inline-flex items-center justify-center rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/10 backdrop-blur-md px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#FF6A00]">
+            <span className="mb-4 inline-flex items-center justify-center rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/10 backdrop-blur-md px-4 py-1.5 text-[11px] font-medium uppercase tracking-widest text-[#FF6A00]">
               Full Stack & Applied AI Engineer
             </span>
-            <h1 className="mt-4 font-display text-[4rem] leading-[1.05] tracking-tight text-white sm:text-[5rem] md:text-[6.5rem]">
+            <h1 className="mt-4 text-[4rem] leading-[1.05] tracking-tight text-white sm:text-[5rem] md:text-[6.5rem]">
               Muhammad <span className="italic text-[#FF6A00]">Usman.</span>
             </h1>
           </motion.div>
           
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 text-[16px] leading-relaxed text-white/70 sm:mt-8 sm:text-[18px] max-w-3xl font-medium"
+            className="mt-6 w-full max-w-3xl sm:mt-8"
           >
-            {PERSONAL_INFO.bio}
-          </motion.p>
+            <MobileTextDrawer
+              text={PERSONAL_INFO.bio}
+              className="text-[16px] leading-relaxed text-white/70 sm:text-[18px] font-medium"
+              lines={4}
+            />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -56,7 +60,7 @@ export function AboutHero() {
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#FF6A00] px-6 text-sm font-bold text-black transition-transform hover:scale-105 active:scale-95"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#FF6A00] px-6 text-sm font-medium text-black transition-transform hover:scale-105 active:scale-95"
               >
                 <Mail size={16} />
                 Email Me

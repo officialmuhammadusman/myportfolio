@@ -120,7 +120,7 @@ export function MobileBottomSheet({
             )}
 
             {/* Content — scrollable */}
-            <div className="flex-1 overflow-y-auto overscroll-contain">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 pt-2 pb-8">
               {children}
             </div>
           </motion.div>

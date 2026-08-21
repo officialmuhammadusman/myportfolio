@@ -17,7 +17,7 @@ export function ExperienceTimeline() {
           <span className="section-eyebrow">Experience</span>
           <div className="fancy-divider" />
           <h2
-            className="font-display font-bold mt-2"
+            className="font-medium mt-2"
             style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "var(--text-primary)" }}
           >
             Work history
@@ -59,12 +59,12 @@ export function ExperienceTimeline() {
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                     <div>
                       <h3
-                        className="font-display font-bold text-lg mb-0.5"
+                        className="font-medium text-lg mb-0.5"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {exp.role}
                       </h3>
-                      <p className="text-sm font-semibold" style={{ color: "var(--accent-primary)" }}>
+                      <p className="text-sm font-medium" style={{ color: "var(--accent-primary)" }}>
                         {exp.company}
                       </p>
                     </div>

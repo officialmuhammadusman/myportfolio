@@ -72,13 +72,13 @@ export function ServiceCaseStudiesSection({ service }: { service: ServiceItem })
         >
           <div>
             <span className="section-eyebrow">Proven Impact</span>
-            <h2 className="mt-4 font-display text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
+            <h2 className="mt-4 text-[2rem] leading-[1.1] tracking-tight text-white sm:text-[2.5rem]">
               Related <span className="italic text-[#FF6A00]">Case Studies</span>
             </h2>
           </div>
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.2em] text-white/50 hover:text-[#FF6A00] transition-colors"
+            className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.2em] text-white/50 hover:text-[#FF6A00] transition-colors"
           >
             View all work <ArrowUpRight size={14} />
           </Link>
@@ -105,10 +105,10 @@ export function ServiceCaseStudiesSection({ service }: { service: ServiceItem })
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(10,10,10,0.4)_50%,rgba(10,10,10,1)_100%)]" />
                 
                 <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
-                  <span className="mb-4 inline-block rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#FFB347] backdrop-blur-md">
+                  <span className="mb-4 inline-block rounded-full border border-[#FF6A00]/24 bg-[#0A0A0A]/45 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-[#FFB347] backdrop-blur-md">
                     {project.industry}
                   </span>
-                  <h3 className="mb-3 font-display text-[1.75rem] leading-[1.1] tracking-tight text-white sm:text-[2.25rem]">
+                  <h3 className="mb-3 text-[1.75rem] leading-[1.1] tracking-tight text-white sm:text-[2.25rem]">
                     {project.name}
                   </h3>
                   <p className="max-w-md text-[15px] leading-relaxed text-white/70">
@@ -117,7 +117,7 @@ export function ServiceCaseStudiesSection({ service }: { service: ServiceItem })
                   
                   <Link 
                     href={project.slug ? `/work/${project.slug}` : `/contact`}
-                    className="mt-8 inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#FF6A00] transition-opacity opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300"
+                    className="mt-8 inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.2em] text-[#FF6A00] transition-opacity opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300"
                   >
                     {project.slug ? "Read case study" : "Discuss this approach"} <ArrowUpRight size={14} />
                   </Link>

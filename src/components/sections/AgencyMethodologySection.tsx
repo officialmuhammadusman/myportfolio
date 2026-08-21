@@ -56,11 +56,11 @@ export function AgencyMethodologySection() {
           className="mb-12 max-w-3xl sm:mb-16"
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 mb-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFF7ED]/50">
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#FFF7ED]/50">
               Methodology
             </span>
           </div>
-          <h2 className="font-display text-[1.75rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.25rem] lg:text-[2.75rem]">
+          <h2 className="text-[1.75rem] leading-[1.1] tracking-[-0.03em] text-[#FFF7ED] sm:text-[2.25rem] lg:text-[2.75rem]">
             A predictable pipeline for <br className="hidden sm:block" />
             <span className="text-gradient italic">production engineering.</span>
           </h2>
@@ -81,13 +81,13 @@ export function AgencyMethodologySection() {
               >
                 <div>
                   <div className="flex justify-between items-start mb-12">
-                    <span className="font-mono text-[10px] uppercase font-bold text-[#FF6A00]">
+                    <span className="font-mono text-[10px] uppercase font-medium text-[#FF6A00]">
                       Phase {step.number}
                     </span>
                     <Icon size={20} className="text-[#FFF7ED]/30 group-hover:text-[#FF6A00] transition-colors" />
                   </div>
                   
-                  <h3 className="font-display text-xl text-[#FFF7ED] mb-3">
+                  <h3 className="text-xl text-[#FFF7ED] mb-3">
                     {step.title}
                   </h3>
                   <p className="text-[13px] leading-relaxed text-[#FFF7ED]/60 mb-8">
@@ -96,7 +96,7 @@ export function AgencyMethodologySection() {
                 </div>
 
                 <div className="border-t border-white/[0.08] pt-4">
-                  <p className="text-[9px] uppercase tracking-[0.1em] font-bold text-[#FFF7ED]/30 mb-3">
+                  <p className="text-[9px] uppercase tracking-[0.1em] font-medium text-[#FFF7ED]/30 mb-3">
                     Deliverables
                   </p>
                   <ul className="space-y-2">
@@ -128,13 +128,13 @@ export function AgencyMethodologySection() {
               >
                 <div>
                   <div className="flex justify-between items-start mb-8">
-                    <span className="font-mono text-[10px] uppercase font-bold text-[#FF6A00]">
+                    <span className="font-mono text-[10px] uppercase font-medium text-[#FF6A00]">
                       Phase {step.number}
                     </span>
                     <Icon size={20} className="text-[#FF6A00]" />
                   </div>
                   
-                  <h3 className="font-display text-xl text-[#FFF7ED] mb-3">
+                  <h3 className="text-xl text-[#FFF7ED] mb-3">
                     {step.title}
                   </h3>
                   <p className="text-[13px] leading-relaxed text-[#FFF7ED]/60 mb-6">
@@ -143,7 +143,7 @@ export function AgencyMethodologySection() {
                 </div>
 
                 <div className="border-t border-white/[0.08] pt-4">
-                  <p className="text-[9px] uppercase tracking-[0.1em] font-bold text-[#FFF7ED]/30 mb-3">
+                  <p className="text-[9px] uppercase tracking-[0.1em] font-medium text-[#FFF7ED]/30 mb-3">
                     Deliverables
                   </p>
                   <ul className="space-y-2">

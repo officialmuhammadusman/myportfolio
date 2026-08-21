@@ -1,375 +1,462 @@
 "use client";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Link from "next/link";
-import { ExternalLink, Github, CheckCircle2, ArrowLeft, ChevronRight, Zap, Shield, AlertTriangle, BarChart2, ArrowUpRight } from "lucide-react";
+import {
+  ExternalLink, Github, ArrowLeft, ArrowRight, ArrowUpRight,
+  CheckCircle2, AlertTriangle, Zap, BarChart2, ChevronDown, ChevronUp
+} from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import type { Project } from "@/types";
 import { SyntaxHighlighter } from "@/components/ui/SyntaxHighlighter";
+import { BottomSheet } from "@/components/ui/BottomSheet";
 
 type LucideIconName = keyof typeof LucideIcons;
-
 function DynIcon({ name, size = 20 }: { name: string; size?: number }) {
   const Comp = (LucideIcons[name as LucideIconName] ?? LucideIcons.Star) as React.ElementType;
   return <Comp size={size} />;
 }
 
-export function ProjectDetailClient({ project, related }: { project: Project; related: Project[] }) {
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/* ─── Section wrapper with scroll reveal ─── */
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
-    <div className="min-h-screen bg-[#050505] text-[#FFF7ED]">
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 36 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, ease }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+}
 
-      {/* Back link */}
-      <div className="layout-wrap pt-8 pb-0">
-        <Link
-          href="/projects"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#FF6A00] transition-colors hover:text-[#FFB347]"
-        >
-          <ArrowLeft size={14} /> Back to Projects
-        </Link>
-      </div>
-
-      {/* ── FULL-WIDTH HERO BANNER ── */}
-      <section className="relative isolate min-h-[70vh] flex flex-col justify-end overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24 bg-[#050505]">
-        
-        {/* Cinematic Background Image */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 z-0"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={project.heroImage ? project.heroImage : "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600&h=900"}
-            alt={project.title}
-            className="w-full h-full object-cover object-[center_30%] opacity-30 grayscale-[20%]"
-          />
-          
-          {/* Gradients */}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.2)_0%,rgba(5,5,5,0.8)_60%,rgba(5,5,5,1)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(255,106,0,0.15),transparent_60%)]" />
-        </motion.div>
-        
-        <div className="layout-wrap relative z-10 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl"
-          >
-            {/* Status */}
-            {project.liveUrl && (
-              <span
-                className="mb-6 inline-flex rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
-                style={{
-                  background: project.status === "completed" ? "rgba(34, 197, 94, 0.1)" : "rgba(234, 179, 8, 0.1)",
-                  color: project.status === "completed" ? "#22c55e" : "#eab308",
-                  borderColor: project.status === "completed" ? "rgba(34, 197, 94, 0.2)" : "rgba(234, 179, 8, 0.2)",
-                }}
-              >
-                {project.status === "completed" ? "✓ Live in Production" : "In Progress"}
-              </span>
-            )}
-
-            <h1 className="font-display text-[3rem] leading-[1.05] tracking-tight text-white sm:text-[4rem] md:text-[5rem] mb-6">
-              {project.title}
-            </h1>
-
-            <p className="mt-6 text-[16px] leading-relaxed text-[#FF6A00] sm:mt-8 sm:text-[20px] max-w-2xl font-medium mb-10">
-              {project.shortDescription}
-            </p>
-
-            {/* Tech tags */}
-            <div className="flex flex-wrap gap-2 mb-10">
-              {project.techStack.map((tech) => (
-                <span
-                  key={tech.name}
-                  className="rounded-full border border-white/20 bg-black/20 backdrop-blur-md px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/90"
-                >
-                  {tech.name}
-                </span>
-              ))}
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex flex-wrap gap-4">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#FF6A00] px-8 text-sm font-bold text-black transition-transform hover:scale-105 active:scale-95"
-                >
-                  <ExternalLink size={16} /> Live Demo
-                </a>
-              )}
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-bold text-white transition-all hover:bg-white/10 hover:scale-105 active:scale-95"
-                >
-                  <Github size={16} /> View GitHub
-                </a>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <div className="layout-wrap pb-24">
-
-        {/* ── OVERVIEW ── */}
-        <Section title="Project Overview" eyebrow="Overview">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-6">
-              <p className="text-[15px] sm:text-base leading-relaxed text-[#FFF7ED]/70">
-                {project.longDescription}
-              </p>
-              <p className="text-[15px] sm:text-base leading-relaxed text-[#FFF7ED]/70">
-                Built with a production-first mindset — every feature comes with tests, documentation, and monitoring. The architecture was designed for scalability from day one, not as an afterthought.
-              </p>
-            </div>
-
-            {/* Quick metrics */}
-            <div className="space-y-4">
-              {[
-                { icon: "TestTube2", label: "QA & Testing", value: project.testCount || "Production QA" },
-                { icon: "Shield", label: "Stability", value: project.testCoverage || (project.liveUrl ? "Live product" : "Internal Release") },
-                { icon: "Calendar", label: "Shipped", value: project.year },
-                ...(project.liveUrl ? [{ icon: "Globe", label: "Status", value: project.status === "completed" ? "Live" : "In Progress" }] : []),
-              ].map((m) => (
-                <div
-                  key={m.label}
-                  className="flex items-center justify-between px-5 py-4 rounded-xl border border-white/[0.08] bg-white/[0.02]"
-                >
-                  <div className="flex items-center gap-3">
-                    <DynIcon name={m.icon} size={16} />
-                    <span className="text-[13px] text-[#FFF7ED]/50">{m.label}</span>
-                  </div>
-                  <span className="text-sm font-semibold text-[#FFF7ED]">{m.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        {/* ── FEATURES ── */}
-        <Section title="Key Features" eyebrow="Capabilities">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {project.features.map((feat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 hover:bg-white/[0.04] transition-colors duration-300"
-              >
-                {/* Top border glow on hover */}
-                <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#FF6A00]/0 to-transparent transition-all duration-500 group-hover:via-[#FF6A00]/50" />
-                
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-[#FF6A00]">
-                  <DynIcon name={feat.icon} size={20} />
-                </div>
-                <h4 className="mb-2 font-display text-lg tracking-tight text-[#FFF7ED]">
-                  {feat.title}
-                </h4>
-                <p className="text-[13px] leading-relaxed text-[#FFF7ED]/50">
-                  {feat.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* ── TECHNICAL DECISIONS ── */}
-        <Section title="Technical Decisions" eyebrow="Architecture">
-          <div className="space-y-4">
-            {project.technicalDecisions.map((dec, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex flex-col sm:flex-row gap-5 p-6 rounded-2xl border border-white/[0.08] bg-[#0A0A0A]"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 text-[#FF6A00] font-bold font-mono text-sm">
-                  0{i + 1}
-                </div>
-                <div>
-                  <h4 className="font-display text-lg tracking-tight text-[#FFF7ED] mb-2">
-                    {dec.title}
-                  </h4>
-                  <p className="text-[14px] leading-relaxed text-[#FFF7ED]/60">
-                    {dec.content}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* ── CHALLENGES & SOLUTIONS ── */}
-        <Section title="Challenges & Solutions" eyebrow="Problem Solving">
-          <div className="space-y-6">
-            {project.challenges.map((ch, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="grid md:grid-cols-2 gap-4"
-              >
-                <div className="p-6 rounded-2xl border-l-2 border-l-[#ef4444] border-t border-b border-r border-white/[0.04] bg-[#0A0A0A]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <AlertTriangle size={16} className="text-[#ef4444]" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#ef4444]">
-                      The Challenge
-                    </span>
-                  </div>
-                  <p className="text-[14px] leading-relaxed text-[#FFF7ED]/70">
-                    {ch.problem}
-                  </p>
-                </div>
-                
-                <div className="p-6 rounded-2xl border-l-2 border-l-[#22c55e] border-t border-b border-r border-white/[0.04] bg-[#0A0A0A]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle2 size={16} className="text-[#22c55e]" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#22c55e]">
-                      The Solution
-                    </span>
-                  </div>
-                  <p className="text-[14px] leading-relaxed text-[#FFF7ED]/70">
-                    {ch.solution}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* ── TESTING & PERFORMANCE ── */}
-        <Section title="Metrics & Performance" eyebrow="Outcomes">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02]">
-              <div className="flex items-center gap-2 mb-6">
-                <BarChart2 size={20} className="text-[#FF6A00]" />
-                <h4 className="font-display text-lg text-[#FFF7ED]">
-                  System Metrics
-                </h4>
-              </div>
-              <div className="space-y-4">
-                {project.performanceMetrics.map((m) => (
-                  <div key={m.label} className="flex items-center justify-between border-b border-white/[0.04] pb-4 last:border-0 last:pb-0">
-                    <span className="text-[14px] text-[#FFF7ED]/50">{m.label}</span>
-                    <div className="text-right">
-                      <span className="text-[15px] font-bold text-[#FFF7ED]">
-                        {m.value}
-                      </span>
-                      {m.unit && (
-                        <span className="text-[12px] ml-2 text-[#FFF7ED]/40 uppercase tracking-wider">
-                          {m.unit}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] flex flex-col justify-center">
-              <h4 className="font-display text-lg text-[#FFF7ED] mb-6 text-center">
-                Production Readiness
-              </h4>
-              <div className="flex flex-wrap justify-center gap-3">
-                {project.badges.map((b) => (
-                  <span
-                    key={b.label}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#FF6A00]/10 px-4 py-2 text-[12px] font-semibold text-[#FF6A00]"
-                  >
-                    <DynIcon name={b.icon ?? "Star"} size={14} />
-                    {b.label}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* ── CODE SNIPPETS ── */}
-        {project.codeSnippets && project.codeSnippets.length > 0 && (
-          <Section title="Code Highlights" eyebrow="Implementation">
-            <div className="space-y-6">
-              {project.codeSnippets.map((snippet, i) => (
-                <div key={i} className="rounded-2xl border border-white/[0.08] overflow-hidden">
-                  <div className="flex items-center justify-between px-6 py-3 bg-white/[0.02] border-b border-white/[0.08]">
-                    <span className="text-[13px] font-mono text-[#FFF7ED]/50">
-                      {snippet.filename}
-                    </span>
-                    <span className="rounded-md bg-white/[0.04] px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF6A00]">
-                      {snippet.language}
-                    </span>
-                  </div>
-                  <SyntaxHighlighter code={snippet.code} language={snippet.language} />
-                </div>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {/* ── RELATED PROJECTS ── */}
-        {related.length > 0 && (
-          <Section title="Other Work" eyebrow="Related">
-            <div className="grid sm:grid-cols-2 gap-4">
-              {related.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/projects/${p.slug}`}
-                  className="group flex flex-col p-6 rounded-2xl border border-white/[0.08] bg-[#0A0A0A] hover:bg-white/[0.02] hover:border-[#FF6A00]/30 transition-all duration-300"
-                >
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6A00]">
-                      Case Study
-                    </span>
-                    <ArrowUpRight size={16} className="text-[#FFF7ED]/30 group-hover:text-[#FF6A00] transition-colors" />
-                  </div>
-                  <h4 className="font-display text-xl text-[#FFF7ED] mb-2 group-hover:text-[#FF6A00] transition-colors">
-                    {p.title}
-                  </h4>
-                  <p className="text-[13px] text-[#FFF7ED]/50 line-clamp-2">
-                    {p.shortDescription}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </Section>
-        )}
-      </div>
+/* ─── Section label ─── */
+function SectionLabel({ number, label }: { number: string; label: string }) {
+  return (
+    <div className="mb-10 flex items-center gap-4">
+      <span className="font-mono text-[11px] font-medium text-[#FF6A00]/60">{number}</span>
+      <span className="h-px flex-1 max-w-[40px] bg-[#FF6A00]/30" />
+      <span className="font-mono text-[11px] font-medium uppercase tracking-[0.26em] text-white/35">
+        {label}
+      </span>
     </div>
   );
 }
 
-function Section({ title, eyebrow, children }: { title: string; eyebrow: string; children: React.ReactNode }) {
+export function ProjectDetailClient({ project, related }: { project: Project; related: Project[] }) {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
+  const [openDecision, setOpenDecision] = useState<number | null>(null);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.6 }}
-      className="py-16 sm:py-20 border-b border-white/[0.08] last:border-0"
-    >
-      <div className="mb-10 sm:mb-12">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FF6A00] mb-3 block">
-          {eyebrow}
+    <div className="min-h-screen bg-[#050505] text-[#FFF7ED]">
+
+      {/* ── FULL-VIEWPORT HERO w/ PARALLAX ── */}
+      <section ref={heroRef} className="relative isolate flex min-h-[100dvh] flex-col justify-end overflow-hidden pb-16 pt-24 sm:pb-24">
+
+        {/* Parallax background */}
+        <motion.div
+          className="absolute inset-0 z-0"
+          style={{ y: imgY, scale: imgScale }}
+        >
+          <img
+            src={project.heroImage || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1920&h=1080"}
+            alt={project.title}
+            className="h-full w-full object-cover opacity-20 filter grayscale blur-[1px]"
+          />
+        </motion.div>
+        <div className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(5,5,5,0.4)_0%,rgba(5,5,5,0.85)_50%,rgba(5,5,5,1)_100%)]" />
+        <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_100%_60%_at_0%_100%,rgba(255,106,0,0.15),transparent)]" />
+
+        {/* Large project number watermark */}
+        <span
+          className="pointer-events-none absolute right-[-5%] top-[10%] z-[2] select-none font-medium leading-none tracking-tighter text-white/[0.03]"
+          style={{ fontSize: "clamp(12rem, 35vw, 30rem)" }}
+          aria-hidden
+        >
+          {String(related.length + 1).padStart(2, "0")}
         </span>
-        <h2 className="font-display text-[2rem] sm:text-[2.5rem] tracking-tight text-[#FFF7ED]">
-          {title}
-        </h2>
+
+        <div className="layout-wrap relative z-[3] w-full">
+
+          {/* Back nav */}
+          <Link
+            href="/projects"
+            className="mb-12 inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-white/40 transition-colors hover:text-[#FF6A00]"
+          >
+            <ArrowLeft size={14} /> Back to Projects
+          </Link>
+
+          {/* Title */}
+          <div className="flex flex-col mb-12">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              {project.liveUrl && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FF6A00]/25 bg-[#FF6A00]/10 px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.16em] text-[#FF6A00]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF6A00] animate-pulse-dot" />
+                  Live in Production
+                </span>
+              )}
+              <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 font-mono text-[10px] text-white/45">
+                {project.year}
+              </span>
+              {project.category.map((c) => (
+                <span key={c} className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">
+                  {c}
+                </span>
+              ))}
+            </div>
+
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display font-medium leading-[0.95] tracking-[-0.02em] text-white"
+                style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)" }}
+              >
+                {project.title}
+              </motion.h1>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16 items-end">
+            {/* Short description */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-xl text-[16px] leading-[1.8] text-white/50 sm:text-[20px]"
+            >
+              {project.shortDescription}
+            </motion.p>
+
+            {/* Action row */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row gap-3 w-full md:w-auto"
+            >
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-xl bg-[#FF6A00] px-7 py-3.5 text-[13px] font-medium tracking-[0.06em] text-black transition-all hover:brightness-110 hover:shadow-[0_8px_28px_rgba(255,106,0,0.4)]"
+              >
+                <ExternalLink size={15} /> View Live
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.05] px-7 py-3.5 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:text-white"
+              >
+                <Github size={15} /> GitHub
+              </a>
+            )}
+          </motion.div>
+          </div>
+
+          {/* Tech stack marquee row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="mt-10 flex flex-wrap gap-2"
+          >
+            {project.techStack.map((tech) => (
+              <span
+                key={tech.name}
+                className="rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium text-white/60 backdrop-blur-sm"
+              >
+                {tech.name}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── MAIN CONTENT ── */}
+      <div className="layout-wrap max-w-6xl py-24 sm:py-32">
+
+        {/* 01 — Overview */}
+        <Section className="mb-32 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_400px]">
+          <div className="glass-panel-heavy p-10 sm:p-16 rounded-[40px] relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#FF6A00]/5 opacity-0 transition-opacity duration-700 hover:opacity-100" />
+            <SectionLabel number="01" label="Overview" />
+            <h2 className="mb-6 text-[1.2rem] font-medium leading-snug tracking-tight text-white mt-4">
+              About the Project
+            </h2>
+            <p className="text-[15px] leading-[1.8] text-white/60 line-clamp-3">
+              {project.longDescription}
+            </p>
+            <button
+              onClick={() => setIsAboutOpen(true)}
+              className="mt-5 inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-wider text-[#FF6A00] hover:text-[#FF6A00]/70 transition-colors"
+            >
+              Read More <ChevronDown size={14} />
+            </button>
+          </div>
+
+          {/* Stats cards / Bento Side */}
+          <div className="flex flex-col gap-6">
+            {project.badges.map((badge, i) => (
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                key={badge.label}
+                className="glass-panel p-8 rounded-[32px] flex items-center gap-6 group relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FF6A00]/0 to-[#FF6A00]/10 translate-x-[-100%] transition-transform duration-500 group-hover:translate-x-0" />
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 text-[#FF6A00] transition-transform duration-500 group-hover:scale-110">
+                  <DynIcon name={badge.icon ?? "Star"} size={24} />
+                </div>
+                <span className="text-[16px] font-medium text-white tracking-wide">{badge.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        {/* About BottomSheet — rendered outside the grid */}
+        <BottomSheet isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} title="About the Project">
+          <p className="text-[15px] leading-[1.9] text-white/70 pb-4">
+            {project.longDescription}
+          </p>
+        </BottomSheet>
+
+        {/* 02 — Key Features */}
+        <Section className="mb-32">
+          <SectionLabel number="02" label="Key Features" />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-8">
+            {project.features.map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative overflow-hidden rounded-[32px] glass-panel p-10 transition-all hover:border-[#FF6A00]/30"
+              >
+                {/* Large number bg */}
+                <span className="pointer-events-none absolute right-6 top-6 select-none text-[5rem] font-medium leading-none text-white/[0.03] transition-colors duration-500 group-hover:text-[#FF6A00]/10">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                
+                {/* Hover glow */}
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(255,106,0,0.1),transparent_60%)]" />
+
+                <div className="relative z-10 h-full flex flex-col">
+                  <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 text-[#FF6A00] transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_rgba(255,106,0,0.2)]">
+                    <DynIcon name={feature.icon} size={24} />
+                  </div>
+                  <h3 className="mb-4 text-[1.5rem] font-medium text-white leading-tight">{feature.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-white/50 flex-1">{feature.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        {/* 03 — Technical Decisions */}
+        {project.technicalDecisions?.length > 0 && (
+          <Section className="mb-32">
+            <SectionLabel number="03" label="Technical Decisions" />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-8">
+              {project.technicalDecisions.map((decision, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="glass-panel p-8 rounded-[32px] group relative overflow-hidden flex flex-col h-full min-h-[250px]"
+                >
+                  <div className="absolute inset-0 bg-[#FF6A00]/5 translate-y-[100%] transition-transform duration-500 group-hover:translate-y-0" />
+                  <span className="font-mono text-[3.5rem] font-medium text-white/5 absolute -top-4 -right-2 transition-colors duration-500 group-hover:text-[#FF6A00]/10">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  
+                  <div className="relative z-10">
+                    <h3 className="mb-4 text-[1.4rem] font-medium text-white leading-tight">{decision.title}</h3>
+                    <p className="text-[14px] leading-[1.8] text-white/50">{decision.content}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* 04 — Challenges & Solutions */}
+        {project.challenges?.length > 0 && (
+          <Section className="mb-32">
+            <SectionLabel number="04" label="Challenges & Solutions" />
+            <div className="flex flex-col gap-8 mt-8">
+              {project.challenges.map((ch, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+                >
+                  <div className="rounded-[32px] border border-red-500/20 bg-red-500/[0.03] p-10 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(239,68,68,0.08),transparent_50%)]" />
+                    <div className="mb-6 flex items-center gap-3 text-red-400 relative z-10">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10">
+                        <AlertTriangle size={18} />
+                      </div>
+                      <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em]">The Challenge</span>
+                    </div>
+                    <p className="text-[16px] leading-[1.8] text-white/70 relative z-10">{ch.problem}</p>
+                  </div>
+                  
+                  <div className="rounded-[32px] border border-[#FF6A00]/20 bg-[#FF6A00]/[0.03] p-10 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,106,0,0.08),transparent_50%)]" />
+                    <div className="mb-6 flex items-center gap-3 text-[#FF6A00] relative z-10">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF6A00]/10">
+                        <CheckCircle2 size={18} />
+                      </div>
+                      <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em]">Our Solution</span>
+                    </div>
+                    <p className="text-[16px] leading-[1.8] text-white/70 relative z-10">{ch.solution}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* 05 — Performance */}
+        {project.performanceMetrics?.length > 0 && (
+          <Section className="mb-32">
+            <SectionLabel number="05" label="Performance & Results" />
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 mt-8">
+              {project.performanceMetrics.map((metric, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col items-center justify-center rounded-[32px] glass-panel p-8 text-center relative overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-[#FF6A00]/0 transition-colors duration-500 group-hover:bg-[#FF6A00]/5" />
+                  <span className="text-[2.5rem] md:text-[3.5rem] font-medium text-white group-hover:text-[#FF6A00] transition-colors duration-500 leading-none">
+                    {metric.value}
+                  </span>
+                  <div className="mt-4 flex flex-col items-center">
+                    <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#FF6A00]/80">{metric.label}</span>
+                    {metric.unit && (
+                      <span className="mt-2 font-mono text-[10px] text-white/30">{metric.unit}</span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* Code Snippets */}
+        {project.codeSnippets?.map((snippet, i) => (
+          <Section key={i} className="mb-12">
+            <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
+              <div className="flex items-center justify-between border-b border-white/[0.06] bg-[#0C0C0C] px-5 py-3.5">
+                <span className="font-mono text-[12px] text-white/50">{snippet.filename}</span>
+                <span className="rounded-md bg-white/[0.05] px-2.5 py-1 font-mono text-[10px] text-white/35">{snippet.language}</span>
+              </div>
+              <SyntaxHighlighter code={snippet.code} language={snippet.language} />
+            </div>
+          </Section>
+        ))}
       </div>
-      {children}
-    </motion.section>
+
+      {/* ── RELATED PROJECTS ── */}
+      {related.length > 0 && (
+        <section className="border-t border-white/[0.06] bg-[#080808] py-20 sm:py-28">
+          <div className="layout-wrap">
+            <div className="mb-10 flex items-center justify-between">
+              <h2 className="text-[1.6rem] font-medium text-white sm:text-[2rem]">
+                More Work
+              </h2>
+              <Link
+                href="/projects"
+                className="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/40 transition-colors hover:text-[#FF6A00]"
+              >
+                All Projects <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {related.map((rel, i) => (
+                <Link
+                  key={rel.id}
+                  href={`/projects/${rel.slug}`}
+                  className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/[0.07] bg-[#0C0C0C] transition-all hover:border-white/[0.18] hover:-translate-y-1"
+                >
+                  <div className="relative h-52 overflow-hidden">
+                    {rel.heroImage ? (
+                      <img src={rel.heroImage} alt={rel.title} className="h-full w-full object-cover opacity-65 transition-all duration-700 group-hover:opacity-95 group-hover:scale-105" />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-white/[0.03]">
+                        <span className="text-[5rem] font-medium text-white/[0.06]">{rel.title[0]}</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C] to-transparent" />
+                  </div>
+                  <div className="p-7">
+                    <h3 className="text-[1.2rem] font-medium text-white transition-colors group-hover:text-[#FF6A00]">
+                      {rel.title}
+                    </h3>
+                    <p className="mt-2 text-[13px] text-white/45 line-clamp-2">{rel.shortDescription}</p>
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white/35 transition-colors group-hover:text-[#FF6A00]">
+                      Case Study <ArrowUpRight size={13} />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── BOTTOM CTA ── */}
+      <section className="relative isolate overflow-hidden py-24 sm:py-32">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(255,106,0,0.07),transparent)]" />
+        <div className="layout-wrap relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease }}
+          >
+            <h2 className="text-[2rem] font-medium text-white sm:text-[2.75rem]">
+              Build something like <em className="text-[#FF6A00] not-italic">this?</em>
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-[15px] text-white/50">
+              Let&apos;s scope your project — I&apos;ll reply with technical architecture and timeline within 24 hours.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex h-14 items-center gap-2.5 rounded-full bg-[#FF6A00] px-10 text-[13px] font-medium tracking-[0.08em] text-black transition-all hover:brightness-110 hover:shadow-[0_12px_40px_rgba(255,106,0,0.4)]"
+            >
+              Start a Project <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   );
 }
