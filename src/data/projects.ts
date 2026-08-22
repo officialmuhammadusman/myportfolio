@@ -393,7 +393,7 @@ export const projects: Project[] = [
     screenshots: [
       "https://iad.microlink.io/2bJgTlbtbC6Cwz3wjtDE1jALxzowQh-yFmsV88IiTwdZA_rxXR4PUQIACkdcrHbLtKfDsYWqFTskkkfV3sEgBg.png"
     ],
-    liveUrl: "https://desertspeedtourism-ffc6.vercel.app/",
+    liveUrl: "https://bookdubaiguide.com",
     techStack: [
       { name: "Next.js", color: "#FFFFFF", bgColor: "#000000" },
       { name: "React", color: "#FFFFFF", bgColor: "#61DAFB" },
