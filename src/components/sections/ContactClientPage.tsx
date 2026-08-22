@@ -328,7 +328,7 @@ export function ContactClientPage() {
               <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#FF6A00]/30 to-transparent" />
               
               <div className="mb-10 flex items-start gap-5">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 shadow-[0_0_30px_rgba(255,106,0,0.2)]">
+                <span className="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#FF6A00]/30 bg-[#FF6A00]/10 shadow-[0_0_30px_rgba(255,106,0,0.2)]">
                   <BrandIcon base={brandIcons.cta.startProject} tone="orange" size={28} />
                 </span>
                 <div>
@@ -341,7 +341,7 @@ export function ContactClientPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 mb-10 p-1.5 rounded-2xl bg-[#0A0A0A] w-full border border-white/5 relative shadow-inner">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-1 mb-10 p-1.5 rounded-2xl bg-[#0A0A0A] w-full border border-white/5 relative shadow-inner">
                 <button
                   type="button"
                   onClick={() => setFlow("message")}

@@ -4,7 +4,7 @@ import { ReduxProvider } from "@/components/providers/ReduxProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { BackToTop } from "@/components/ui/BackToTop";
+import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { Toaster } from "react-hot-toast";
 import { PERSONAL_INFO } from "@/lib/constants";
 import { MainShell } from "@/components/layout/MainShell";
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               */}
               <MainShell>{children}</MainShell>
               <Footer />
-              <BackToTop />
+              <FloatingWhatsApp />
               <Toaster
                 position="bottom-right"
                 toastOptions={{

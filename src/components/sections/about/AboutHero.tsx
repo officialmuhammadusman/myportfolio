@@ -17,10 +17,9 @@ export function AboutHero() {
         <img
           src="/muhammad_usman_hero_slider_updated/web-1080/01-hero-laptop-primary-16x9-1920x1080.jpg"
           alt="About Me"
-          className="w-full h-full object-cover object-[center_30%] opacity-40 grayscale-[20%]"
+          className="w-full h-full object-cover object-[center_30%] opacity-80"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.4)_0%,rgba(5,5,5,0.9)_70%,rgba(5,5,5,1)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,106,0,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.1)_0%,rgba(5,5,5,0.7)_70%,rgba(5,5,5,1)_100%)]" />
       </motion.div>
       
       <div className="layout-wrap relative z-10 w-full">
@@ -33,7 +32,7 @@ export function AboutHero() {
             <span className="mb-4 inline-flex items-center justify-center rounded-full border border-[#FF6A00]/30 bg-[#FF6A00]/10 backdrop-blur-md px-4 py-1.5 text-[11px] font-medium uppercase tracking-widest text-[#FF6A00]">
               Full Stack & Applied AI Engineer
             </span>
-            <h1 className="mt-4 text-[4rem] leading-[1.05] tracking-tight text-white sm:text-[5rem] md:text-[6.5rem]">
+            <h1 className="mt-4 text-[3.2rem] leading-[1.05] tracking-tight text-white sm:text-[4rem] md:text-[5rem]">
               Muhammad <span className="italic text-[#FF6A00]">Usman.</span>
             </h1>
           </motion.div>
@@ -45,7 +44,7 @@ export function AboutHero() {
             className="mt-6 w-full max-w-3xl sm:mt-8"
           >
             <MobileTextDrawer
-              text={PERSONAL_INFO.bio}
+              text={PERSONAL_INFO.bioShort}
               className="text-[16px] leading-relaxed text-white/70 sm:text-[18px] font-medium"
               lines={4}
             />
